@@ -1,2 +1,3 @@
 paper.tex
+proof.tex
   
