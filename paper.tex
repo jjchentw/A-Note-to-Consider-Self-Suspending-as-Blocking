@@ -48,6 +48,9 @@ With the above argument, a constrained-deadline task $\tau_k$ can be feasibly sc
   
 \section{Proof of Liu's Analysis}  
 
+This section provides the proof to support the correctness of the test in Eq. \eqref{eq:TDA-suspension}. First, it should be easy to see that we can convert the suspension time of task $\tau_k$ into computation. This has been done by many researchers, e.g., the proof in Lemma 3 in the paper by Liu and Chen \cite{Liu_2014}. The remaining part is to show that the additional interference due to self-suspension from a higher-priority task $\tau_i$ is at most $min(C_i, S_i)$. The interference to be at most $C_i$ has been provided in the literature as well, e.g., \cite{Rajkumar_1990}\cite{Liu_2014}. However, the argument about blocking task $\tau_k$ due to a higher-priority task $\tau_i$ by at most $S_i$ amount of time is not very clear. 
+
+  
   
   
   
