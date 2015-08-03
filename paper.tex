@@ -38,6 +38,12 @@ Therefore,
 \label{eq:Bk}
 B_k = S_k + \sum_{i=1}^{k-1} min(C_i, S_i).
 \end{equation}
+
+With the above argument, a task constrained-deadline $\tau_k$ can be feasibly scheduled by a fixed-priority scheduling if
+\begin{equation}
+\label{eq:TDA-suspension}
+\exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}}C_i \leq t
+\end{equation}
   
   
   
