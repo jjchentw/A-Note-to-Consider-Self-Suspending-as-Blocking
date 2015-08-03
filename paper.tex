@@ -1,0 +1,29 @@
+\section{Introduction}
+
+This report presents a proof to support the correctness of the feasibility test for self-suspending real-time task systems by Jane W. S. Liu in the textbook. Since there was no proof in the book, this report provides the reasoning of the correctness.  
+
+We define the
+terminologies in this section for completeness.  A sporadic task
+$\tau_i$ is released repeatedly, with each such invocation called a
+job. The $j^{th}$ job of $\tau_i$, denoted $\tau_{i,j}$, is released
+at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
+job of any task $\tau_i$ is assumed to have execution time $C_i$. Each job of task $\tau_i$ 
+suspends for at most $S_i$ time units (across all of its suspension phases).
+The response time
+of a job is defined as its finishing time minus its release
+time. Successive jobs of the same task are required to execute in
+sequence. Associated with each task $\tau_i$ are a period $T_i$, which
+specifies the minimum time between two consecutive job releases of
+$\tau_i$, and a deadline $D_i$, which specifies the relative deadline
+of each such job, i.e., $d_{i,j}=r_{i,j}+D_i$. The worst-case response
+time of a task $\tau_i$ is the maximum response time among all its
+jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
+
+
+
+
+\section{Liu's Analysis}
+
+
+
+  
