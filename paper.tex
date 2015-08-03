@@ -25,8 +25,9 @@ We will focus on the analysis of task $\tau_k$ under the assumption that $\tau_1
 
 \section{Liu's Analysis}
 
-To analyze the worst-case response time of task $\tau_k$, we need to in general quantify the worst-case interference of the higher-priority tasks during the execution of a job of task $\tau_k$. In the ordinary sporadic real-time tasks, i.e., $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens when all the higher-priority tasks release a job at the same time and the subsequent jobs as early as possible (by respecting to the periods). The critical instant theorem does not work for self-suspending sporadic task models.  
+To analyze the worst-case response time of task $\tau_k$, we need to in general quantify the worst-case interference of the higher-priority tasks during the execution of a job of task $\tau_k$. In the ordinary sporadic real-time tasks, i.e., $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens when all the higher-priority tasks release a job at the same time and the subsequent jobs as early as possible (by respecting to the periods). 
 
+The critical instant theorem does not work for self-suspending sporadic task models.  
 Jane W. S. Liu \cite{Liu:2000:RS:518501} shows that the critical instant theorem can still be applied by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to self-suspending behavior as a factor of blocking time, denoted as $B_k$ as follows:
 \begin{itemize}
 \item The blocking time contributed from task $\tau_k$ is $S_k$.
@@ -37,6 +38,7 @@ Therefore,
 \label{eq:Bk}
 B_k = S_k + \sum_{i=1}^{k-1} min(C_i, S_i).
 \end{equation}
+  
   
   
   
