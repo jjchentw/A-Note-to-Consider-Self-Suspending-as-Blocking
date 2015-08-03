@@ -1,6 +1,6 @@
 \section{Introduction}
 
-This report presents a proof to support the correctness of the feasibility test for self-suspending real-time task systems by Jane W. S. Liu in the textbook. Since there was no proof in the book, this report provides the reasoning of the correctness.  
+This report presents a proof to support the correctness of the feasibility test for self-suspending real-time task systems by Jane W. S. Liu in the textbook \cite{1}. Since there was no proof in the book, this report provides the reasoning of the correctness.  
 
 We define the
 terminologies in this section for completeness.  A sporadic task
@@ -21,11 +21,12 @@ jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
 Here, in this report, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling, in which each task is assigned with a unique priority level. We assume that the priority ordering is given, and the task with a smaller index has higher priority, i.e., task $\tau_i$ is with a higher-priority level than task $\tau_{i+1}$. Task $\tau_1$ is the highest-priority task in the task system.
 
-
+We will focus on the analysis of task $\tau_k$ under the assumption that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. 
 
 \section{Liu's Analysis}
 
 
 
+  
   
   
