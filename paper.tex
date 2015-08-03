@@ -1,13 +1,13 @@
 \section{Introduction}
 
-This report presents a proof to support the correctness of the feasibility test for self-suspending real-time task systems by Jane W. S. Liu in the textbook \cite{Liu:2000:RS:518501}. Since there was no proof in the book, this report provides the reasoning of the correctness.  
+This report presents a proof to support the correctness of the schedulability test for self-suspending real-time task systems by Jane W. S. Liu in the textbook \cite{Liu:2000:RS:518501}. Since there was no proof in the book, this report provides the reasoning of the correctness.  
 
 We define the
-terminologies in this section for completeness.  A sporadic task
+terminologies as follows:  A sporadic task
 $\tau_i$ is released repeatedly, with each such invocation called a
 job. The $j^{th}$ job of $\tau_i$, denoted $\tau_{i,j}$, is released
 at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
-job of any task $\tau_i$ is assumed to have execution time $C_i$. Each job of task $\tau_i$ 
+job of any task $\tau_i$ is assumed to have worst-case execution time $C_i$. Each job of task $\tau_i$ 
 suspends for at most $S_i$ time units (across all of its suspension phases).
 The response time
 of a job is defined as its finishing time minus its release
@@ -25,7 +25,7 @@ We will focus on the analysis of task $\tau_k$ under the assumption that $\tau_1
 
 \section{Liu's Analysis}
 
-To analyze the worst-case response time of task $\tau_k$, we need to in general quantify the worst-case interference of the higher-priority tasks during the execution of a job of task $\tau_k$. In the ordinary sporadic real-time tasks, i.e., $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens when all the higher-priority tasks release a job at the same time and the subsequent jobs as early as possible (by respecting to the periods). 
+To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we need to in general quantify the worst-case interference of the higher-priority tasks during the execution of a job of task $\tau_k$. In the ordinary sporadic real-time tasks, i.e., $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens when all the higher-priority tasks release a job at the same time and the subsequent jobs as early as possible (by respecting to the periods). 
 
 The critical instant theorem does not work for self-suspending sporadic task models.  
 Jane W. S. Liu \cite{Liu:2000:RS:518501} shows that the critical instant theorem can still be applied by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to self-suspending behavior as a factor of blocking time, denoted as $B_k$ as follows:
@@ -44,6 +44,7 @@ With the above argument, a task constrained-deadline $\tau_k$ can be feasibly sc
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
+  
   
   
   
