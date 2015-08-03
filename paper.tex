@@ -62,12 +62,13 @@ Consider the following schedule:
 \begin{itemize}
 \item Task $\tau_k'$ releases a job at time $t$.
 \item A higher priority task $\tau_i$ in ${\bf T}_1$ releases a job at time $t$, in which the suspension time of this job is converted to computation time.
-\item A higher priority task $\tau_i$ in ${\bf T}_2$ releases a job before $t$, in which the execution time of this job is $2C_i$.
+\item A higher priority task $\tau_i$ in ${\bf T}_2$ releases a job at time $t$, in which the execution time of this job is $2C_i$.
 \item All the subsequent higher-priority jobs are released as early as possible by respecting to their periods, and do not suspend themselves.
 \end{itemize}
 The response time of the job of task $\tau_k'$ released at time $t$ in the above schedule is a safe upper bound of the worst-case response time of task $\tau_k$ in the self-suspending task system if its worst-case response time is no more than $T_k$.
 \end{lemma}
 
+  
   
   
   
