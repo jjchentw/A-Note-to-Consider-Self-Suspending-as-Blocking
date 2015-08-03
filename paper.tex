@@ -53,21 +53,22 @@ This section provides the proof to support the correctness of the test in Eq. \e
 We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof of the critical instant theorem of the ordinary sporadic task system. From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. 
 
 We now classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$.
-
-
-
-\begin{lemma}
-\label{lemma:critical}
 Consider the following schedule:
 \begin{itemize}
 \item Task $\tau_k'$ releases a job at time $t$.
 \item A higher priority task $\tau_i$ in ${\bf T}_1$ releases a job at time $t$, in which the suspension time of this job is converted to computation time.
 \item A higher priority task $\tau_i$ in ${\bf T}_2$ releases a job at time $t$, in which the execution time of this job is $2C_i$.
-\item All the subsequent higher-priority jobs are released as early as possible by respecting to their periods, and do not suspend themselves.
+\item All the subsequent higher-priority jobs are released as early as possible by respecting to their periods. All these jobs are executed with their worst-case execution times and do not suspend themselves at all.
 \end{itemize}
-The response time of the job of task $\tau_k'$ released at time $t$ in the above schedule is a safe upper bound of the worst-case response time of task $\tau_k$ in the self-suspending task system if its worst-case response time is no more than $T_k$.
+
+Let the response time of the job of task $\tau_k'$ released at time $t$ in the above schedule be $R_k'$. For brevity, the above schedule is called \emph{bursty interference schedule} for the rest of the report. The following lemma shows that $R_k'$ is a safe upper bound of the original self-suspending task system. 
+
+\begin{lemma}
+\label{lemma:critical}
+ $R_k'$ defined in the above bursty interference schedule is a safe upper bound of the worst-case response time of task $\tau_k$ in the self-suspending task system if its worst-case response time is no more than $T_k$.
 \end{lemma}
 
+  
   
   
   
