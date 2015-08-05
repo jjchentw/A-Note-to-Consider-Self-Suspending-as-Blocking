@@ -8,7 +8,9 @@ $\tau_i$ is released repeatedly, with each such invocation called a
 job. The $j^{th}$ job of $\tau_i$, denoted $\tau_{i,j}$, is released
 at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
 job of any task $\tau_i$ is assumed to have worst-case execution time $C_i$. Each job of task $\tau_i$ 
-suspends for at most $S_i$ time units (across all of its suspension phases).
+suspends for at most $S_i$ time units (across all of its suspension phases). When a task suspends itself, 
+the processor can execute another task. 
+
 The response time
 of a job is defined as its finishing time minus its release
 time. Successive jobs of the same task are required to execute in
@@ -44,6 +46,7 @@ With the above argument, a constrained-deadline task $\tau_k$ can be feasibly sc
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
+  
   
   
   
