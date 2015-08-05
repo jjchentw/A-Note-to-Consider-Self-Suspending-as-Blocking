@@ -43,7 +43,7 @@ Up to here, the proof is very similar to the proof of the critical instant theor
 
 However, analyzing the workload of such \emph{carry-in} jobs due to self-suspension is non-trivial. One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. 
 
-Suppose that $F=|{\bf T}_1|$ and these $F$ tasks are indexed from $1, 2, 3, \ldots, F$. In the $i$-th iteration, we will define $t_i$ as the \emph{release time} of the first job of task $\tau_{k-i}$ in the revised schedule. 
+Suppose that $F=|{\bf T}_1|$ and these $F$ tasks are indexed from $1, 2, 3, \ldots, F$. In the $i$-th iteration, we will define $t_i$ as the \emph{release time} of the first job of task $\tau_{F+1-i}$ in the revised schedule. 
 
 
 
@@ -54,6 +54,7 @@ Suppose that $F=|{\bf T}_1|$ and these $F$ tasks are indexed from $1, 2, 3, \ldo
   
   
 
+  
   
   
   
