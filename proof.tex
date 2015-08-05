@@ -11,6 +11,13 @@ We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar
 \begin{proof}
   This is due to the preemptive scheduling. The removal of the lower-priority job has no impact at all on the higher-priority jobs.
 \end{proof}
+\begin{lemma}
+\label{lemma:remove-same-task}
+  For a schedule, based on preemptive fixed-priority scheduling, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ arriving at time $t$ does not change the schedule for the remaining jobs of task $\tau_i$.
+\end{lemma}
+\begin{proof}
+  The removal of the job of task $\tau_i$ has no impact on the higher-priority jobs as in Lemma \ref{lemma:remove-lower-priority}. Since the worst-case response time of task $\tau_i$ is no more than the period, the execution of the next job of task $\tau_i$ arriving after $t+T_i$ is also not affected by the removal of the job.
+\end{proof}
 
 We now classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$.
 Consider the following schedule:
@@ -40,6 +47,7 @@ Up to here, the proof is very similar to the proof of the critical instant theor
   
   
 
+  
   
   
   
