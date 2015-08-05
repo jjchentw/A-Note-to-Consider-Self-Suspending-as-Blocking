@@ -48,6 +48,7 @@ The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We kn
 \[
 \forall t_j < t \leq t_{j+1},\qquad  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i > t-t_1.
 \]
+That is, if a task $\tau_j$ is in ${\bf T}_2$, we consider its artificial job with remaining execution $C_j' \leq C_j$.  If a task $\tau_j$ is in ${\bf T}_1$, we may have at most $S_j$ amount of suspension time from $t_j$ to $t_{j+1}$. We can simply consider such an amount of time as \emph{virtual computation}. 
 By further considering the time interval from $t_k$ to $z+\rho$, we have
 \[
 \forall t_k < t < z+\rho,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t- t_i}{T_i} } C_i > t-t_1.
@@ -62,6 +63,7 @@ By the fact $t_i \leq t_k$ for $i=1,2,\ldots,k-1$, we know that $\ceiling{\frac{
   
   
 
+  
   
   
   
