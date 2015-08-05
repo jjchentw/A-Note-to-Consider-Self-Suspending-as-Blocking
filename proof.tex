@@ -38,7 +38,7 @@ Up to here, the proof is basically similar to the proof of the critical instant 
 In each iteration, we will define $t_j$ for task $\tau_j$, starting from $j=k-1, k-2, \ldots, 1$, in the revised schedule. Let $y$ be the release time of the job (arrived before $t_{j+1}$) of task $\tau_j$ that has not yet finished at time $t_{j+1}$. There are a few cases:
 \begin{itemize}
 \item There is no such a job of task $\tau_j$: Removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma \ref{lemma:remove-lower-priority}. Therefore, we simply set $t_j$ to $t_{j+1}$ and remove all the jobs of task $\tau_j$ arrived before $t_{j+1}$ in the schedule
-\item There is such a job of task $\tau_j$ with $y < t_{j+1}$:  Removing all the jobs of task $\tau_j$ arrived before $y$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma \ref{lemma:remove-lower-priority}. Therefore, we remove all the jobs of task $\tau_j$ arrived before $y$ in the schedule. There are two subcases:
+\item There is such a job of task $\tau_j$ with $y < t_{j+1}$:  Removing all the jobs of task $\tau_j$ arrived before $y$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma \ref{lemma:remove-lower-priority} and the assumption that the worst-case response time of task $\tau_j$ is at most $T_j$. Therefore, we remove all the jobs of task $\tau_j$ arrived before $y$ in the schedule. There are two subcases:
 \begin{itemize}
 \item If task $\tau_j$ is in ${\bf T}_1$, i.e., $S_j < C_j$: For such a case, we set $t_{j}$ to $y$. Moreover, we also know that the maximum idle time of the system is at most $S_j$ from $t_j$ to $t_{j+1}$
 \item If task $\tau_j$ is in ${\bf T}_2$, i.e., $S_j \geq C_j$: For such a case, we set $t_{j}$ to $t_{j+1}$. Let $C_j'$ be the remaining execution time for the job of task $\tau_j$, unfinished at time $t_j$. We know that $C_j'$ is at most $C_j$. Here, we remove the job of task $\tau_j$ arrived at time $y$ and release a new job with execution time $C_j'$  at time $t_j$ with the same priority level of task $\tau_j$. Clearly, this has no impact on the execution of the higher-priority jobs executed after $t_j$.
@@ -66,6 +66,7 @@ Since $\rho-t_k \leq \rho-t_1$, we can reach the conclusion that the minimum $t$
   
   
 
+  
   
   
   
