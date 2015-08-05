@@ -45,7 +45,7 @@ In each iteration, we will define $t_j$ as the \emph{release time} of the first 
 
 The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$. Let $b_i$ be $min(S_i, C_i)$. Moreover, we can see that
 \[
-\forall t_j < t \leq t_{j+1}  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i > t.
+\forall t_j < t \leq t_{j+1},\qquad  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i > t.
 \]
 
 \end{itemize}
@@ -54,6 +54,7 @@ The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We kn
   
   
 
+  
   
   
   
