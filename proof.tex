@@ -31,9 +31,7 @@ According to the above definitions, we only need to show that $R_k'$ is a safe u
 
 Therefore, for the rest of the proof, we only have to analyze the response time of a job of task $\tau_k'$ released at time $z$, in which all the other jobs of task $\tau_k'$ and other lower priority jobs are removed. Suppose that this job of task $\tau_k$ has a response time $\rho$ in the above schedule. This means that the system is busy for executing the higher-priority tasks or the job of task $\tau_k'$ from $z$ to $z+\rho$. In the above schedule, let $t_{k}$ be the latest moment before $z$ such that the processor does not run any job. That is, from $t_k$ to $z$, certain higher-priority tasks are executed by the processor. Apparently, we can change the release time of the job of task $\tau_k'$ to $t_k$. The response time of the job becomes $\rho+z-t_k \geq \rho$. 
 
-Up to here, the proof is very similar to the proof of the critical instant theorem of the ordinary sporadic real-time task systems. However, for self-suspending task systems, we need to consider that a job of task $\tau_i$ suspends itself before $t_k$ and resumes after $t_k$.  Fortunately, each higher-priority task only has such a job due to the assumption that the higher-priority tasks can finish before their periods. 
-
-However, analyzing the workload of such \emph{carry-in} jobs due to self-suspension is non-trivial. One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. 
+Up to here, the proof is very similar to the proof of the critical instant theorem of the ordinary sporadic real-time task systems. However, for self-suspending task systems, we need to consider that a job of task $\tau_i$ suspends itself before $t_k$ and resumes after $t_k$.  Fortunately, each higher-priority task only has such a so-called \emph{carry-in} job due to the assumption that the higher-priority tasks can finish before their periods. However, analyzing the workload of such carry-in jobs due to self-suspension is non-trivial. One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. 
 
 
 In each iteration, we will define $t_j$ as the \emph{release time} of the first job of task $\tau_j$, starting from $j=k-1, k-2, \ldots, 1$, in the revised schedule. Let $y$ be the release time of the job of task $\tau_j$ that has no finished at time $t_{j+1}$. There are a few cases:
@@ -50,6 +48,7 @@ In each iteration, we will define $t_j$ as the \emph{release time} of the first 
   
   
 
+  
   
   
   
