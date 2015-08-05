@@ -3,7 +3,7 @@
 
 This section provides the proof to support the correctness of the test in Eq. \eqref{eq:TDA-suspension}. First, it should be easy to see that we can convert the suspension time of task $\tau_k$ into computation. This has been done by many researchers, e.g., the proof in Lemma 3 in the paper by Liu and Chen \cite{Liu_2014}, Nelissen et al. \cite{ecrts15nelissen}, etc. The remaining part is to show that the additional interference due to self-suspension from a higher-priority task $\tau_i$ is at most $b_i=min(C_i, S_i)$. The interference to be at most $C_i$ has been provided in the literature as well, e.g., \cite{Rajkumar_1990}\cite{Liu_2014}. However, the argument about blocking task $\tau_k$ due to a higher-priority task $\tau_i$ by at most $S_i$ amount of time is not very clear. 
 
-We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof of the critical instant theorem of the ordinary sporadic task system. From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. Our analysis is also based on a very simple observation as follows:
+From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. Our analysis is also based on a very simple observation as follows:
 \begin{lemma}
 \label{lemma:remove-lower-priority}
   For a schedule, based on preemptive fixed-priority scheduling, removing a lower-priority job arrived at time $t$ does not change the schedule for executing the higher-priority jobs after time $t$.
@@ -19,6 +19,7 @@ We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar
   The removal of the job of task $\tau_i$ has no impact on the higher-priority jobs as in Lemma \ref{lemma:remove-lower-priority}. Since the worst-case response time of task $\tau_i$ is no more than the period, the execution of the other jobs of task $\tau_i$ is also not affected by the removal of the job.
 \end{proof}
 
+We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof of the critical instant theorem of the ordinary sporadic task system.
 Let $R_k'$ be the minimum $t > 0$ such that  $C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i = t$, i.e., Eq. \ref{eq:TDA-suspension} holds. The following lemma shows that $R_k'$ is a safe upper bound if the worst-case response time of task $\tau_k'$ is no more than $T_k$.
 
 \begin{lemma}
@@ -65,6 +66,7 @@ Since $\rho-t_k \leq \rho-t_1$, we can reach the conclusion that the minimum $t$
   
   
 
+  
   
   
   
