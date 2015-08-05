@@ -43,7 +43,7 @@ Up to here, the proof is very similar to the proof of the critical instant theor
 
 However, analyzing the workload of such \emph{carry-in} jobs due to self-suspension is non-trivial. One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. 
 
-Suppose that $F=|{\bf T}_1|$ and these $F$ tasks are indexed from $1, 2, 3, \ldots, F$. In the $i$-th iteration, we will define $t_i$ as the \emph{release time} of the first job of task $\tau_{F+1-i}$ in the revised schedule. 
+Suppose that $F=|{\bf T}_1|$ and these $F$ tasks are indexed from $1, 2, 3, \ldots, F$. In each iteration, we will define $t_j$ as the \emph{release time} of the first job of task $\tau_j$, starting from $j=F, F-1, F-2, \ldots, 1$, in the revised schedule. For notational brevity, we set $t_{F+1}$ as $t_k$. Let $y$ be the release time of the job of task $\tau_j$ that has no finished at time $t_{j+1}$. If there is no such a job of task $\tau_j$, we simply set $t_j$ to $t_{j+1}$. Otherwise, we set $t_j$ to $x$. For such a case, we also know that the maximum idle time of the system is at most $S_j$ from $t_j$ to $t_{j+1}$. At the end of the iteration for handling task $\tau_j$, all the jobs of task $\tau_j$ arriving before $t_j$ are removed from the schedule. By Lemma \ref{lemma:remove-lower-priority}, removing these jobs have no impact on the execution of the higher priority tasks. 
 
 
 
@@ -54,6 +54,7 @@ Suppose that $F=|{\bf T}_1|$ and these $F$ tasks are indexed from $1, 2, 3, \ldo
   
   
 
+  
   
   
   
