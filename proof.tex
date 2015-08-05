@@ -43,7 +43,10 @@ In each iteration, we will define $t_j$ as the \emph{release time} of the first 
 \item If task $\tau_j$ is in ${\bf T}_2$, i.e., $S_j \geq C_j$: For such a case, we set $t_{j}$ to $t_{j+1}$. Let $C_j'$ be the remaining execution time for the job of task $\tau_j$, unfinished at time $t_j$. We know that $C_j'$ is at most $C_j$. Here, we remove the job of task $\tau_j$ arrived at time $y$ and release a new job with execution time $C_j'$  at time $t_j$ with the same priority level of task $\tau_j$. Clearly, this has no impact on the execution of the higher-priority jobs executed after $t_j$.
 \end{itemize}
 
-The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$. 
+The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$. Let $b_i$ be $min(S_i, C_i)$. Moreover, we can see that
+\[
+\forall t_j < t \leq t_{j+1}  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i > t.
+\]
 
 \end{itemize}
  
@@ -51,6 +54,7 @@ The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We kn
   
   
 
+  
   
   
   
