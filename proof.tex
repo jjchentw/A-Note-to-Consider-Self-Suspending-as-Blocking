@@ -46,17 +46,23 @@ In each iteration, we will define $t_j$ as the \emph{release time} of the first 
  
 The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$. Let $b_i$ be $min(S_i, C_i)$. Moreover, we can see that for $j=1,2,\ldots,k-1$
 \[
-\forall t_j < t \leq t_{j+1},\qquad  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i > t.
+\forall t_j < t \leq t_{j+1},\qquad  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i > t-t_1.
 \]
 By further considering the time interval from $t_k$ to $z+\rho$, we have
 \[
-\forall t_k < t < z+\rho,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t- t_i}{T_i} } C_i > t.
+\forall t_k < t < z+\rho,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t- t_i}{T_i} } C_i > t-t_1.
+\]
+
+By the fact $t_i \leq t_k$ for $i=1,2,\ldots,k-1$, we know that $\ceiling{\frac{t- t_i}{T_i} } \geq \ceiling{\frac{t- t_k}{T_i} }$. Therefore, we know that 
+\[
+\forall 0 < t < z+\rho-t_k, C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t}{T_i} } C_i > t.
 \]
 
 \end{proof}
   
   
 
+  
   
   
   
