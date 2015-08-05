@@ -16,7 +16,7 @@ We now classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and $
 Consider the following schedule:
 \begin{itemize}
 \item Task $\tau_k'$ releases a job at time $t$.
-\item A higher priority task $\tau_i$ in ${\bf T}_1$ releases a job at time $t$, in which the suspension time of this job is converted to computation time.
+\item A higher priority task $\tau_i$ in ${\bf T}_1$ releases a job at time $t$, in which the execution time of this job is $C_i+S_i$.
 \item A higher priority task $\tau_i$ in ${\bf T}_2$ releases a job at time $t$, in which the execution time of this job is $2C_i$.
 \item All the subsequent higher-priority jobs are released as early as possible by respecting to their periods. All these jobs are executed with their worst-case execution times and do not suspend themselves at all.
 \end{itemize}
@@ -40,6 +40,7 @@ Up to here, the proof is very similar to the proof of the critical instant theor
   
   
 
+  
   
   
   
