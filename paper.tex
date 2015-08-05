@@ -22,7 +22,7 @@ jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
 Here, in this report, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling on a single processor, in which each task is assigned with a unique priority level. We assume that the priority assignment is given.
 
-We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$.  We assume that the priority ordering is given, and the task with a smaller index has higher priority, i.e., task $\tau_i$ is with a higher-priority level than task $\tau_{i+1}$. Task $\tau_1$ is the highest-priority task in the task system. When performing schedulability analysis of task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. We also classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$. 
+We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. The task with a smaller index has higher priority, i.e., task $\tau_i$ is with a higher-priority level than task $\tau_{i+1}$. Task $\tau_1$ is the highest-priority task in the task system. When performing schedulability analysis of task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. We also classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$. 
 
 \section{Liu's Analysis}
 
@@ -45,6 +45,7 @@ With the above argument, a constrained-deadline task $\tau_k$ can be feasibly sc
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
+  
   
   
   
