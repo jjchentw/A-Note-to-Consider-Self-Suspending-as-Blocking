@@ -21,9 +21,7 @@ jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
 Here, in this report, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling, in which each task is assigned with a unique priority level. We assume that the priority ordering is given.
 
-We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks than task $\tau_k$. When performing schedulability analysis of task $\tau_k$, we do not need how the $k-1$ tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, are indexed. But we need the assumption that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. 
-
-For notational brevity, the $k-1$ higher-priority tasks 
+We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks than task $\tau_k$. When performing schedulability analysis of task $\tau_k$, we do not need how the $k-1$ tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, are indexed. But we need the assumption that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines.  We now classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$. Moreover, we index the tasks in ${\bf T}_1$ as $\tau_1, \tau_2, \ldots, \tau_{|{\bf T}_1|}$ and the remaining tasks in ${\bf T}_2$ as $\tau_{|{\bf T}_1|+1}, \tau_{|{\bf T}_1|+2}, \ldots, \tau_{k-1}$.
 
 \section{Liu's Analysis}
 
@@ -46,6 +44,7 @@ With the above argument, a constrained-deadline task $\tau_k$ can be feasibly sc
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
+  
   
   
   
