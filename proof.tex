@@ -54,15 +54,16 @@ By further considering the time interval from $t_k$ to $z+\rho$, we have
 \forall t_k < t < z+\rho,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t- t_i}{T_i} } C_i > t-t_1.
 \]
 
-By the fact $t_i \geq t_1$ for $i=1,2,\ldots,k-1$, we know that $\ceiling{\frac{t- t_i}{T_i} } \leq \ceiling{\frac{t- t_1}{T_i} }$. Therefore, we know that
+By the fact $t_i \geq t_1$ for $i=1,2,\ldots,k$, we know that $\ceiling{\frac{t- t_i}{T_i} } \leq \ceiling{\frac{t- t_1}{T_i} }$. Therefore, we know that
 \[
 \forall 0 < t < z+\rho-t_1, C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t}{T_i} } C_i > t.
 \]
-
+Since $z+\rho-t_k \leq z+\rho-t_1$, we can reach the conclusion that the minimum $t$ such that $C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t}{T_i} } C_i \leq t$ is a safe upper bound of the response time of task $\tau_k'$ if its worst-case response time is no more than $T_k$.
 \end{proof}
   
   
 
+  
   
   
   
