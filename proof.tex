@@ -31,7 +31,7 @@ According to the above definitions, we only need to show that $R_k'$ is a safe u
 
 Therefore, for the rest of the proof, we only have to analyze the response time of a job of task $\tau_k'$ released at time $z$, in which all the other jobs of task $\tau_k'$ and other lower priority jobs are removed. Suppose that this job of task $\tau_k$ finishes at time $\rho$ in the above schedule. This means that the system is busy for executing the higher-priority tasks or the job of task $\tau_k'$ from $z$ to $\rho$. In the above schedule, let $t_{k}$ be the latest moment before $z$ such that the processor does not run any job. That is, from $t_k$ to $z$, certain higher-priority tasks are executed by the processor. Apparently, we can change the release time of the job of task $\tau_k'$ to $t_k$. The response time of the job becomes $\rho-t_k \geq \rho-z$. 
 
-Up to here, the proof is very similar to the proof of the critical instant theorem of the ordinary sporadic real-time task systems. However, for self-suspending task systems, we need to consider that a job of task $\tau_i$ suspends itself before $t_k$ and resumes after $t_k$.  Fortunately, each higher-priority task only has such a so-called \emph{carry-in} job due to the assumption that the higher-priority tasks can finish before their periods. However, analyzing the workload of such carry-in jobs due to self-suspension is non-trivial. One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. 
+Up to here, the proof is basically similar to the proof of the critical instant theorem of the ordinary sporadic real-time task systems. However, for self-suspending task systems, we need to consider that a job of task $\tau_i$ suspends itself before $t_k$ and resumes after $t_k$.  Fortunately, each higher-priority task only has such a so-called \emph{carry-in} job due to the assumption that the higher-priority tasks can finish before their periods. However, analyzing the workload of such carry-in jobs due to self-suspension is non-trivial. One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. For the simplicity of presentation, let $J_i$ be the carry-in job of task $\tau_i$ at time $t_k$.
 
 
 In each iteration, we will define $t_j$ for task $\tau_j$, starting from $j=k-1, k-2, \ldots, 1$, in the revised schedule. Let $y$ be the release time of the job (arrived before $t_{j+1}$) of task $\tau_j$ that has not yet finished at time $t_{j+1}$. There are a few cases:
@@ -44,7 +44,9 @@ In each iteration, we will define $t_j$ for task $\tau_j$, starting from $j=k-1,
 \end{itemize}
 \end{itemize}
  
-The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$. Moreover, we can see that for $j=1,2,\ldots,k-1$
+The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. After each iteration for setting $t_j$, we can reduce the schedule by removing some jobs without affecting the schedule of the carry-in $J_j$. (Note that $J_j$ is defined as the carry-in job of task $\tau_j$ at time $t_k$.) Therefore, the reduced schedule after the above procedure does not change the execution of $J_j$ after time $t_j$ if $\tau_j$ is in ${\bf T}_1$. For a task $\tau_j$ in ${\bf T}_2$, its corresponding carry-in job $J_j$ may be changed, but its execution after $t_i$ remains identical as in the original schedule. 
+
+Therefore, the resulting schedule above does not change any execution behavior of the (at most) $k-1$ carry-in jobs at time $t_k$. Now, it is time to look at the property of the above schedule after removing the unnecessary jobs. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$. More precisely, for $j=1,2,\ldots,k-1$
 \[
 \forall t_j < t \leq t_{j+1},\qquad  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i > t-t_1.
 \]
@@ -63,6 +65,7 @@ Since $\rho-t_k \leq \rho-t_1$, we can reach the conclusion that the minimum $t$
   
   
 
+  
   
   
   
