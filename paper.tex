@@ -32,8 +32,9 @@ The critical instant theorem does not work for self-suspending sporadic task mod
 Jane W. S. Liu \cite{Liu:2000:RS:518501} explains a way to handle self-suspending task models by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to self-suspending behavior as a factor of blocking time, denoted as $B_k$ as follows:
 \begin{itemize}
 \item The blocking time contributed from task $\tau_k$ is $S_k$.
-\item A higher-priority task $\tau_i$ can only block the execution of task $\tau_k$ by at most $C_i$ time units. Moreover, if $S_i < C_i$, then the blocking time contributed from task $\tau_i$ is at most $S_i$. Therefore, the contribution of a higher-priority task $\tau_i$  to $B_k$ is at most $b_i=min(C_i, S_i)$.
+\item A higher-priority task $\tau_i$ can only block the execution of task $\tau_k$ by at most $C_i$ time units.
 \end{itemize}
+As a result, if $S_i < C_i$, then the blocking time contributed from task $\tau_i$ is at most $S_i$. Therefore, the contribution of a higher-priority task $\tau_i$  to $B_k$ is at most $b_i=min(C_i, S_i)$.
 Therefore, 
 \begin{equation}
 \label{eq:Bk}
@@ -45,6 +46,7 @@ With the above argument, a constrained-deadline task $\tau_k$ can be feasibly sc
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
+  
   
   
   
