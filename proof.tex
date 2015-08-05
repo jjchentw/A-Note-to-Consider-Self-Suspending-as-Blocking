@@ -1,7 +1,7 @@
 
 \section{Proof of Liu's Analysis}  
 
-This section provides the proof to support the correctness of the test in Eq. \eqref{eq:TDA-suspension}. First, it should be easy to see that we can convert the suspension time of task $\tau_k$ into computation. This has been done by many researchers, e.g., the proof in Lemma 3 in the paper by Liu and Chen \cite{Liu_2014}. The remaining part is to show that the additional interference due to self-suspension from a higher-priority task $\tau_i$ is at most $min(C_i, S_i)$. The interference to be at most $C_i$ has been provided in the literature as well, e.g., \cite{Rajkumar_1990}\cite{Liu_2014}. However, the argument about blocking task $\tau_k$ due to a higher-priority task $\tau_i$ by at most $S_i$ amount of time is not very clear. 
+This section provides the proof to support the correctness of the test in Eq. \eqref{eq:TDA-suspension}. First, it should be easy to see that we can convert the suspension time of task $\tau_k$ into computation. This has been done by many researchers, e.g., the proof in Lemma 3 in the paper by Liu and Chen \cite{Liu_2014}. The remaining part is to show that the additional interference due to self-suspension from a higher-priority task $\tau_i$ is at most $b_i=min(C_i, S_i)$. The interference to be at most $C_i$ has been provided in the literature as well, e.g., \cite{Rajkumar_1990}\cite{Liu_2014}. However, the argument about blocking task $\tau_k$ due to a higher-priority task $\tau_i$ by at most $S_i$ amount of time is not very clear. 
 
 We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof of the critical instant theorem of the ordinary sporadic task system. From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. Our analysis is also based on a very simple observation as follows:
 \begin{lemma}
@@ -44,7 +44,7 @@ In each iteration, we will define $t_j$ as the \emph{release time} of the first 
 \end{itemize}
 \end{itemize}
  
-The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$. Let $b_i$ be $min(S_i, C_i)$. Moreover, we can see that for $j=1,2,\ldots,k-1$
+The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$. Moreover, we can see that for $j=1,2,\ldots,k-1$
 \[
 \forall t_j < t \leq t_{j+1},\qquad  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i > t-t_1.
 \]
@@ -63,6 +63,7 @@ Since $z+\rho-t_k \leq z+\rho-t_1$, we can reach the conclusion that the minimum
   
   
 
+  
   
   
   
