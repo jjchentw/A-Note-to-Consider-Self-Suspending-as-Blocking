@@ -38,15 +38,24 @@ Let the response time of the job of task $\tau_k'$ released at time $t$ in the a
 According to the above definitions, we only need to show that $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ by converting the suspension time of task $\tau_k$ as computation. We consider a given schedule in the task system with $\tau_1, \tau_2, \ldots, \tau_k', \tau_{k1+}, \ldots$. Since we consider fixed-priority preemptive scheduling, we can safely remove all the lower priority tasks without changing any execution pattern of the higher-priority tasks by Lemma \ref{lemma:remove-lower-priority}. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, there is no impact on the schedule of a job of task $\tau_k'$ if all the other jobs of task $\tau_k'$ are removed, as shown in Lemma \ref{lemma:remove-same-task}. 
 
 
-Therefore, for the rest of the proof, we only have to analyze the response time of a job of task $\tau_k'$ released at time $t_k$, in which all the other jobs of task $\tau_k'$ and other lower priority jobs are removed. Suppose that the job has a response time $\rho$ in the above schedule. This means that the system is busy for executing the higher-priority tasks or the job of task $\tau_k'$ from $t_k$ to $t_k+\rho$. In the above schedule, let $t_{-1}$ be the latest moment before $t_k$ such that the processor does not run any job. That is, from $t_{-1}$ to $t_k$, certain higher-priority tasks are executed by the processor. Apparently, we can change the release time of the job of task $\tau_k'$ to $t_{-1}$. The response time of the job becomes $\rho+t_k-t_{-1} \geq \rho$. 
+Therefore, for the rest of the proof, we only have to analyze the response time of a job of task $\tau_k'$ released at time $z$, in which all the other jobs of task $\tau_k'$ and other lower priority jobs are removed. Suppose that the job has a response time $\rho$ in the above schedule. This means that the system is busy for executing the higher-priority tasks or the job of task $\tau_k'$ from $z$ to $z+\rho$. In the above schedule, let $t_{k}$ be the latest moment before $t_k$ such that the processor does not run any job. That is, from $t_k$ to $z$, certain higher-priority tasks are executed by the processor. Apparently, we can change the release time of the job of task $\tau_k'$ to $t_k$. The response time of the job becomes $\rho+z-t_k \geq \rho$. 
 
-Up to here, the proof is very similar to the proof of the critical instant theorem of the ordinary sporadic real-time task systems. However, for self-suspending task systems, we need to consider that a job of task $\tau_i$ suspends itself before $t_{-1}$ and resumes after $t_{-1}$.  Fortunately, each higher-priority task only has such a job due to the assumption that the higher-priority tasks can finish before their periods. 
+Up to here, the proof is very similar to the proof of the critical instant theorem of the ordinary sporadic real-time task systems. However, for self-suspending task systems, we need to consider that a job of task $\tau_i$ suspends itself before $t_k$ and resumes after $t_k$.  Fortunately, each higher-priority task only has such a job due to the assumption that the higher-priority tasks can finish before their periods. 
+
+However, analyzing the workload of such \emph{carry-in} jobs due to self-suspension is non-trivial. One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. 
+
+Suppose that $F=|{\bf T}_1|$ and these $F$ tasks are indexed from $1, 2, 3, \ldots, F$. In the $i$-th iteration, we will define $t_i$ as the \emph{release time} of the first job of task $\tau_{k-i}$ in the revised schedule. 
+
+
+
+
 
 
 \end{proof}
   
   
 
+  
   
   
   
