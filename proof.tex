@@ -13,7 +13,7 @@ From the above discussions, we can greedily convert the suspension time of task 
 \end{proof}
 \begin{lemma}
 \label{lemma:remove-same-task}
-  For a schedule, based on preemptive fixed-priority scheduling, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ arriving at time $t$ does not change the schedule for the remaining jobs of task $\tau_i$.
+  For a schedule, based on preemptive fixed-priority scheduling, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ arrived at time $t$ does not change the schedule for the remaining jobs of task $\tau_i$.
 \end{lemma}
 \begin{proof}
   The removal of the job of task $\tau_i$ has no impact on the higher-priority jobs as in Lemma \ref{lemma:remove-lower-priority}. Since the worst-case response time of task $\tau_i$ is no more than the period, the execution of the other jobs of task $\tau_i$ is also not affected by the removal of the job.
@@ -37,7 +37,7 @@ Up to here, the proof is basically similar to the proof of the critical instant 
 
 In each iteration, we will define $t_j$ for task $\tau_j$, starting from $j=k-1, k-2, \ldots, 1$, in the revised schedule. Let $y$ be the release time of the job (arrived before $t_{j+1}$) of task $\tau_j$ that has not yet finished at time $t_{j+1}$. There are a few cases:
 \begin{itemize}
-\item There is no such a job of task $\tau_j$: Removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma \ref{lemma:remove-lower-priority}. Therefore, we simply set $t_j$ to $t_{j+1}$ and remove all the jobs of task $\tau_j$ arriving before $t_{j+1}$ in the schedule
+\item There is no such a job of task $\tau_j$: Removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma \ref{lemma:remove-lower-priority}. Therefore, we simply set $t_j$ to $t_{j+1}$ and remove all the jobs of task $\tau_j$ arrived before $t_{j+1}$ in the schedule
 \item There is such a job of task $\tau_j$ with $y < t_{j+1}$:  Removing all the jobs of task $\tau_j$ arrived before $y$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma \ref{lemma:remove-lower-priority}. Therefore, we remove all the jobs of task $\tau_j$ arrived before $y$ in the schedule. There are two subcases:
 \begin{itemize}
 \item If task $\tau_j$ is in ${\bf T}_1$, i.e., $S_j < C_j$: For such a case, we set $t_{j}$ to $y$. Moreover, we also know that the maximum idle time of the system is at most $S_j$ from $t_j$ to $t_{j+1}$
@@ -66,6 +66,7 @@ Since $\rho-t_k \leq \rho-t_1$, we can reach the conclusion that the minimum $t$
   
   
 
+  
   
   
   
