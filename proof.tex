@@ -6,8 +6,11 @@ This section provides the proof to support the correctness of the test in Eq. \e
 We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof of the critical instant theorem of the ordinary sporadic task system. From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. Our analysis is also based on a very simple observation as follows:
 \begin{lemma}
 \label{lemma:remove-lower-priority}
-  For a schedule, based on fixed-priority scheduling, removing a lower-priority job arrived at time $t$ does not change the execution of the higher-priority jobs after time $t$.
+  For a schedule, based on preemptive fixed-priority scheduling, removing a lower-priority job arrived at time $t$ does not change the schedule for executing the higher-priority jobs after time $t$.
 \end{lemma}
+\begin{proof}
+  This is due to the preemptive scheduling. The removal of the lower-priority job has no impact at all on the higher-priority jobs.
+\end{proof}
 
 We now classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$.
 Consider the following schedule:
@@ -37,6 +40,7 @@ Up to here, the proof is very similar to the proof of the critical instant theor
   
   
 
+  
   
   
   
