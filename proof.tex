@@ -3,7 +3,11 @@
 
 This section provides the proof to support the correctness of the test in Eq. \eqref{eq:TDA-suspension}. First, it should be easy to see that we can convert the suspension time of task $\tau_k$ into computation. This has been done by many researchers, e.g., the proof in Lemma 3 in the paper by Liu and Chen \cite{Liu_2014}. The remaining part is to show that the additional interference due to self-suspension from a higher-priority task $\tau_i$ is at most $min(C_i, S_i)$. The interference to be at most $C_i$ has been provided in the literature as well, e.g., \cite{Rajkumar_1990}\cite{Liu_2014}. However, the argument about blocking task $\tau_k$ due to a higher-priority task $\tau_i$ by at most $S_i$ amount of time is not very clear. 
 
-We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof of the critical instant theorem of the ordinary sporadic task system. From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. 
+We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof of the critical instant theorem of the ordinary sporadic task system. From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. Our analysis is also based on a very simple observation as follows:
+\begin{lemma}
+\label{lemma:remove-lower-priority}
+  For a schedule, based on fixed-priority scheduling, removing a lower-priority job arrived at time $t$ does not change the execution of the higher-priority jobs after time $t$.
+\end{lemma}
 
 We now classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$.
 Consider the following schedule:
@@ -33,6 +37,7 @@ Up to here, the proof is very similar to the proof of the critical instant theor
   
   
 
+  
   
   
   
