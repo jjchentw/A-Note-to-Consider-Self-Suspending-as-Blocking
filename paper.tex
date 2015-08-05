@@ -19,9 +19,11 @@ of each such job, i.e., $d_{i,j}=r_{i,j}+D_i$. The worst-case response
 time of a task $\tau_i$ is the maximum response time among all its
 jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
-Here, in this report, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling, in which each task is assigned with a unique priority level. We assume that the priority ordering is given, and the task with a smaller index has higher priority, i.e., task $\tau_i$ is with a higher-priority level than task $\tau_{i+1}$. Task $\tau_1$ is the highest-priority task in the task system.
+Here, in this report, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling, in which each task is assigned with a unique priority level. We assume that the priority ordering is given.
 
-We will focus on the analysis of task $\tau_k$ under the assumption that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. 
+We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks than task $\tau_k$. When performing schedulability analysis of task $\tau_k$, we do not need how the $k-1$ tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, are indexed. But we need the assumption that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. 
+
+For notational brevity, the $k-1$ higher-priority tasks 
 
 \section{Liu's Analysis}
 
@@ -44,5 +46,6 @@ With the above argument, a constrained-deadline task $\tau_k$ can be feasibly sc
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
+  
   
   
