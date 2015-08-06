@@ -1,6 +1,8 @@
 \section{Introduction}
 
-This report presents a proof to support the correctness of the schedulability test for self-suspending real-time task systems by Jane W. S. Liu in the textbook \cite{Liu:2000:RS:518501}. Since there was no proof in the book, this report provides the reasoning of the correctness.  
+This report presents a proof to support the correctness of the
+schedulability test for self-suspending real-time task systems by Jane
+W. S. Liu in the textbook \cite{Liu:2000:RS:518501}, since the proof was not provided in the textbook.
 
 We define the
 terminologies as follows:  A sporadic task
@@ -22,19 +24,19 @@ jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
 Here, in this report, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling on a single processor, in which each task is assigned with a unique priority level. We assume that the priority assignment is given.
 
-We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. The task with a smaller index has higher priority, i.e., task $\tau_i$ is with a higher-priority level than task $\tau_{i+1}$. Task $\tau_1$ is the highest-priority task in the task system. When performing schedulability analysis of task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. We also classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$. 
+We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. The task with a smaller index has higher priority, i.e., task $\tau_i$ is with a higher-priority level than task $\tau_{i+1}$. When performing schedulability analysis of task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. We also classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$. 
 
 \section{Liu's Analysis}
 
 To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we need to in general quantify the worst-case interference of the higher-priority tasks during the execution of a job of task $\tau_k$. In the ordinary sporadic real-time tasks, i.e., $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens when all the higher-priority tasks release a job at the same time and the subsequent jobs as early as possible (by respecting to the periods). 
 
 The critical instant theorem does not work for self-suspending sporadic task models.  
-Jane W. S. Liu \cite{Liu:2000:RS:518501} explains a way to handle self-suspending task models by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to self-suspending behavior as a factor of blocking time, denoted as $B_k$ as follows:
+Jane W. S. Liu \cite{Liu:2000:RS:518501} explains a way to handle self-suspending task models by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to self-suspending behavior as a factor of blocking time, denoted as $B_k$, as follows:
 \begin{itemize}
 \item The blocking time contributed from task $\tau_k$ is $S_k$.
-\item A higher-priority task $\tau_i$ can only block the execution of task $\tau_k$ by at most $C_i$ time units.
+\item A higher-priority task $\tau_i$ can only block the execution of task $\tau_k$ by at most $min(C_i, S_i)$ time units.
 \end{itemize}
-As a result, if $S_i < C_i$, then the blocking time contributed from task $\tau_i$ is at most $S_i$. Therefore, the contribution of a higher-priority task $\tau_i$  to $B_k$ is at most $b_i=min(C_i, S_i)$.
+%As a result, if $S_i < C_i$, then the blocking time contributed from task $\tau_i$ is at most $S_i$. Therefore, the contribution of a higher-priority task $\tau_i$  to $B_k$ is at most $b_i=min(C_i, S_i)$.
 Therefore, 
 \begin{equation}
 \label{eq:Bk}
