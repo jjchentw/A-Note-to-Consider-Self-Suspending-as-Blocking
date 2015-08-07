@@ -1,0 +1,34 @@
+;; RefTeX parse info file
+;; File: /Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof.tex
+;; User: jjchen (Jian-Jia Chen)
+
+(set reftex-docstruct-symbol '(
+
+
+(xr nil "\\\\\\\\\\\\")
+
+(index-tags)
+
+(is-multi nil)
+
+(bibview-cache)
+
+(master-dir . "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/")
+
+(label-numbers)
+
+(bof "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof.tex")
+
+(toc "toc" "    1 Proof of Liu's Analysis" "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof.tex" nil 2 "1" "\\section{Proof of Liu's Analysis}" 2)
+
+("lemma:remove-lower-priority" "s" "For a schedule, based on preemptive fixed-priority scheduling, removing a lower-priority job arrived" "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof.tex" nil)
+
+("lemma:remove-same-task" "s" "For a schedule, based on preemptive fixed-priority scheduling, if the worst-case response time of ta" "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof.tex" nil)
+
+("theorem:critical" "s" "$R_k'$ is a safe upper bound of the worst-case response time of task $\\tau_k'$ in the self-suspendin" "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof.tex" nil)
+
+("fig:example" "f" "An illustrative example of the proof" "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof.tex" nil)
+
+(eof "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof.tex")
+))
+
