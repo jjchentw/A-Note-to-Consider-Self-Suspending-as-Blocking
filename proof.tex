@@ -13,7 +13,7 @@ From the above discussions, we can greedily convert the suspension time of task 
 \end{proof}
 \begin{lemma}
 \label{lemma:remove-same-task}
-  For a preemptive fixed-priority schedule, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ arrived at time $t$ does not change the schedule for the remaining jobs of task $\tau_i$.
+  For a preemptive fixed-priority schedule, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ does not change the schedule for the remaining jobs of task $\tau_i$.
 \end{lemma}
 \begin{proof}
   The removal of the job of task $\tau_i$ has no impact on the higher-priority jobs as in Lemma \ref{lemma:remove-lower-priority}. Since the worst-case response time of task $\tau_i$ is no more than the period, the execution of the other jobs of task $\tau_i$ is also not affected by the removal of the job.
@@ -27,7 +27,7 @@ Let $R_k'$ be the minimum $t > 0$ such that  $C_k + B_k + \sum_{i=1}^{k-1}\ceili
  $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ in the self-suspending task system if its worst-case response time is no more than $T_k$.
 \end{theorem}
 \begin{proof}
-According to the above definitions, we only need to show that $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ by converting the suspension time of task $\tau_k$ as computation. We consider a given schedule in the task system with $\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots$. Since we consider fixed-priority preemptive scheduling, we can safely remove all the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ without changing any execution behavior of the higher-priority tasks by Lemma \ref{lemma:remove-lower-priority}. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, there is no impact on the schedule of a job of task $\tau_k'$ if all the other jobs of task $\tau_k'$ are removed, as shown in Lemma \ref{lemma:remove-same-task}. 
+According to the above definitions, we only need to show that $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ by converting the suspension time of task $\tau_k$ as computation. We consider a given schedule in the task system with $\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots$. Since we consider fixed-priority preemptive scheduling, we can safely remove all the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ without changing any execution behavior of the higher-priority tasks by Lemma \ref{lemma:remove-lower-priority}. Suppose that the job of task $\tau_k'$ with worst-case response time arrives at time $t_k$ and finishes at time $\rho$. Since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, there is no impact on the schedule of the job of task $\tau_k'$ arrived at time $t_k$ by removing all the other jobs of task $\tau_k'$, as shown in Lemma \ref{lemma:remove-same-task}. 
 
 
 Therefore, for the rest of the proof, we only have to analyze the response time of a job of task $\tau_k'$ released at time $z$, in which all the other jobs of task $\tau_k'$ and other lower priority jobs are removed. Suppose that this job of task $\tau_k'$ finishes at time $\rho$ in the above schedule. This means that the processor is busy for executing the higher-priority tasks or the job of task $\tau_k'$ from $z$ to $\rho$. In the above schedule, let $t_{k}$ be the latest moment before $z$ such that the processor does not run any job. That is, from $t_k$ to $z$, certain higher-priority tasks are executed by the processor. Apparently, we can change the release time of the job of task $\tau_k'$ to $t_k$. The response time of the job becomes $\rho-t_k \geq \rho-z$. 
@@ -88,5 +88,6 @@ to $4+\epsilon$. In the above schedule, the idle time from
 $4+\epsilon$ to $20-\epsilon$ is at most $2 = S_1+S_3$. We have to
 further consider one job of task $\tau_2$ arrived before time $t_1$
 with execution time $C_2$.
+  
   
   
