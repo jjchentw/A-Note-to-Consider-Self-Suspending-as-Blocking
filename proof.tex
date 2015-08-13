@@ -27,13 +27,17 @@ Let $R_k'$ be the minimum $t > 0$ such that  $C_k + B_k + \sum_{i=1}^{k-1}\ceili
  $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ in the self-suspending task system if its worst-case response time is no more than $T_k$.
 \end{theorem}
 \begin{proof}
-According to the above definitions, we only need to show that $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ by converting the suspension time of task $\tau_k$ as computation. We consider a given schedule in the task system with $\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots$. Since we consider fixed-priority preemptive scheduling, we can safely remove all the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ without changing any execution behavior of the higher-priority tasks by Lemma \ref{lemma:remove-lower-priority}. Suppose that the job of task $\tau_k'$ with worst-case response time arrives at time $t_k$ and finishes at time $\rho$. Since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, there is no impact on the schedule of the job of task $\tau_k'$ arrived at time $t_k$ by removing all the other jobs of task $\tau_k'$, as shown in Lemma \ref{lemma:remove-same-task}. 
+According to the above definitions, we only need to show that $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ by converting the suspension time of task $\tau_k$ as computation. We consider a given schedule in the task system with $\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots$. Since we consider fixed-priority preemptive scheduling, we can safely remove all the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ without changing any execution behavior of the higher-priority tasks by Lemma \ref{lemma:remove-lower-priority}. Suppose that the job of task $\tau_k'$ with worst-case response time arrives at time $t_k$ and finishes at time $\rho$. Since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$,  removing all the other jobs of task $\tau_k'$ has no impact on the schedule of the job of task $\tau_k'$ arrived at time $t_k$, as shown in Lemma \ref{lemma:remove-same-task}. 
 
 
-Therefore, for the rest of the proof, we only have to analyze the response time of a job of task $\tau_k'$ released at time $z$, in which all the other jobs of task $\tau_k'$ and other lower priority jobs are removed. Suppose that this job of task $\tau_k'$ finishes at time $\rho$ in the above schedule. This means that the processor is busy for executing the higher-priority tasks or the job of task $\tau_k'$ from $z$ to $\rho$. In the above schedule, let $t_{k}$ be the latest moment before $z$ such that the processor does not run any job. That is, from $t_k$ to $z$, certain higher-priority tasks are executed by the processor. Apparently, we can change the release time of the job of task $\tau_k'$ to $t_k$. The response time of the job becomes $\rho-t_k \geq \rho-z$. 
+Therefore, for the rest of the proof, we only have to consider this \emph{reduced} schedule. In this reduced schedule, the processor is busy for executing the higher-priority tasks or the job of task $\tau_k'$ from $z$ to $\rho$. In the above schedule, let $t_{k}$ be the latest moment before $z$ such that the processor does not run any job. That is, from $t_k$ to $z$, the processor executes certain higher-priority tasks. Apparently, we can change the release time of the job of task $\tau_k'$ to $t_k$. The response time of the job becomes $\rho-t_k \geq \rho-z$. 
 
-Up to here, the proof is basically similar to the proof of the critical instant theorem of the ordinary sporadic real-time task systems. However, for self-suspending task systems, we need to consider that a job of task $\tau_i$ suspends itself before $t_k$ and resumes after $t_k$.  Fortunately, each higher-priority task only has such a so-called \emph{carry-in} job due to the assumption that the higher-priority tasks can finish before their periods. However, analyzing the workload of such carry-in jobs due to self-suspension is non-trivial. One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. For the simplicity of presentation, let $J_i$ be the carry-in job of task $\tau_i$ at time $t_k$.
+Up to here, the proof is basically similar to the proof of the critical instant theorem of the ordinary sporadic real-time task systems. However, for self-suspending task systems, we need to consider that a job of task $\tau_i$ suspends itself before $t_k$ and resumes after $t_k$. Such a job is the so-called \emph{carry-in} job. Fortunately, each higher-priority task has only one carry-in job due to the assumption that the higher-priority tasks are assumed to finish before their periods. However, analyzing the accurate workload of such jobs due to self-suspension is non-trivial. 
+%One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. For the simplicity of presentation, let $J_i$ be the carry-in job of task $\tau_i$ at time $t_k$.
 
+The analysis here has two steps. First, we \emph{extend the window of interest} from $[t_k, \rho)$ to $[t_1, \rho)$ by inspecting the above schedule carefully. The procedure starts from the lowest priority task $\tau_{k-1}$ to the highest priority task $\tau_1$. In each iteration for considering task $\tau_j$, we may extend the window of interest from $[t_{j+1}, \rho)$ to $[t_{j}, \rho)$ with $t_j \leq t_{j+1}$. After each iteration for considering task $\tau_j$, all the jobs of task $\tau_j$ arrived before $t_j$ will be either removed or represented by an artificial job to represent the residual workload (to be detailed later). Second, we \emph{analyze the final reduced schedule} in the window of interest $[t_1, \rho)$ to obtain the properties of the worst-case behaviour.
+
+{\bf Step 1: Extend the Window of Interest} 
 
 In each iteration, we will define $t_j$ for task $\tau_j$, starting from $j=k-1, k-2, \ldots, 1$, in the revised schedule. Let $y$ be the release time of the job (arrived before $t_{j+1}$) of task $\tau_j$ that has not yet finished at time $t_{j+1}$. There are a few cases:
 \begin{itemize}
@@ -46,9 +50,13 @@ In each iteration, we will define $t_j$ for task $\tau_j$, starting from $j=k-1,
 \end{itemize}
  
 The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. After each iteration to set $t_j$, we can reduce the schedule by removing some jobs without affecting the schedule of the carry-in $J_j$. (Note that $J_j$ is defined as the carry-in job of task $\tau_j$ at time $t_k$.) Therefore, the reduced schedule after the above procedure does not change the execution of $J_j$ after time $t_j$ if $\tau_j$ is in ${\bf T}_1$. For a task $\tau_j$ in ${\bf T}_2$, its corresponding carry-in job $J_j$ may be changed, but its execution after $t_j$ remains identical as in the original schedule. 
+Therefore, the resulting schedule above does not change any execution behavior of the (at most) $k-1$ carry-in jobs at time $t_k$.
 
-Therefore, the resulting schedule above does not change any execution behavior of the (at most) $k-1$ carry-in jobs at time $t_k$. Now, it is time to look at the property of the above schedule after removing the unnecessary jobs. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$.  We can simply consider such self-suspension time as \emph{virtual computation}.  More precisely, for any $t$ with  $t_j < t \leq t_{j+1}$ for $j=1,2,\ldots,k-1$, the total amount of idle time plus the \emph{residual workload} of $\tau_i \in {\bf T}_2$ from time $t_1$ to time $t$ is at most $\sum_{i=1}^{j} b_i$. 
-Therefore, for $j=1,2,\ldots,k-1$,
+{\bf Analysis of the Final Reduced Schedule in $[t_1, \rho)$:}
+
+
+Now, it is time to look at the property of the above schedule after removing the unnecessary jobs. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$.  We can simply consider such self-suspension time as \emph{virtual computation}.  More precisely, for any $t$ with  $t_j < t \leq t_{j+1}$ for $j=1,2,\ldots,k-1$, the total amount of idle time plus the \emph{residual workload} of $\tau_i \in {\bf T}_2$ from time $t_1$ to time $t$ is at most $\sum_{i=1}^{j} b_i$. 
+Therefore, for $j=1,2,\ldots,k-1$, by the choice of $t_j$, we know that
 \[
 \forall t_j \leq t < t_{j+1},\qquad  \sum_{i=1}^{j} b_i + \sum_{i=1}^j \ceiling{\frac{t- t_i}{T_i} } C_i >  t-t_1.
 \]
@@ -57,14 +65,14 @@ By further considering the time interval from $t_k$ to $\rho$, we have
 \forall t_k \leq t < \rho,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t- t_i}{T_i} } C_i > t-t_1.
 \]
 
-By the fact $t_i \geq t_1$ for $i=1,2,\ldots,k$, we know that $\ceiling{\frac{t- t_i}{T_i} } \leq \ceiling{\frac{t- t_1}{T_i} }$. Therefore, we know that
+By the fact $t_i \geq t_1$ for $i=1,2,\ldots,k$, we know that $\ceiling{\frac{t- t_i}{T_i} } \leq \ceiling{\frac{t- t_1}{T_i} }$. Therefore, by setting $\theta$ to $t-t_1$ and the above two conditions, we know that
 \[
-\forall 0 < t < \rho-t_1, C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t}{T_i} } C_i > t.
+\forall 0 < \theta < \rho-t_1 , C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{\theta}{T_i} } C_i > \theta.
 \]
-Since $\rho-t_k \leq \rho-t_1$, we can reach the conclusion that the minimum $t$ such that $C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t}{T_i} } C_i \leq t$ is a safe upper bound of the response time of task $\tau_k'$ if its worst-case response time is no more than $T_k$.
+Since $\rho-t_k \leq \rho-t_1$, we can reach the conclusion that the minimum $\theta$ such that $C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{\theta}{T_i} } C_i \leq \theta$ is a safe upper bound of the response time of task $\tau_k'$ if its worst-case response time is no more than $T_k$.
 \end{proof}
   
-To illustrate the above proof, we also provide one example. Consider a task system with the following 4 tasks:
+To illustrate Step 1 in the above proof, we also provide one concrete example. Consider a task system with the following 4 tasks:
 \begin{itemize}
 \item $T_1 = 6, C_1 = 1, S_1 = 1$,
 \item $T_2 = 10, C_2 = 1, S_2 = 6$,
@@ -91,3 +99,8 @@ with execution time $C_2$.
   
   
   
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "authorea_build/authorea_paper.tex"
+%%% End:
