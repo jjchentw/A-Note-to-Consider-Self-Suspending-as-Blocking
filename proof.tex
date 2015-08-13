@@ -52,7 +52,7 @@ In each iteration, we will define $t_j$ for task $\tau_j$, starting from $j=k-1,
 The above construction of $t_{k-1}, t_{k-2}, \ldots, t_1$ is well-defined. After each iteration to set $t_j$, we can reduce the schedule by removing some jobs without affecting the schedule of the carry-in $J_j$. (Note that $J_j$ is defined as the carry-in job of task $\tau_j$ at time $t_k$.) Therefore, the reduced schedule after the above procedure does not change the execution of $J_j$ after time $t_j$ if $\tau_j$ is in ${\bf T}_1$. For a task $\tau_j$ in ${\bf T}_2$, its corresponding carry-in job $J_j$ may be changed, but its execution after $t_j$ remains identical as in the original schedule. 
 Therefore, the resulting schedule above does not change any execution behavior of the (at most) $k-1$ carry-in jobs at time $t_k$.
 
-{\bf Analysis of the Final Reduced Schedule in $[t_1, \rho)$:}
+{\bf Step 2: Analyze the Final Reduced Schedule in $[t_1, \rho)$:}
 
 
 Now, it is time to look at the property of the above schedule after removing the unnecessary jobs. We know that the maximum idle time of the above schedule due to self-suspension from $t_1$ to $t_k$ is at most $\sum_{\tau_i \in {\bf T}_1} S_i$.  We can simply consider such self-suspension time as \emph{virtual computation}.  More precisely, for any $t$ with  $t_j < t \leq t_{j+1}$ for $j=1,2,\ldots,k-1$, the total amount of idle time plus the \emph{residual workload} of $\tau_i \in {\bf T}_2$ from time $t_1$ to time $t$ is at most $\sum_{i=1}^{j} b_i$. 
