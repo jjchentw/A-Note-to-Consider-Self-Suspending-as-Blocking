@@ -13,7 +13,7 @@ From the above discussions, we can greedily convert the suspension time of task 
 \end{proof}
 \begin{lemma}
 \label{lemma:remove-same-task}
-  For a schedule, based on preemptive fixed-priority scheduling, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ arrived at time $t$ does not change the schedule for the remaining jobs of task $\tau_i$.
+  For a schedule, based on preemptive fixed-priority scheduling, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ does not change the schedule for the remaining jobs of task $\tau_i$.
 \end{lemma}
 \begin{proof}
   The removal of the job of task $\tau_i$ has no impact on the higher-priority jobs as in Lemma \ref{lemma:remove-lower-priority}. Since the worst-case response time of task $\tau_i$ is no more than the period, the execution of the other jobs of task $\tau_i$ is also not affected by the removal of the job.
@@ -91,6 +91,7 @@ to $4+\epsilon$. In the above schedule, the idle time from
 $4+\epsilon$ to $20-\epsilon$ is at most $2 = S_1+S_3$. We have to
 further consider one job of task $\tau_2$ arrived before time $t_1$
 with execution time $C_2$.
+  
   
   
   
