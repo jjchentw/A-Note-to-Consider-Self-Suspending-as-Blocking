@@ -18,7 +18,7 @@ We can enumerate all possible configurations of $\vec{x}$.
 Suppose that $S_i \leq \gamma C_i$ for every task $\tau_i \in hp(\tau_k)$. We will present the utilization bounds in this subsection. 
 
 \subsubsection{Simple Test}
-
+We start from the analysis by Liu, which considers the self-suspension time as blocking time for such cases.
 By using the k2U framework, task $\tau_k$ in an implicit deadline system is schedulable by using RM scheduling if
 \[
 (\frac{C_k + S_k}{ T_k}+1+\gamma) \prod_{i=1}^{k-1}(1+U_i) \leq 2+\gamma.
@@ -30,6 +30,10 @@ This gives the immediate utilization bound to find the infimum $\sum_{i=1}^{k} U
 \Rightarrow & \prod_{i=1}^{k}(1+U_i) > \frac{2+\gamma}{1+\gamma}.
 \end{align*}
 Therefore, the utilization bound for a given $0 \leq \gamma \leq 1$  is $\ln(\frac{2+\gamma}{1+\gamma})$.
+
+\subsubsection{Tighter Analysis}
+
+  
   
   
   
