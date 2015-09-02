@@ -15,12 +15,18 @@ By following the proof of Theorem \ref{theorem:critical}, we can also reach a ti
 We can enumerate all possible configurations of $\vec{x}$.
   
 \subsection{Utilization Bounds}
+Suppose that $S_i \leq \gamma C_i$ for every task $\tau_i \in hp(\tau_k)$. We will present the utilization bounds in this subsection. 
 
 \subsubsection{Simple Test}
 
-Suppose that $S_i \leq \gamma C_i$ for every task $\tau_i \in hp(\tau_k)$. Then, task $\tau_k$ in an implicit deadline system is schedulable by using RM scheduling if
+By using the k2U framework, task $\tau_k$ in an implicit deadline system is schedulable by using RM scheduling if
 \[
 (\frac{C_k + S_k}{ T_k}+1+\gamma) \prod_{i=1}^{k-1}(1+U_i) \leq 2+\gamma.
+\]
+That is, $0 < \alpha_i \leq  1+\gamma$ and $0 < \beta_i \leq 1$ for $i=1,2,\ldots,k-1$.
+This gives the immediate utilization bound:
+\[
+
 \]
   
   
