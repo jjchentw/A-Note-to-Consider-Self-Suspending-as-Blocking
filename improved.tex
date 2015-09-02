@@ -1,5 +1,7 @@
 \section{Improved Analysis}
 
+\subsection{Direct Implication}
+
 Let $x_i$ be either $0$ or $1$. We first define $q_i$ as follows:
 \begin{equation}
   \label{eq:qi}
@@ -12,6 +14,14 @@ By following the proof of Theorem \ref{theorem:critical}, we can also reach a ti
 \end{equation}
 We can enumerate all possible configurations of $\vec{x}$.
   
+\subsection{Utilization Bounds}
+
+\subsubsection{Simple Test}
+
+Suppose that $S_i \leq \gamma C_i$ for every task $\tau_i \in hp(\tau_k)$. Then, task $\tau_k$ in an implicit deadline system is schedulable by using RM scheduling if
+\[
+(\frac{C_k + S_k}{ T_k}+1+\gamma) \prod_{i=1}^{k-1}(1+U_i) \leq 2+\gamma.
+\]
   
   
   
