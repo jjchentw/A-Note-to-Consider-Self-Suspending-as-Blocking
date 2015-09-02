@@ -1,0 +1,30 @@
+;; RefTeX parse info file
+;; File: /Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/improved.tex
+;; User: jjchen (Jian-Jia Chen)
+
+(set reftex-docstruct-symbol '(
+
+
+(xr nil "\\\\\\\\\\\\")
+
+(index-tags)
+
+(is-multi nil)
+
+(bibview-cache)
+
+(master-dir . "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/")
+
+(label-numbers ("eq:" . 1))
+
+(bof "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/improved.tex")
+
+(toc "toc" "    1 Improved Analysis" "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/improved.tex" nil 2 "1" "\\section{Improved Analysis}" 1)
+
+("eq:1" "e" nil "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/improved.tex" nil "")
+
+("eq:TDA-suspension-tighter" "e" "\\exists 0 < t \\leq D_k, \\qquad C_k + B_k + \\sum_{i=1}^{k-1}\\ceiling{\\frac{t}{T_i}} C_i \\leq t. " "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/improved.tex" nil)
+
+(eof "/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/improved.tex")
+))
+
