@@ -6,11 +6,12 @@ Let $x_i$ be either $0$ or $1$. We first define $q_i$ as follows:
   q_i = S_i x_i
 \end{equation}
 Let $Q_i$ be $\sum_{j=i}^{k-1} q_j$.  
-By following the proof of Theorem \ref{theorem:critical}, we can also reach a tighter schedulability test as follows: A constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+By following the proof of Theorem \ref{theorem:critical}, we can also reach a tighter schedulability test as follows: For any given assignment $\vec{x} = \{x_1, x_2, \ldots, x_{k-1}\}$, a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
 \begin{equation} \label{eq:TDA-suspension-tighter} 
-\exists 0 < t \leq D_k, \qquad C_k+S_k+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i+(D_i-C_i)\delta_i}{T_i}} C_i \leq t,
+\exists 0 < t \leq D_k, \qquad C_k+S_k+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i+(1-x_i)(D_i-C_i)\delta_i}{T_i}} C_i \leq t,
 \end{equation}
 where $\delta_i$ is $1$ if $S_i > C_i$ and $\delta_i$ is $0$ otherwise.
+  
   
   
   
