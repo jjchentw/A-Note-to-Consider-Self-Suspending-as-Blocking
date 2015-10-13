@@ -1,16 +1,38 @@
 
-\input{/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/preamble}
+\input{../preamble}
 
-\input{/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/header}
+\input{../header}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{sansmath}
+\tikzset{>=latex}
 
 
 \begin{document}
 
-\title{\input{/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/title}}
+\title{A Note to Consider Self-Suspending as Blocking in Real-Time Systems\thanks{This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/).}}
 
-\input{/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/paper}
-\input{/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/proof}
+\author{Jian-Jia Chen\inst{1}, Wen-Hung Huang\inst{1}, and Geoffrey Nelissen\inst{2}}
+\institute{TU Dortmund University, Germany\\
+Email: jian-jia.chen@tu-dortmund.de, wen-hung.huang@tu-dortmund.de
+\and
+CISTER/INESC-TEC, ISEP, Polytechnic Institute of Porto, Portugal \\
+Email: grrpn@isep.ipp.pt
+}
 
-\bibliography{/Users/jjchen/repository/github/2015-Note-Suspension-As-Blocking/bibliography/biblio}{}
+
+\maketitle
+\input{../paper}
+\input{../proof}
+
+\begin{figure}[t]
+  \centering
+  \input{../figures/example/example-body.tex}
+\caption{An illustrative example of the proof.}
+\label{fig:example}  
+\end{figure}
+
+\bibliography{../biblio}{}
 
 \end{document}
