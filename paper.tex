@@ -1,15 +1,14 @@
 \section{Introduction}
 
 This report presents a proof to support the correctness of the
-schedulability test for self-suspending real-time task systems by Jane
-W. S. Liu in the textbook \cite{Liu:2000:RS:518501}, since the proof was not provided in the textbook.
+schedulability test for self-suspending real-time task systems proposed by Jane
+W. S. Liu in her book titled "Real-Time Systems" \cite{Liu:2000:RS:518501}.
 
-We define the
-terminologies as follows:  A sporadic task
+The system model and terminologies are defined as follows:  a sporadic task
 $\tau_i$ is released repeatedly, with each such invocation called a
 job. The $j^{th}$ job of $\tau_i$, denoted $\tau_{i,j}$, is released
 at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
-job of any task $\tau_i$ is assumed to have worst-case execution time $C_i$. Each job of task $\tau_i$ 
+job of any task $\tau_i$ is assumed to have a worst-case execution time $C_i$. Each job of task $\tau_i$ 
 suspends for at most $S_i$ time units (across all of its suspension phases). When a task suspends itself, 
 the processor can execute another task. 
 The response time
@@ -17,21 +16,21 @@ of a job is defined as its finishing time minus its release
 time. Successive jobs of the same task are required to execute in
 sequence. Associated with each task $\tau_i$ are a period (or minimum inter-arrival time) $T_i$, which
 specifies the minimum time between two consecutive job releases of
-$\tau_i$, and a deadline $D_i$, which specifies the relative deadline
-of each such job, i.e., $d_{i,j}=r_{i,j}+D_i$. The worst-case response
-time of a task $\tau_i$ is the maximum response time among all its
+$\tau_i$, and a deadline $D_i$, which specifies the maximum amount of time a job can take to complete its execution after its release, i.e., $d_{i,j}=r_{i,j}+D_i$. The worst-case response
+time $R_i$ of a task $\tau_i$ is the maximum response time among all its
 jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
-Here, in this report, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling on a single processor, in which each task is assigned with a unique priority level. We assume that the priority assignment is given.
+In this report, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling on a single processor, in which each task is assigned with a unique priority level. We assume that the priority assignment is given.
 
-We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. The task with a smaller index has higher priority, i.e., task $\tau_i$ is with a higher-priority level than task $\tau_{i+1}$. When performing schedulability analysis of task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines. We also classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$. 
+%We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. 
+We assume that the tasks are numbered in a decreasing priority order. That is, a task with a smaller index has higher priority than any task with a higher index, i.e., task $\tau_i$ has a higher-priority level than task $\tau_{i+1}$. When performing the schedulability analysis of a specific task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines, i.e., that $R_i \leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$. We also classify the $k-1$ higher-priority tasks into two sets: ${\bf T}_1$ and ${\bf T}_2$. A task $\tau_i$ is in ${\bf T}_1$ if $C_i \geq S_i$; otherwise, it is in ${\bf T}_2$. 
 
 \section{Liu's Analysis}
 
-To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we need to in general quantify the worst-case interference of the higher-priority tasks during the execution of a job of task $\tau_k$. In the ordinary sporadic real-time tasks, i.e., $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens when task $\tau_k$ and all the higher-priority tasks release a job at the same time and the subsequent jobs as early as possible (by respecting to the periods). 
+To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we usually need to quantify the worst-case interference caused by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when $\tau_k$ and all the higher-priority tasks release a job synchronously and the subsequent jobs are released as early as possible (i.e., with a rate equal to their period). 
 
-The critical instant theorem does not work for self-suspending sporadic task models.  
-Jane W. S. Liu \cite{Liu:2000:RS:518501} explains a way to handle self-suspending task models by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to self-suspending behavior as a factor of blocking time, denoted as $B_k$, as follows:
+However, as proven in \cite{}, this definition of the critical instant does not hold for self-suspending sporadic tasks.  
+In \cite{Liu:2000:RS:518501}, Jane W. S. Liu proposes a solution to study the schedulability of self-suspending tasks by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to the self-suspending behavior of the tasks as a blocking time denoted as $B_k$ and defined as follows:
 \begin{itemize}
 \item The blocking time contributed from task $\tau_k$ is $S_k$.
 \item A higher-priority task $\tau_i$ can only block the execution of task $\tau_k$ by at most $b_i=min(C_i, S_i)$ time units.
@@ -43,13 +42,13 @@ Therefore,
 B_k = S_k + \sum_{i=1}^{k-1} b_i.
 \end{equation}
 
-In the textbook \cite{Liu:2000:RS:518501}, the blocking time is then used to perform utilization-based analysis for rate-monotonic scheduling, i.e., if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further reach the following argument. That is, a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic. Namely, it stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
 \begin{equation}
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
   
-However, as there was no proof in the textbook \cite{Liu:2000:RS:518501}, to support the correctness of the above tests, we provide a proof in this report.
+However, as there is no provided proof in \cite{Liu:2000:RS:518501} to support the correctness of the above tests, we present a proof in the next section this report.
   
   
   
