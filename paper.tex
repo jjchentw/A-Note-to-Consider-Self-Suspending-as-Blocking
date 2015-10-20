@@ -29,7 +29,7 @@ We assume that the tasks are numbered in a decreasing priority order. That is, a
 
 To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we usually need to quantify the worst-case interference caused by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when $\tau_k$ and all the higher-priority tasks release a job synchronously and the subsequent jobs are released as early as possible (i.e., with a rate equal to their period). 
 
-However, as proven in \cite{}, this definition of the critical instant does not hold for self-suspending sporadic tasks.  
+However, as proven in \cite{ecrts15nelissen}, this definition of the critical instant does not hold for self-suspending sporadic tasks.  
 In \cite{Liu:2000:RS:518501}, Jane W. S. Liu proposes a solution to study the schedulability of self-suspending tasks by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to the self-suspending behavior of the tasks as a blocking time denoted as $B_k$ and defined as follows:
 \begin{itemize}
 \item The blocking time contributed from task $\tau_k$ is $S_k$.
