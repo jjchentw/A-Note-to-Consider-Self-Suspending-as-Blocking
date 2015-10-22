@@ -1,6 +1,7 @@
+\ifpaper
 \newtheorem{property}{Property}
 \newtheorem{lemma}{Lemma}
-
+\fi
 \section{Proof of Liu's Analysis}  
 
 This section provides the proof to support the correctness of the test in Eq. \eqref{eq:TDA-suspension}. First, it should be easy to see that we can convert the suspension time of task $\tau_k$ into computation. This has been proven in many previous works, e.g., Lemma~3 in \cite{Liu_2014} and Theorem~2 in \cite{ecrts15nelissen}. Yet, it remains to formally prove that the additional interference due to the self-suspension of a higher-priority task $\tau_i$ is upper-bounded by $b_i=min(C_i, S_i)$. The interference to be at most $C_i$ has been provided in the literature as well, e.g., \cite{Rajkumar_1990}\cite{Liu_2014}. However, the argument about blocking task $\tau_k$ due to a higher-priority task $\tau_i$ by at most $S_i$ amount of time is not straightforward. 
@@ -8,7 +9,7 @@ This section provides the proof to support the correctness of the test in Eq. \e
 From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For the sake of notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. Our analysis is also based on very simple properties and lemmas enunciated as follows:
 \begin{property}
 \label{prop:lower-priority}
-In a preemptive fixed-priority schedule, the lower-priority jobs do not impact the schedule the higher-priority jobs.
+In a preemptive fixed-priority schedule, the lower-priority jobs do not impact the schedule of the higher-priority jobs.
 \end{property}
 
 %\begin{lemma}
@@ -28,14 +29,14 @@ Since the worst-case response time of task $\tau_i$ is no more than its period, 
 \end{proof}
 
 We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof of the critical instant theorem of the ordinary sporadic task system.
-Let $R_k'$ be the minimum $t > 0$ such that  $C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i = t$, i.e., Eq. \ref{eq:TDA-suspension} holds. The following lemma shows that $R_k'$ is a safe upper bound if the worst-case response time of task $\tau_k'$ is no more than $T_k$.
+Let $R_k'$ be the minimum $t > 0$ such that  $C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i = t$, i.e., Eq. \eqref{eq:TDA-suspension} holds. The following lemma shows that $R_k'$ is a safe upper bound if the worst-case response time of task $\tau_k'$ is no more than $T_k$.
 
 \begin{theorem}
 \label{theorem:critical}
  $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ in the self-suspending task system if its worst-case response time is no more than $T_k$.
 \end{theorem}
 \begin{proof}
-According to the above definitions, we only need to show that $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ by converting the suspension time of task $\tau_k$ as computation. We consider a given schedule in the task system with $\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots$. Since we consider fixed-priority preemptive scheduling, we can safely remove all the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ without changing any execution behavior of the higher-priority tasks by Lemma \ref{lemma:remove-lower-priority}. Suppose that the job of task $\tau_k'$ with worst-case response time arrives at time $t_k$ and finishes at time $\rho$. Since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$,  removing all the other jobs of task $\tau_k'$ has no impact on the schedule of the job of task $\tau_k'$ arrived at time $t_k$, as stated by Property \ref{prop:lower-priority}. 
+According to the above definitions, we only need to show that $R_k'$ is a safe upper bound of the worst-case response time of task $\tau_k'$ by converting the suspension time of task $\tau_k$ as computation. We consider a given schedule in the task system with $\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots$. Since we consider fixed-priority preemptive scheduling, we can safely remove all the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ without changing any execution behavior of the higher-priority tasks by Property \ref{prop:lower-priority}. Suppose that the job of task $\tau_k'$ with worst-case response time arrives at time $t_k$ and finishes at time $\rho$. Since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$,  removing all the other jobs of task $\tau_k'$ has no impact on the schedule of the job of task $\tau_k'$ arrived at time $t_k$, as stated by Lemma~\ref{lemma:remove-same-task}.
 
 
 Therefore, for the rest of the proof, we only have to consider this \emph{reduced} schedule. In this reduced schedule, the processor is busy for executing the higher-priority tasks or the job of task $\tau_k'$ from $z$ to $\rho$. In the above schedule, let $t_{k}$ be the latest moment before $z$ such that the processor does not run any job. That is, from $t_k$ to $z$, the processor executes certain higher-priority tasks. Apparently, we can change the release time of the job of task $\tau_k'$ to $t_k$. The response time of the job becomes $\rho-t_k \geq \rho-z$. 
@@ -49,8 +50,8 @@ The analysis here has two steps. First, we \emph{extend the window of interest} 
 
 In each iteration, we will define $t_j$ for task $\tau_j$, starting from $j=k-1, k-2, \ldots, 1$, in the revised schedule. Let $y$ be the release time of the job (arrived before $t_{j+1}$) of task $\tau_j$ that has not yet finished at time $t_{j+1}$. There are a few cases:
 \begin{itemize}
-\item There is no such a job of task $\tau_j$: Removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma \ref{lemma:remove-lower-priority}. Therefore, we simply set $t_j$ to $t_{j+1}$ and remove all the jobs of task $\tau_j$ arrived before $t_{j+1}$ in the schedule
-\item There is such a job of task $\tau_j$ with $y < t_{j+1}$:  Removing all the jobs of task $\tau_j$ arrived before $y$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma \ref{lemma:remove-lower-priority} and the assumption that the worst-case response time of task $\tau_j$ is at most $D_j \leq T_j$. Therefore, we remove all the jobs of task $\tau_j$ arrived before $y$ in the schedule. There are two subcases:
+\item There is no such a job of task $\tau_j$: Removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma~\ref{lemma:remove-same-task} and Property \ref{prop:lower-priority}. Therefore, we simply set $t_j$ to $t_{j+1}$ and remove all the jobs of task $\tau_j$ arrived before $t_{j+1}$ in the schedule
+\item There is such a job of task $\tau_j$ with $y < t_{j+1}$:  Removing all the jobs of task $\tau_j$ arrived before $y$ has no impact on the schedule of the higher-priority jobs (higher than $\tau_j$) executed after $t_{j+1}$ by Lemma~\ref{lemma:remove-same-task} and Property \ref{prop:lower-priority} and the assumption that the worst-case response time of task $\tau_j$ is at most $D_j \leq T_j$. Therefore, we remove all the jobs of task $\tau_j$ arrived before $y$ in the schedule. There are two subcases:
 \begin{itemize}
 \item If task $\tau_j$ is in ${\bf T}_1$, i.e., $S_j < C_j$: For such a case, we set $t_{j}$ to $y$. Moreover, we also know that the maximum idle time of the processor from $t_j$ to $t_{j+1}$ is at most $S_j$ since there is no job with priority lower than $\tau_j$ available to be executed before $t_{j+1}$ after we remove the jobs of task $\tau_{j+1}$ in the previous iterations.
 \item If task $\tau_j$ is in ${\bf T}_2$, i.e., $S_j \geq C_j$: For such a case, we set $t_{j}$ to $t_{j+1}$. Let $C_j'$ be the remaining execution time for the job of task $\tau_j$, unfinished at time $t_j$. We know that $C_j'$ is at most $C_j$. Here, we remove the job of task $\tau_j$ arrived at time $y$ and release a new job with execution time $C_j'$  at time $t_j$ with the same priority level of task $\tau_j$. Clearly, this has no impact on the execution of the higher-priority jobs executed after $t_j$. Such an amount of execution time $C_j'$ is called \emph{residual workload} of task $\tau_j$ for the rest of the proof.

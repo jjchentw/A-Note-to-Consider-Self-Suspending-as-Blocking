@@ -9,14 +9,14 @@ $\tau_i$ is released repeatedly, with each such invocation called a
 job. The $j^{th}$ job of $\tau_i$, denoted $\tau_{i,j}$, is released
 at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
 job of any task $\tau_i$ is assumed to have a worst-case execution time $C_i$. Each job of task $\tau_i$ 
-suspends for at most $S_i$ time units (across all of its suspension phases). When a task suspends itself, 
-the processor can execute another task. 
+suspends for at most $S_i$ time units (across all of its suspension phases). When a job suspends itself, 
+the processor can execute another job. 
 The response time
 of a job is defined as its finishing time minus its release
 time. Successive jobs of the same task are required to execute in
 sequence. Associated with each task $\tau_i$ are a period (or minimum inter-arrival time) $T_i$, which
 specifies the minimum time between two consecutive job releases of
-$\tau_i$, and a deadline $D_i$, which specifies the maximum amount of time a job can take to complete its execution after its release, i.e., $d_{i,j}=r_{i,j}+D_i$. The worst-case response
+$\tau_i$, and a relative deadline $D_i$, which specifies the maximum amount of time a job can take to complete its execution after its release, i.e., $d_{i,j}=r_{i,j}+D_i$. The worst-case response
 time $R_i$ of a task $\tau_i$ is the maximum response time among all its
 jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
@@ -42,7 +42,7 @@ Therefore,
 B_k = S_k + \sum_{i=1}^{k-1} b_i.
 \end{equation}
 
-In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic. Namely, it stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
 \begin{equation}
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
