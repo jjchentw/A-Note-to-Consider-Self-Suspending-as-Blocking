@@ -1,20 +1,44 @@
 \section{Improved Analysis}
 
-We first define $q_i$ as follows:
+\subsection{Direct Implication}
+
+Let $x_i$ be either $0$ or $1$. We first define $q_i$ as follows:
 \begin{equation}
   \label{eq:qi}
-  q_i =
-  \begin{cases}
-    S_i & \mbox{ if } S_i \leq C_i\\
-    0 & \mbox{ otherwise }.
-  \end{cases}
+  q_i = S_i x_i
 \end{equation}
 Let $Q_i$ be $\sum_{j=i}^{k-1} q_j$.  
-By following the proof of Theorem \ref{theorem:critical}, we can also reach a tighter schedulability test as follows: A constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+By following the proof of Theorem \ref{theorem:critical}, we can also reach a tighter schedulability test as follows: For any given assignment $\vec{x} = \{x_1, x_2, \ldots, x_{k-1}\}$, a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
 \begin{equation} \label{eq:TDA-suspension-tighter} 
-\exists 0 < t \leq D_k, \qquad C_k+S_k+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i+(D_i-C_i)\delta_i}{T_i}} C_i \leq t,
+\exists 0 < t \leq D_k, \qquad C_k+S_k+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t.
 \end{equation}
-where $\delta_i$ is $1$ if $S_i > C_i$ and $\delta_i$ is $0$ otherwise.
+We can enumerate all possible configurations of $\vec{x}$.
+  
+\subsection{Utilization Bounds}
+Suppose that $S_i \leq \gamma C_i$ for every task $\tau_i \in hp(\tau_k)$. We will present the utilization bounds in this subsection. 
+
+\subsubsection{Simple Test}
+We start from the analysis by Liu, which considers the self-suspension time as blocking time for such cases.
+By using the k2U framework, task $\tau_k$ in an implicit deadline system is schedulable by using RM scheduling if
+\[
+(\frac{C_k + S_k}{ T_k}+1+\gamma) \prod_{i=1}^{k-1}(1+U_i) \leq 2+\gamma.
+\]
+That is, $0 < \alpha_i \leq  1+\gamma$ and $0 < \beta_i \leq 1$ for $i=1,2,\ldots,k-1$.
+This gives the immediate utilization bound to find the infimum $\sum_{i=1}^{k} U_k$ such that
+\begin{align*}
+& (1+\gamma)*(1+U_k) \prod_{i=1}^{k-1}(1+U_i) \geq  (\frac{C_k + S_k}{ T_k}+1+\gamma) \prod_{i=1}^{k-1}(1+U_i) > 2+\gamma.\\
+\Rightarrow & \prod_{i=1}^{k}(1+U_i) > \frac{2+\gamma}{1+\gamma}.
+\end{align*}
+Therefore, the utilization bound for a given $0 \leq \gamma \leq 1$  is $\ln(\frac{2+\gamma}{1+\gamma})$.
+
+\subsubsection{Tighter Analysis}
+
+This is much more involved and requires deeper knowledge of the k2U framework.   
+Now, suppose that $\sum_{i=1}^{k-1} C_i = $ 
+  
+  
+  
+  
   
   
   
