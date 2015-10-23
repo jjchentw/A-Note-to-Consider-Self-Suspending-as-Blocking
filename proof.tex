@@ -7,6 +7,7 @@
 This section provides the proof to support the correctness of the test in Eq. \eqref{eq:TDA-suspension}. First, it should be easy to see that we can convert the suspension time of task $\tau_k$ into computation. This has been proven in many previous works, e.g., Lemma~3 in \cite{Liu_2014} and Theorem~2 in \cite{ecrts15nelissen}. Yet, it remains to formally prove that the additional interference due to the self-suspension of a higher-priority task $\tau_i$ is upper-bounded by $b_i=min(C_i, S_i)$. The interference to be at most $C_i$ has been provided in the literature as well, e.g., \cite{Rajkumar_1990}\cite{Liu_2014}. However, the argument about blocking task $\tau_k$ due to a higher-priority task $\tau_i$ by at most $S_i$ amount of time is not straightforward. 
 
 From the above discussions, we can greedily convert the suspension time of task $\tau_k$ to its computation time. For the sake of notational brevity, let $C_k'$ be $C_k + S_k$. We call this converted version of task $\tau_k$ as task $\tau_k'$. Our analysis is also based on very simple properties and lemmas enunciated as follows:
+
 \begin{property}
 \label{prop:lower-priority}
 In a preemptive fixed-priority schedule, the lower-priority jobs do not impact the schedule of the higher-priority jobs.
