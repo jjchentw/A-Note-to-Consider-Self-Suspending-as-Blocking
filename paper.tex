@@ -42,7 +42,7 @@ Therefore,
 B_k = S_k + \sum_{i=1}^{k-1} b_i.
 \end{equation}
 
-In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it is stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
 \begin{equation}
 \label{eq:TDA-suspension}
 \exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
