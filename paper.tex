@@ -4,8 +4,7 @@ This report presents a proof to support the correctness of the
 schedulability test for self-suspending real-time task systems proposed by Jane
 W. S. Liu in her book titled "Real-Time Systems" \cite{Liu:2000:RS:518501}.
 
-The system model and terminologies are defined as follows:  a sporadic task
-$\tau_i$ is released repeatedly, with each such invocation called a
+The system model and terminologies are defined as follows: We assume a system composed of $n$ sporadic self-suspending tasks. A sporadic task $\tau_i$ is released repeatedly, with each such invocation called a
 job. The $j^{th}$ job of $\tau_i$, denoted $\tau_{i,j}$, is released
 at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
 job of any task $\tau_i$ is assumed to have a worst-case execution time $C_i$. Each job of task $\tau_i$ 
@@ -45,7 +44,7 @@ B_k = S_k + \sum_{i=1}^{k-1} b_i.
 In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it is stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
 \begin{equation}
 \label{eq:TDA-suspension}
-\exists 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
+\exists t \mid 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
   
 However, as there is no proof in \cite{Liu:2000:RS:518501} to support the correctness of the above tests, we present a proof in the next section of this report.
