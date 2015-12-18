@@ -31,7 +31,7 @@ Since the worst-case response time of task $\tau_i$ is no more than its period, 
 \end{proof}
 
 We can prove the correctness of Eq. \eqref{eq:TDA-suspension} by using a similar proof than for the critical instant theorem of the ordinary sporadic task model.
-Let $R_k'$ be the minimum $t$ greater than $0$ such that  Eq. \eqref{eq:TDA-suspension} holds, i.e., $C'_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{R_k'}{T_i}} C_i = R_k'$ and $\forall 0 < t < R_k'$ $C'_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i > t$. The following lemma shows that $R_k'$ is a safe upper bound if the worst-case response time of task $\tau_k'$ is no more than $T_k$.
+Let $R_k'$ be the minimum $t$ greater than $0$ such that  Eq. \eqref{eq:TDA-suspension} holds, i.e., $C'_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{R_k'}{T_i}} C_i = R_k'$ and $\forall 0 < t < R_k'$ $C'_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i > t$. The following theorem shows that $R_k'$ is a safe upper bound if the worst-case response time of task $\tau_k'$ is no more than $T_k$.
 
 \begin{theorem}
 \label{theorem:critical}
@@ -112,7 +112,7 @@ Because there is no job released by lower priority tasks than $\tau_k$ in $\Psi^
 %Consequently, for any time $t$ such that $t_1 < t \leq f_k$, the total amount of idle time and residual workload within $[t_1, t)$ is upper bounded by $\sum_{\tau_i \in {\bf T}_1} S_i + \sum_{\tau_i \in {\bf T}_2} C_i = \sum_{i=1}^{j} b_i$. 
 Therefore, considering the fact that no job of $\tau_j$ is released before $t_j$ in $\Psi^1$ ($j=1,2,\ldots,k$), the workload released by the tasks (by treating the residual workload in ${\bf T}_2$ as released workload as well) within any time interval $[t_1, t)$ in schedule $\Psi^1$ such that $t_1 < t \leq f_k$ is upper bounded by 
 \begin{align*}
-\sum_{i=1}^k \left( c_j(t_j) + \max\{0, \ceiling{\frac{t- t_i}{T_i} } C_i \} \right) & \leq \sum_{\tau_i \in {\bf T}_2} C_i + \sum_{i=1}^k \max\{0, \ceiling{\frac{t- t_i}{T_i} } C_i \},
+\sum_{i=1}^k \left( c_i(t_i) + \max\{0, \ceiling{\frac{t- t_i}{T_i} } C_i \} \right) & \leq \sum_{\tau_i \in {\bf T}_2} C_i + \sum_{i=1}^k \max\{0, \ceiling{\frac{t- t_i}{T_i} } C_i \},
 \end{align*}
 leading to 
 \begin{equation}
