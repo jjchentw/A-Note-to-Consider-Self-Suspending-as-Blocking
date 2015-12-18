@@ -1,0 +1,625 @@
+\documentclass[10pt,conference]{IEEEtran}
+%\documentclass[conference, onecolumn]{IEEEtran}
+%\documentclass[10pt,twocolumn]{article} 
+%\usepackage{latex8}
+%\usepackage{times}
+
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
+
+\renewcommand\thesectiondis{\arabic{section}}
+\renewcommand\thesubsectiondis{\thesectiondis.\arabic{subsection}}
+\renewcommand\thesubsubsectiondis{\thesubsectiondis.\arabic{subsubsection}}
+
+
+\usepackage{verbatim} 
+\usepackage[pdftex]{graphicx}
+\usepackage{setspace}
+\usepackage[cmex10]{amsmath}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{subfig}
+\usepackage{caption}
+%\usepackage[compact]{titlesec}
+%\addtolength{\itemsep}{-0.05in}
+%\usepackage{subcaption}
+\usepackage{paralist}
+\usepackage{cases}
+\usepackage{cite}
+
+\usepackage{tikz}
+
+\usepackage{etoolbox}
+
+\usepackage{color}
+
+\newcommand{\ceiling}[1]{\left\lceil{#1}\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
+\newcommand{\setof}[1]{\left\{{#1}\right\}}
+\newcommand{\set}[2]{\{{#1}\mid{#2}\}}
+
+\newcommand{\jj}[1]{\textcolor{blue}{jj: #1 : endjj}}
+\newcommand{\kh}[1]{\textcolor{magenta}{kevin: #1 : endkevin}}
+\newcommand{\framework}[1]{$\mathbf{k^2U}$}
+\newcommand{\frameworkkq}[1]{$\mathbf{k^2Q}$}
+\newcommand{\Cong}[1]{\textcolor{red}{cong: #1 : endcong}}
+
+
+%%%%%%%%%%%%%%%
+ \def\myendproof{{\ \vbox{\hrule\hbox{%
+   \vrule height1.3ex\hskip0.8ex\vrule}\hrule }}\par}
+ \renewenvironment{proof}{\noindent{\bf Proof. }}{\myendproof}
+%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+ \newenvironment{appProof}[1]{\noindent{\bf Proof of
+     #1. }}{\myendproof\vskip 0.1in}
+ %%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Corollary}{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{claim}{Claim}
+\newtheorem{definition}{Definition}
+\newtheorem{rrule}{Rule}
+\newtheorem{remark}{Remark}
+\newtheorem{observation}{Observation}
+\newtheorem{Property}{Property}
+
+
+\graphicspath{{fig/multiframe/}{fig/arbitrary/}{fig/dag/}} %pdf file searching path
+
+\usetikzlibrary{%
+  arrows,%
+  shapes.misc,% wg. rounded rectangle
+  shapes.arrows,%
+  chains,%
+  matrix,%
+  positioning,% wg. " of "
+  scopes,%
+  decorations.pathmorphing,% /pgf/decoration/random steps | erste Graphik
+  shadows%
+}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+\tikzstyle{materia}=[draw, fill=white, text width=1.0em, text centered,
+  minimum height=4em,drop shadow]
+\tikzstyle{practica} = [materia, text width=18em, minimum width=8em,
+align =left,
+  minimum height=3em, rounded corners, drop shadow]
+\tikzstyle{texto} = [above, text width=6em, text centered]
+\tikzstyle{linepart} = [draw, thick, color=blue!50, -latex', dashed]
+\tikzstyle{line} = [draw, line width = 2pt, color=blue!50, -latex']
+\tikzstyle{ur}=[draw, text centered, minimum height=0.01em]
+
+\bibliographystyle{abbrv} 
+
+\newif\ifpaper
+\paperfalse
+
+
+
+\begin{document}
+
+\title{AAAAA}
+
+\author{Jian-Jia Chen, Wen-Hung Huang, and Geoffrey Nelissen\\
+TU Dortmund University, Germany\\
+Email: jian-jia.chen@tu-dortmund.de, wen-hung.huang@tu-dortmund.de\\
+CISTER/INESC-TEC, ISEP, Polytechnic Institute of Porto, Portugal \\
+Email: grrpn@isep.ipp.pt
+}
+
+\maketitle
+\section{Introduction}
+
+\section{Task Model}
+
+This paper presents a proof to support the correctness of the
+schedulability test for self-suspending real-time task systems proposed by Jane
+W. S. Liu in her book titled "Real-Time Systems" \cite[Pages 164-165]{Liu:2000:RS:518501}.
+The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending behaviour due to synchronization protocols in multiprocessor systems. 
+
+
+The system model and terminologies are defined as follows: We assume a system composed of $n$ sporadic self-suspending tasks. A sporadic task $\tau_i$ is released repeatedly, with each such invocation called a
+job. The $j^{th}$ job of $\tau_i$, denoted $\tau_{i,j}$, is released
+at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
+job of any task $\tau_i$ is assumed to have a worst-case execution time $C_i$. Each job of task $\tau_i$ 
+suspends for at most $S_i$ time units (across all of its suspension phases). When a job suspends itself, 
+the processor can execute another job. 
+The response time
+of a job is defined as its finishing time minus its release
+time. Successive jobs of the same task are required to execute in
+sequence. Associated with each task $\tau_i$ are a period (or minimum inter-arrival time) $T_i$, which
+specifies the minimum time between two consecutive job releases of
+$\tau_i$, and a relative deadline $D_i$, which specifies the maximum amount of time a job can take to complete its execution after its release, i.e., $d_{i,j}=r_{i,j}+D_i$. The worst-case response
+time $R_i$ of a task $\tau_i$ is the maximum response time among all its
+jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
+
+In this paper, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling on a single processor, in which each task is assigned with a unique priority level. We assume that the priority assignment is given.
+
+%We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. 
+We assume that the tasks are numbered in a decreasing priority order. That is, a task with a smaller index has higher priority than any task with a higher index, i.e., task $\tau_i$ has a higher-priority level than task $\tau_{i+1}$. When performing the schedulability analysis of a specific task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines, i.e., that $R_i \leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$. 
+
+\section{Existing Analyses}
+
+To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we usually need to quantify the worst-case interference caused by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when $\tau_k$ and all the higher-priority tasks release a job synchronously and the subsequent jobs are released as early as possible (i.e., with a rate equal to their period).  However, as proven in \cite{ecrts15nelissen}, this definition of the
+critical instant does not hold for self-suspending sporadic tasks.  
+
+\subsection{Model the Back-to-Back Hit as Jitter}
+\label{sec:jitter}
+
+
+A constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+\begin{equation}
+\label{eq:TDA-jitter}
+\exists t \mid 0 < t \leq D_k, \qquad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+D_i-C_i}{T_i}} C_i \leq t.
+\end{equation}
+
+\subsection{Model Suspension Time as Blocking Time}
+
+In \cite[Pages 164-165]{Liu:2000:RS:518501}, Jane W. S. Liu proposed a solution to study the schedulability of self-suspending tasks by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to the self-suspending behavior of the tasks as a blocking time denoted as $B_k$ and defined as follows:
+\begin{itemize}
+\item The blocking time contributed from task $\tau_k$ is $S_k$.
+\item A higher-priority task $\tau_i$ can only block the execution of task $\tau_k$ by at most $b_i=min(C_i, S_i)$ time units.
+\end{itemize}
+%As a result, if $S_i < C_i$, then the blocking time contributed from task $\tau_i$ is at most $S_i$. Therefore, the contribution of a higher-priority task $\tau_i$  to $B_k$ is at most $b_i=min(C_i, S_i)$.
+Therefore, 
+\begin{equation}
+\label{eq:Bk}
+B_k = S_k + \sum_{i=1}^{k-1} b_i.
+\end{equation}
+
+In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it is stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+\begin{equation}
+\label{eq:TDA-suspension}
+\exists t \mid 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
+\end{equation}
+  
+
+The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending behaviour due to synchronization protocols in multiprocessor systems. To account for the self-suspending behaviour, it reads as follows:\footnote{We rephrased the wordings and notations to be consistent with this paper.}
+\begin{quote}
+\emph{For each higher priority job $J_i$ on the processor that suspends on global semaphores or for other reasons, add the term $min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $J_i$ can suspend itself. The sum ... yields $B_k$, which in turn can be used in 
+$\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable.}
+\end{quote}
+  
+However, there is no proof in \cite{Liu:2000:RS:518501,DBLP:conf/rtss/RajkumarSL88} to support the correctness of the above tests. We will support the correctness of the above analysis by proving a more powerful analysis framework.
+
+\section{Our General Analysis Framework}
+
+
+We can greedily convert the suspension time of task $\tau_k$ to its
+computation time. For the sake of notational brevity, let $C_k'$ be
+$C_k + S_k$. We call this converted version of task $\tau_k$ as task
+$\tau_k'$.  Suppose that $R_k'$ is the worst-case response time in the
+task system $\setof{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k'}$. It
+was already shown in the previous works, e.g., Lemma~3 in
+\cite{Liu_2014} and Theorem~2 in \cite{ecrts15nelissen}, that $R_k'$
+is a safe upper bound on the worst-case response time of task $\tau_k$
+in the original task system.
+
+Our key result in this paper is the following theorem:
+
+\begin{theorem}
+   \label{theorem:general-framework}
+   Suppose that $R_k' \leq T_k$.
+   For any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots,
+   x_{k-1})$, in which $x_i$ is either $0$ or $1$, the worst-case
+   response time $R_k'$ is upper bounded by the minimum $t$ (with $t > 0$) that
+   satisfies 
+   {\small \begin{equation} \label{eq:TDA-suspension-tighter0} 
+       C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t,
+     \end{equation}}where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$.
+ \end{theorem}
+
+ With Theorem~\ref{theorem:general-framework}, we can
+ directly have the following corollary.
+
+ \begin{Corollary}
+   \label{corollary:general-framework}
+   If there exists a vector assignment $\vec{x} = (x_1, x_2, \ldots,
+   x_{k-1})$, in which $x_i$ is either $0$ or $1$, such that 
+   {\small \begin{equation} \label{eq:TDA-suspension-tighter} 
+       \exists t | 0 < t \leq D_k, \\
+       C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t,
+     \end{equation}}where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$, then a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling.
+ \end{Corollary}
+
+\subsection{An Illustrative Example and Dominance}
+
+We use an example to demonstrate how
+Corollary~\ref{corollary:general-framework} can be applied. Suppose
+that we have three tasks
+\begin{itemize}
+\item $C_1 = 4, S_1 = 5, T_1=D_1=10$, 
+\item $C_2 = 6, S_2 = 1, T_2=D_2=19$,  and
+\item $C_3 = 4, S_3 = 0, T_3=D_3=35$.
+\end{itemize}
+Tasks $\tau_1$ and $\tau_2$ can be verified to be schedulable under
+the fixed-priority scheduling by using Eq.~(\ref{eq:TDA-jitter}). 
+
+We focus on task $\tau_3$.  
+For task $\tau_3$, the blocking term $B_3$ is $4+1=5$ by
+Eq.~(\ref{eq:Bk}). The minimum $t$ to satisfy $C_k + B_k +
+\sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t$ happens when $t=37$, i.e., $4+5+\ceiling{\frac{37}{10}}\cdot 4+\ceiling{\frac{37}{19}}\cdot 6=37$. Therefore, task $\tau_3$ cannot pass the schedulability test in Eq.~(\ref{eq:TDA-suspension}).
+There are four
+possible vector assignments $\vec{x}$ when we consider the schedulability of task $\tau_3$:
+\begin{itemize}
+\item Case 1 $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by the minimum $t$ under $0 < t \leq T_3$ that
+   satisfies 
+   {\small \begin{equation}\label{eq:example-case1} 
+       4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+13}{19}}\cdot 6 \leq t.
+     \end{equation}}Such a value $t$ does not exist for this case.
+\item Case 2 $\vec{x} = (0 , 1)$:
+ In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
+under $0 < t \leq T_3$ that
+   satisfies 
+   {\small \begin{equation}\label{eq:example-case2} 
+       4+ \ceiling{\frac{t+7}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t.
+     \end{equation}}Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+7}{10}}\cdot 4 + \ceiling{\frac{32+1}{19}}\cdot 6=32$.
+\item Case 3 $\vec{x} = (1 , 0)$:
+ In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
+under $0 < t \leq T_3$ that
+   satisfies 
+   {\small \begin{equation}\label{eq:example-case3} 
+       4+ \ceiling{\frac{t+5}{10}}\cdot 4 + \ceiling{\frac{t+13}{19}}\cdot 6 \leq t.
+     \end{equation}}Such a value $t$ does not exist for this case.
+\item Case 4 $\vec{x} = (1 , 1)$:
+ In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
+under $0 < t \leq T_3$ that
+   satisfies 
+   {\small \begin{equation}\label{eq:example-case4} 
+       4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t.
+     \end{equation}}Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+6}{10}}\cdot 4 + \ceiling{\frac{32+1}{19}}\cdot 6=32$.
+\end{itemize}
+Among the above four cases, the test in Case 4, i.e.,
+Eq.~(\ref{eq:example-case4}), is the tightest. By
+Corollary~\ref{corollary:general-framework}, task $\tau_3$ is
+schedulable by the fixed-priority scheduling policy.
+
+In fact, the following theorem shows that the test in Corollary
+\ref{corollary:general-framework} analytically dominates the existing
+tests in Eq.~(\ref{eq:TDA-jitter}) and Eq.~(\ref{eq:TDA-suspension}).
+
+\begin{theorem}
+  \label{theorem:dominance}
+  The schedulability test in
+  Corollary~\ref{corollary:general-framework} dominates the
+  schedulability tests in Eq.~(\ref{eq:TDA-jitter}) and Eq.~(\ref{eq:TDA-suspension}).
+\end{theorem}
+\begin{proof}
+  The dominance of Eq.~(\ref{eq:TDA-jitter}) can be easily seen by
+  considering the vector assignment $x_1=x_2=\cdots=x_{k-1}=0$. The
+  resulting test in Eq.~(\ref{eq:TDA-suspension-tighter}) is identical
+  to Eq.~(\ref{eq:TDA-suspension}) for this vector assignment.
+
+  We now prove the dominance of Eq.~(\ref{eq:TDA-suspension}) by
+  considering the vector assignment $\vec{x}$ in which 
+  \begin{equation*}
+    x_i =
+    \begin{cases}
+      1 &\mbox{if } S_i \leq    C_i\\
+      0 & \mbox{otherwise},
+    \end{cases}
+  \end{equation*}
+  for $i=1,2,\ldots,k-1$. By the fact that $Q_i^{\vec{x}} \leq
+  Q_1^{\vec{x}}$ for $i=1,2,\ldots,k-1$, we know that it is more
+  pessimistic if we test $C_k'+
+  \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}}
+  C_i \leq t$ instead of testing Eq.~\eqref{eq:TDA-suspension-tighter}. Let $\theta$ be $t+Q_1^{\vec{x}}$. Therefore, we know
+  that $R_k'$ is upper bounded by the minimum $\theta-Q_1^{\vec{x}} >
+  0$ such that 
+  \begin{align} 
+&      C_k'+\sum_{i=1}^{k-1}\ceiling{\frac{\theta+(1-x_i)(D_i-C_i)}{T_i}}
+      C_i \leq \theta-Q_1^{\vec{x}}\\
+\Rightarrow\;\;&C_k'+Q_1^{\vec{x}}+\sum_{i=1}^{k-1}\ceiling{\frac{\theta+(1-x_i)(D_i-C_i)}{T_i}}
+      C_i \leq \theta.
+    \end{align}
+    Moreover, by the fact that $D_i \leq T_i$ for $i=1,2,\ldots,k-1$,
+    we also have $\ceiling{\frac{\theta+(1-x_i)(D_i-C_i)}{T_i}} C_i
+    \leq \ceiling{\frac{\theta+(1-x_i)T_i}{T_i}} C_i = (1-x_i) C_i +
+    \ceiling{\frac{\theta}{T_i}} C_i$.  
+    Therefore, we know that $R_k'$
+    is upper bounded by the minimum $\theta-Q_1^{\vec{x}} > 0$ such
+    that 
+    \begin{equation}
+      \label{eq:dominance-proof2}
+    C_k + S_k + \sum_{i=1}^{k-1}(x_i S_i + (1-x_i) C_i) + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i \leq \theta.      
+    \end{equation}
+    By the fact that $B_k$ is defined as $S_k + \sum_{i=1}^{k-1}(x_i
+    S_i + (1-x_i) C_i)$, and $Q_1^{\vec{x}} \geq 0$, the above test in
+    Eq.~(\ref{eq:dominance-proof2}) is analytically tighter than that
+    in Eq.~(\ref{eq:TDA-suspension}), which concludes the proof.
+\end{proof}
+
+
+
+\subsection{Proof of Theorem~\ref{theorem:general-framework}}  
+
+We now provide the proof to support the correctness of the test in
+Theorem~\ref{theorem:general-framework}.  Our proof strategy is to
+show that the worst-case response time of task $\tau_k$ can be safely
+upper-bounded by any assignment of $\vec{x}$ of the $k-1$
+higher-priority tasks when adopting
+Eq.~(\ref{eq:TDA-suspension-tighter0}) as the response time analysis.
+
+Throughout the proof, we consider any arbitrary assignment
+$\vec{x}$. For the sake of notational brevity, we classify the $k-1$
+higher-priority tasks into two sets: ${\bf T}_0$ and ${\bf T}_1$. A
+task $\tau_i$ is in ${\bf T}_0$ if $x_i$ is $0$; otherwise, it is in
+${\bf T}_1$.
+
+
+
+
+Our analysis is also based on very simple properties and lemmas enunciated as follows:
+
+\begin{Property}
+\label{prop:lower-priority}
+In a preemptive fixed-priority schedule, the lower-priority jobs do not impact the schedule of the higher-priority jobs.
+\end{Property}
+
+%\begin{lemma}
+%\label{lemma:remove-lower-priority}
+%In a preemptive fixed-priority schedule, removing a lower-priority job arrived at time $t$ does not affect the schedule of the higher-priority jobs after time $t$.
+%\end{lemma}
+%\begin{proof}
+%This is a direct consequence of Property~\ref{prop:lower-priority}.
+%\end{proof}
+
+\begin{Lemma}
+\label{lemma:remove-same-task}
+In a preemptive fixed-priority schedule, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, preventing the release of a job of task $\tau_i$ does not affect the schedule of any other job of task $\tau_i$.
+\end{Lemma}
+\begin{proof}
+Since the worst-case response time of task $\tau_i$ is no more than its period, any job $\tau_{i,j}$ of task $\tau_i$ completes its execution before the release of the next job $\tau_{i,j+1}$. Hence, the execution of $\tau_{i,j}$ does not directly interfere with the execution of any other job of $\tau_i$, which then depends only on the schedule of the higher priority jobs. Furthermore, as stated in Property~\ref{prop:lower-priority}, the removal of $\tau_{i,j}$ has no impact on the schedule of the higher-priority jobs, thereby implying that the other jobs of task $\tau_i$ are not affected by the removal of $\tau_{i,j}$.
+\end{proof}
+
+With the above properties, we now present the proof of
+Theorem~\ref{theorem:general-framework} as follows:
+
+
+\begin{appProof}{Theorem~\ref{theorem:general-framework}}
+Let us consider the task set $\tau'$ composed of $\left\{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots \right\}$ and let $\Psi$ be a schedule of $\tau'$ that generates the worst-case response time of $\tau_k'$, in which $R_k' \leq T_k$ by our assumption.  
+The proof is built upon the two following steps:
+\begin{enumerate}
+\item We discard all the jobs that do not contribute to the worst-case response time of $\tau_k'$ in the schedule $\Psi$. We follow an inductive strategy by iteratively inspecting the schedule of the higher priority tasks in $\Psi$, starting with $\tau_{k-1}$ until the highest priority task $\tau_1$. At each iteration, a time instant $t_j$ is identified such that $t_j \leq t_{j+1}$ ($1 \leq j < k$). Then, all the jobs of task $\tau_j$ released before $t_j$ are removed from the schedule and, if needed, replaced by an artificial job mimicking the interference caused by the residual workload of task $\tau_j$ at time $t_j$ on the worst-case response time of $\tau_{k}'$. 
+\item The final reduced schedule is analyzed so as to characterize the worst-case response time of $\tau_k'$ in $\Psi$. We then prove that the response time analysis in Eq.~(\ref{eq:TDA-suspension-tighter0}) is indeed an upper bound on the worst-case response time $R_k'$ of $\tau_k'$.
+\end{enumerate}
+
+%Suppose that the job $J_{k}$ of task $\tau_k'$ with the largest response time in $\Psi$ arrives at time $r_k$ and finishes at time $f_k$.
+%We know by Property~\ref{prop:lower-priority} that the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ do not impact the response time of $J_{k}$. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, Lemma~\ref{lemma:remove-same-task} proves that removing all the jobs of task $\tau_k'$ but $J_{k}$ has no impact on the schedule of $J_{k}$ arrived at time $r_k$. Therefore, let $\Psi^{red}$ be a schedule identical to $\Psi$ but removing all the jobs released by the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ as well as all the jobs released by $\tau_k'$ at the exception of $J_{k}$. The response time of $J_{k}$ in $\Psi^{red}$ is identical to the response time of $J_{k}$ in $\Psi$.
+
+
+%Therefore, for the rest of the proof, we only have to consider this \emph{reduced} schedule $\Psi^{red}$. Note that by construction of $\Psi^{red}$, the processor is busy only when executing higher-priority tasks than $\tau'_k$ or the job of task $\tau_k'$ released at time $r_k$ and completing at time $f_k$. In $\Psi^{red}$, let $t_{k}$ be the latest moment before $r_k$ such that the processor does not execute any job. That is, from $t_k$ to $r_k$, the processor executes tasks with higher priorities than $\tau_k'$. Apparently, one can change the release time of the unique job of task $\tau_k'$ in $\Psi^{red}$ to time $t_k$, and hence increase the response time of the job to $f_k-t_k \geq f_k-r_k$. It however contradicts our assumption that the response time of $J_{k}$ is the worst-case response time of $\tau_k'$. Consequently, $t_k$ is equal to the release $r_k$ of $J_{k}$ in $\Psi^{red}$ and the processor is idle before $t_k$.
+
+%Up to here, the proof is basically similar to the proof of the critical instant theorem of the usual sporadic sequential real-time task model. However, for self-suspending tasks, one needs to consider that a job of a higher priority task $\tau_i$ can suspend itself before $t_k$ and resume its execution after $t_k$. Such jobs are usually referred to as \emph{carry-in} jobs. 
+
+%Fortunately, each higher-priority task has only one carry-in job due to the assumption that the higher-priority tasks are assumed to finish before their periods. However, analyzing the accurate workload of such jobs due to self-suspension is non-trivial. 
+%One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. For the simplicity of presentation, let $J_i$ be the carry-in job of task $\tau_i$ at time $t_k$.
+
+
+
+\noindent{\bf Step 1: Reducing the schedule $\Psi$} 
+
+During this step, we iteratively build an artificial schedule $\Psi^j$ from $\Psi^{j+1}$ (with $1 \leq j < k$) so that the response time of $\tau_{k}'$ remains identical. At each iteration, we define $t_j$ for task $\tau_j$ in the schedule $\Psi^{j+1}$ (with $j=k-1, k-2, \ldots, 1$) and build $\Psi^j$ by removing all the jobs released by $\tau_j$ before $t_j$.
+
+~
+
+\noindent\textit{Basic step (definition of $\Psi^k$ and $t_k$):} 
+
+Suppose that the job $J_{k}$ of task $\tau_k'$ with the largest response time in $\Psi$ arrives at time $r_k$ and finishes at time $f_k$. We know by Property~\ref{prop:lower-priority} that the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots, \tau_n$ do not impact the response time of $J_{k}$. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, Lemma~\ref{lemma:remove-same-task} proves that removing all the jobs of task $\tau_k'$ but $J_{k}$ has no impact on the schedule of $J_{k}$. Therefore, let $\Psi^k$ be a schedule identical to $\Psi$ but removing all the jobs released by the lower priority tasks $\tau_{k+1}, \ldots, \tau_n$ as well as all the jobs released by $\tau_k'$ at the exception of $J_{k}$. The response time of $J_{k}$ in $\Psi^{k}$ is thus identical to the response time of $J_{k}$ in $\Psi$.
+
+We define $t_k$ as the release time of $J_k$ (i.e., $t_k = r_k$).
+
+~
+
+\noindent\textit{Induction step (definition of $\Psi^j$ and $t_j$ with $1 \leq j < k$):}
+
+Let $r_j$ be the arrival time of the last job released by $\tau_j$ before $t_{j+1}$ in $\Psi^{j+1}$ and let $J_{j}$ denote that job. %There are a two possible cases:
+%\begin{itemize}
+%\item $J_{j}$ completed its execution no later than $t_{j+1}$. Then, we simply set $t_j$ to $t_{j+1}$ and generate $\Psi^j$ by removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ in the schedule $\Psi^{j+1}$. By Lemma~\ref{lemma:remove-same-task} and Property \ref{prop:lower-priority}, removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (jobs released by $\tau_1, \ldots, \tau_{j-1}$) and the jobs of $\tau_j$ released after $t_{j+1}$. Moreover, because no task with a priority lower than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. The response time of $J_{k}$ in $\Psi^j$ thus remains unchanged in comparison to its response time in $\Psi^{j+1}$. 
+%\item $J_{j}$ did not complete its execution before $t_{j+1}$.
+Removing all the jobs of task $\tau_j$ arrived before $r_j$ has no impact on the schedule of any other job released by $\tau_j$ (Lemma~\ref{lemma:remove-same-task}) or any higher priority job released by $\tau_1, \ldots, \tau_{j-1}$ (Property \ref{prop:lower-priority}). Moreover, because by the construction of $\Psi^{j+1}$, no task with a priority lower than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. Therefore, we can safely remove all the jobs of task $\tau_j$ arrived before $r_j$ without impacting the response time of $J_{k}$. Two cases must then be considered:
+\begin{enumerate}[(a)]
+\item $\tau_j \in {\bf T}_0$. In this case, we analyze two different subcases:
+\begin{itemize}
+\item $J_{j}$ completed its execution before or at $t_{j+1}$. By Lemma~\ref{lemma:remove-same-task} and Property \ref{prop:lower-priority}, removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (jobs released by $\tau_1, \ldots, \tau_{j-1}$) and the jobs of $\tau_j$ released after or at $t_{j+1}$. 
+Moreover, because no task with lower priority than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. Therefore, $t_j$ is set to $t_{j+1}$ and $\Psi^j$ is generated by removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$. The response time of $J_{k}$ in $\Psi^j$ thus remains unchanged in comparison to its response time in $\Psi^{j+1}$. 
+\item $J_{j}$ did not complete its execution by $t_{j+1}$. For such a case, $t_{j}$ is set to $r_j$ and hence $\Psi^j$ is built from $\Psi^{j+1}$ by removing all the jobs released by $\tau_j$ before $r_j$. 
+\end{itemize}
+Note that because by the construction of $\Psi^{j+1}$ and hence $\Psi^j$ there is no job with priority lower than $\tau_j$ available to be executed before $t_{j+1}$, the maximum amount of time during which the processor remains idle within $[t_j, t_{j+1})$ is at most $S_j$ time units.
+\item $\tau_j \in {\bf T}_1$. For such a case, we set $t_{j}$ to $t_{j+1}$. Let $c_j^*$ be the remaining execution time for the job of task $\tau_j$ at time $t_j$. We know that $c_j^*$ is at most $C_j$. Since by the construction of $\Psi^j$, all the jobs of $\tau_j$ released before $t_j$ are removed, the job of task $\tau_j$ arrived at time $r_j$ ($< t_j$) is replaced by a new job released at time $t_j$ with execution time $c_j^*$ and the same priority than $\tau_j$. Clearly, this has no impact on the execution of any job executed after $t_j$ and thus on the response time of $J_k$. The remaining execution time $c_j^*$ of $\tau_j$ at time $t_j$ is called the \emph{residual workload} of task $\tau_j$ for the rest of the proof.
+\end{enumerate}
+%\end{itemize}
+ 
+The above construction of $\Psi^{k-1}, \Psi^{k-2}, \ldots, \Psi^1$ is repeated until producing $\Psi^1$. The procedures are well-defined. Therefore, it is guaranteed that $\Psi^1$ can be constructed. Note that after each iteration, the number of jobs considered in the schedule have been reduced, yet without affecting the response time of $J_k$. 
+%(Note that $J_j$ is defined as the carry-in job of task $\tau_j$ at time $t_k$.) Therefore, the reduced schedule after the above procedure does not change the execution of $J_j$ after time $t_j$ if $\tau_j$ is in ${\bf T}_0$. For a task $\tau_j$ in ${\bf T}_1$, its corresponding carry-in job $J_j$ may be changed, but its execution after $t_j$ remains identical as in the original schedule. 
+%Therefore, the resulting schedule above does not change any execution behavior of the (at most) $k-1$ carry-in jobs at time $t_k$.
+
+~
+
+\noindent{\bf Step 2: Analyzing the final reduced schedule $\Psi^1$}
+
+
+We now analyze the properties of the final schedule $\Psi^1$ in which all the unnecessary jobs have been removed. The proof is based on the fact that for any interval $[t_1, t)$, there is 
+\begin{equation}
+\label{eq:exec_plus_idle}
+\operatorname{idle}(t_1, t) + \operatorname{exec}(t_1, t)  = (t - t_1)
+\end{equation}
+where $\operatorname{exec}(t_1, t)$ is the amount of time during which the processor executed tasks within $[t_1, t)$, and $\operatorname{idle}(t_1, t)$ is the amount of time during which the processor remained idle within the interval $[t_1, t)$.
+
+From case (a) of Step 1, we know that the maximum amount of time
+during which the processor is idle in $\Psi^1$ within any time
+interval $[t_1, t)$ such that $t_1 < t \leq t_k$, is upper bounded by
+\begin{align*}
+\operatorname{idle}(t_1, t) \leq \sum_{\tau_i: t_i < t \mbox{ and } \tau_i\in {\bf T}_1} S_i.
+\end{align*}
+
+Because there is no job released by lower priority tasks than $\tau_k$ in $\Psi^1$, the workload released by $\tau_1, \ldots, \tau_k$ within any interval $[t_1, t)$ is an upper bound on the workload $\operatorname{exec}(t_1, t)$ executed within $[t_1, t)$.  From case (a) of Step 1, we know that the maximum workload released by task $\tau_j$ in ${\bf T}_1$ within any time interval $[t_1, t)$ in schedule $\Psi^1$ such that $t_j \leq t \leq f_k$ is upper bounded by $\ceiling{\frac{t-t_j}{T_j}}C_j$.
+
+From case (b) of Step 1, if the residual workload $c_j^*$ of task $\tau_j$ in ${\bf T}_0$ is positive, the earliest arrival time of task $\tau_j$ arriving \emph{strictly after $t_j$} is at least $t_j + (T_j-D_j + c_j^*)$.
+Therefore, considering the fact that no job of $\tau_j$ is released before $t_j$ in $\Psi^1$ ($j=1,2,\ldots,k$), the workload released by task $\tau_j$ (by treating the residual workload as released workload as well) in ${\bf T}_0$ within any time interval $[t_1, t)$ in schedule $\Psi^1$ such that $t_1 < t \leq f_k$ is upper bounded by $rbf_j(t_j, t)$ defined as follows:
+\begin{align*}
+ rbf_j(t_j, t) = \begin{cases}
+c_j^* +\ceiling{\frac{t-t_j- (D_j-c_j^*)}{T_j} } C_j  & \mbox{ if } t > t_j\\
+0 & \mbox{ otherwise}.
+  \end{cases}
+\end{align*}
+
+Putting the execution time from the tasks in ${\bf T}_0$ and ${\bf T}_1$ together, we have
+$\forall t \mid t_1 \leq t < t_i$
+\begin{align}
+\label{eq:exec_time}
+\operatorname{exec}(t_1, t) \leq \sum_{j=1}^{i-1} x_j \ceiling{\frac{t-t_j}{T_j}}C_j + (1-x_j) rbf_j(t_j, t) 
+\end{align}
+\jj{here!!!}
+
+\begin{equation}
+\label{eq:exec_time}
+\forall t \mid t_1 \leq t < f_k,\quad \operatorname{exec}(t_1, t) \leq \sum_{\tau_i \in {\bf T}_1} C_i + \sum_{i=1}^k \max\{0, \ceiling{\frac{t- t_i}{T_i} } C_i.
+\end{equation}
+
+Furthermore, from case (a) of Step 1, we know that the maximum amount of time during which the processor is idle in $\Psi^1$ within any time interval $[t_1, t)$ such that $t_1 < t \leq t_k$, is upper bounded by $\sum_{\tau_i \in {\bf T}_0} S_i$. That is,
+\begin{equation}
+\label{eq:idle_time}
+\forall t \mid t_1 \leq t < t_k,\quad \operatorname{idle}(t_1, t) \leq \sum_{\tau_i \in {\bf T}_0} S_i.
+\end{equation}
+
+Hence, injecting Eq. \eqref{eq:exec_time} and Eq. \eqref{eq:idle_time} into Eq. \eqref{eq:exec_plus_idle}, we get
+\[
+\forall t \mid t_1 \leq t < t_k,\qquad  \sum_{\tau_i \in {\bf T}_0} S_i + \sum_{\tau_i \in {\bf T}_1} C_i + \sum_{i=1}^{k} \max\{ 0, \ceiling{\frac{t- t_i}{T_i} } C_i\}  \geq t-t_1.
+\]
+Since $C_k' > 0$ and $\max\{ 0, \ceiling{\frac{t- t_k}{T_k} } C_k'\} = 0$ for any $t$ smaller than $t_k$, it holds that
+\[
+\forall t \mid t_1 \leq t < t_k,\qquad  \sum_{\tau_i \in {\bf T}_0} S_i + \sum_{\tau_i \in {\bf T}_1} C_i + C_k' + \sum_{i=1}^{k-1} \max\left\{ 0, \ceiling{\frac{t- t_i}{T_i} } C_i\right\}  > t-t_1,
+\]
+and using the definition of $b_i$
+\begin{equation}
+\label{eq:eq1_in_proof}
+\forall t \mid t_1 \leq t < t_k,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \max\left\{ 0, \ceiling{\frac{t- t_i}{T_i} } C_i\right\} > t-t_1.
+\end{equation}
+
+Furthermore, because $J_k$ is released at time $t_k$ and does not complete its execution before $f_k$, it must hold that
+\begin{equation}
+\label{eq:eq2_in_proof}
+\forall t \mid t_k \leq t < f_k,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \max\left\{ 0, \ceiling{\frac{t- t_i}{T_i} } C_i\right\} > t-t_1.
+\end{equation}
+
+Combining Eq. \eqref{eq:eq1_in_proof} and Eq. \eqref{eq:eq2_in_proof}, we get
+\begin{equation}
+\label{eq:whole_interval}
+\forall t \mid t_1 \leq t < f_k,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \max\left\{ 0, \ceiling{\frac{t- t_i}{T_i} } C_i\right\} > t-t_1.
+\end{equation}
+
+Since $t_i \geq t_1$ for $i=1,2,\ldots,k$, there is 
+$$\ceiling{\frac{t- t_i}{T_i} } \leq \ceiling{\frac{t- t_1}{T_i} },$$
+thereby leading to
+\begin{equation}
+\label{eq:with_t1_only}
+\forall t \mid t_1 \leq t < f_k,\qquad  C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \max\left\{ 0, \ceiling{\frac{t- t_1}{T_i} } C_i\right\} > t-t_1.
+\end{equation}
+By replacing $t-t_1$ with $\theta$, Eq. \eqref{eq:with_t1_only} becomes\footnote{We take $0 < \theta$ instead of $0 \leq \theta$ since $C_k'$ is assumed to be positive.}
+\[
+\forall \theta \mid 0 < \theta < f_k-t_1, \qquad C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{\theta}{T_i} } C_i > \theta.
+\]
+The above inequation implies that the minimum $t$ such that $C_k'+\sum_{i=1}^{k-1} b_i + \sum_{i=1}^{k-1} \ceiling{\frac{t}{T_i} } C_i \leq t$ is larger than or equal to $f_k-t_1$. And because by assumption the worst-case response time of $\tau_k'$ is equal to $f_k-t_k \leq f_k - t_1$ which is obviously smaller than or equal to $R_k'$, it holds that $R_k'$ is a safe upper bound on the worst-case response time of $\tau_k'$.
+\end{appProof}
+
+
+To illustrate Step 1 in the above proof, we also provide one concrete example. Consider a task system with the following 4 tasks:
+\begin{itemize}
+\item $T_1 = 6, C_1 = 1, S_1 = 1$,
+\item $T_2 = 10, C_2 = 1, S_2 = 6$,
+\item $T_3 = 18, C_3 = 4, S_3 = 1$,
+\item $T_4 = 20, C_4 = 5, S_4 = 0$.
+\end{itemize}
+
+Figure~\ref{fig:example} demonstrates a schedule for the jobs of the
+above 4 tasks. We assume that the first job of task $\tau_1$ arrives
+at time $4+\epsilon$ with a very small $\epsilon > 0$. The first job
+of task $\tau_2$ suspends itself from time $0$ to time $5+\epsilon$,
+and is blocked by task $\tau_1$ from time $5+\epsilon$ to time
+$6+\epsilon$. After some very short computation with $\epsilon$ amount
+of time, the first job of task $\tau_2$ suspends itself again from
+time $6+2\epsilon$ to $7$.   In this schedule, $f_k$ is set to $20-\epsilon$.
+
+We define $t_4$ as $7$. Then, we set $t_3$ to $6$. When considering
+task $\tau_2$, since it belongs to ${\bf T}_1$, we greedily set $t_2$
+to $t_3=6$ and the residual workload $C_2'$ is $1$. Then, $t_1$ is set
+to $4+\epsilon$. In the above schedule, the idle time from
+$4+\epsilon$ to $20-\epsilon$ is at most $2 = S_1+S_3$. We have to
+further consider one job of task $\tau_2$ arrived before time $t_1$
+with execution time $C_2$.
+  
+  
+\begin{figure*}[t]
+  \centering
+  \input{../figures/example/example-body.tex}
+\caption{An illustrative example of Step 1 in the proof of Theorem~\ref{theorem:general-framework}.}
+\label{fig:example}  
+\end{figure*}
+
+
+For the simplicity of presentation, we assume that $\Psi$ is a schedule of $\tau'$ that generates the worst-case response time of $\tau_k'$ in the proof of Theorem~\ref{theorem:general-framework}. This can be relaxed to start from an arbitrary job $J_k$ in any fixed-priority schedule by using the same proof flow with similar arguments.
+
+
+\section{Improved Analysis}
+
+\subsection{Direct Implication}
+
+We can enumerate all possible configurations of $\vec{x}$.
+  
+\subsection{Utilization Bounds}
+Suppose that $S_i \leq \gamma C_i$ for every task $\tau_i \in hp(\tau_k)$. We will present the utilization bounds in this subsection. 
+
+\paragraph{Simple Test}
+We start from the analysis by Liu, which considers the self-suspension time as blocking time for such cases.
+By using the k2U framework, task $\tau_k$ in an implicit deadline system is schedulable by using RM scheduling if
+\[
+(\frac{C_k + S_k}{ T_k}+1+\gamma) \prod_{i=1}^{k-1}(1+U_i) \leq 2+\gamma.
+\]
+That is, $0 < \alpha_i \leq  1+\gamma$ and $0 < \beta_i \leq 1$ for $i=1,2,\ldots,k-1$.
+This gives the immediate utilization bound to find the infimum $\sum_{i=1}^{k} U_k$ such that
+\begin{align*}
+&\;\;\;\;\;\; (1+\gamma)*(1+U_k) \prod_{i=1}^{k-1}(1+U_i) \\
+&\geq (\frac{C_k + S_k}{ T_k}+1+\gamma) \prod_{i=1}^{k-1}(1+U_i) > 2+\gamma.\\
+\Rightarrow & \prod_{i=1}^{k}(1+U_i) > \frac{2+\gamma}{1+\gamma}.
+\end{align*}
+Therefore, the utilization bound for a given $0 \leq \gamma \leq 1$  is $\ln(\frac{2+\gamma}{1+\gamma})$.
+
+\paragraph{Tighter Analysis}
+
+This is much more involved and requires deeper knowledge of the k2U framework.   
+Now, suppose that $\sum_{i=1}^{k-1} C_i = $ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+
+{\bf Acknowledgement:} This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/).
+
+\bibliography{../bibliography/biblio}{}
+
+\end{document}
