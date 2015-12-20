@@ -511,9 +511,9 @@ In this case, for any $\Delta \geq 0$, the workload contributed from task
   \end{cases}
 \end{equation}
 \end{itemize}
-It is not difficult to see that the worst case residual workload in
-$\widehat{W}_j^0(\Delta, c_j^*)$ by considering both
-Eq.~(\ref{eq:execution-case2-precise0}) and
+It is proved in Lemma~\ref{lemma:Wj0-dominate} that the worst case
+residual workload in $\widehat{W}_j^0(\Delta, c_j^*)$ by considering
+both Eq.~(\ref{eq:execution-case2-precise0}) and
 Eq.~(\ref{eq:execution-case2-precise}) is to have $c_j^* = C_j$, i.e.,
 for all $\Delta \geq 0$, we have $\widehat{W}_j^0(\Delta, C_j) \geq
 \widehat{W}_j^0(\Delta, c_j^*)$. For the sake of notational brevity,
@@ -549,8 +549,8 @@ This step constructs a safe response-time analysis based on the
 conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
 (\ref{eq:exec_plus_idle-3}). We will construct another release pattern
 which moves $t_i$ to $t_i^*$ for $i=2,3,\ldots,k$ such that $t_i^*
-\leq t_i$ and the conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
-(\ref{eq:exec_plus_idle-3}) become worse when using $t_i^*$. We start
+\leq t_i$ and the corresponding conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
+(\ref{eq:exec_plus_idle-3}) will become worse when we use $t_i^*$. We start
 the procedure as follows:
 \begin{itemize}
 \item Initial Step: Let $t_1^*$ be $t_1$.
@@ -559,57 +559,60 @@ the procedure as follows:
 This results in $t_i^* \leq t_i$ for $i=2,3,\ldots,k$. Moreover, by
 definition, $t_j^*$ is $t_1^* + \sum_{i=1}^{j-1} x_i\cdot\sigma_i$ for
 $j=2,3,\ldots,k$.
-For any task $\tau_j$ in ${\bf T}_1$,  $\forall \Delta \geq 0$, we have
+For any task $\tau_j$ in ${\bf T}_1$,  $\forall \Delta \geq 0$, since $t_j \geq t_j^*$, we have
 \begin{equation}
   \label{eq:execution-case1-shifted}
   W_j^1(\Delta)  \leq W_j^1(\Delta + (t_j-t_j^*)).
 \end{equation}
-For any task $\tau_j$ in ${\bf T}_0$,  $\forall \Delta \geq 0$, we have
+For any task $\tau_j$ in ${\bf T}_0$,  $\forall \Delta \geq 0$, since $t_j \geq t_j^*$, we have
 \begin{equation}
   \label{eq:execution-case2-shifted}
   W_j^0(\Delta)  \leq W_j^0(\Delta + (t_j-t_j^*)).
 \end{equation}
 
-These conditions together with 
-$t_k^*=t_1 + \sum_{i=1}^{k-1} x_i\cdot\sigma_i$ and
-the conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
-(\ref{eq:exec_plus_idle-3}) lead to $\forall t \mid t_k^* \leq t < t_k$
+Therefore, for any $j=1,2,\ldots,k-1$, the contribution $W_j^1(t-t_j)
+\leq W_j^1(t-t_j^*)$ and $W_j^0(t-t_j) \leq W_j^0(t-t_j^*)$ for any $t
+\geq t_j$. Putting these into 
+Eqs.~(\ref{eq:exec_plus_idle-2}) $\forall t \mid t_k^* \leq t < t_k$ leads to
+{\small \begin{align}
+&\sum_{j=1}^{k-1} x_j\cdot (W_j^1(t-t_j^*)+\sigma_j) + (1-x_j)\cdot W_j^0(t-t_j^*) \geq t-t_1,\nonumber\\
+\Rightarrow& \sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) \geq t-t_k^*.
+\label{eq:exec_plus_idle-4}
+\end{align}}
+Similarly, putting these into 
+Eqs.~(\ref{eq:exec_plus_idle-3})  leads to 
 \begin{equation}
-\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) \geq t-t_{k-1}^*,
+\label{eq:exec_plus_idle-5}
+C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-t_k^*.
 \end{equation}
-and $\forall t \mid t_k \leq t < f_k$
-\begin{equation}
-C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-t_{k-1}^*,
-\end{equation}
-respectively. By the assumption that $C_k' \geq C_k > 0$, we know that 
+ By the assumption that $C_k' \geq C_k > 0$, we can unify the above inequalities in Eq.~(\ref{eq:exec_plus_idle-4}) and Eq.~(\ref{eq:exec_plus_idle-5}) as follows:
 $\forall t \mid t_k^* \leq t < f_k$
 \begin{equation}
-C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-t_{k-1}^*.
+C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-t_k^*.
 \end{equation}
 
 
 
-By the definition, $\forall t \mid t_k^* \leq t < f_k$, we have
-$t-t_j^* = t - t_k^* + \sum_{i=j}^{k-1} x_i\sigma_i$ for every
+By definition, $\forall t \mid t_k^* \leq t < f_k$, we have
+$t-t_j^* = t - t_k^* + \sum_{\ell=j}^{k-1} x_\ell\sigma_\ell$ for every
 $j=1,2,\ldots,k-1$. Therefore, we know that
  $W_j^1(t-t_j^*) \leq
-\ceiling{\frac{t-t_k^* +\sum_{i=j}^{k-1} x_i\sigma_i}{T_j}}C_j$ for task $\tau_j$ in ${\bf T}_1$. Moreover, 
+\ceiling{\frac{t-t_k^* +\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell}{T_j}}C_j$ for task $\tau_j$ in ${\bf T}_1$. Moreover, 
 $\forall t
 \mid t_k^* \leq t < f_k$, we have $W_j^0(t-t_j^*) \leq
-\ceiling{\frac{t-t_k^*+\sum_{i=j}^{k-1} x_i\sigma_i + (1-x_j)(D_j-C_j)}{T_j}}C_j$
+\ceiling{\frac{t-t_k^*+\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell + (1-x_j)(D_j-C_j)}{T_j}}C_j$
 for task $\tau_j$ in ${\bf T}_0$. Therefore, we can conclude that 
 $\forall t \mid t_k^* \leq t < f_k$
 \begin{equation}
-C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{t-t_k^*+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j > t-t_{k-1}^*,
+C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{t-t_k^*+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j > t-t_k^*,
 \end{equation}
-where $X_j$ is $\sum_{i=j}^{k-1} x_i\sigma_i$. We replace $t-t_{k-1}^*$ with $\theta$. 
-The above inequation implies that the minimum $\theta$ such that
+where $X_j$ is $\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell$. We replace $t-t_k^*$ with $\theta$. 
+The above inequation implies that the minimum $\theta$ with $\theta > 0$ such that
 $C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j = \theta$
  is larger than or equal to $f_k-t_k^* \geq f_k-t_k$. 
 
 However, the above condition requires the knowledge of $\sigma_i$. It is straightforward to see that $\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j$ reaches the worst case if $X_j$ is the largest. Since $X_j$ is upper bounded bo $Q_j^{\vec{x}}$ defined in Theorem~\ref{theorem:general-framework}, we reach the conclusion.
 \end{appProof}
-
 
 To illustrate Step 1 in the above proof, we also provide one concrete example. Consider a task system with the following 4 tasks:
 \begin{itemize}
@@ -644,20 +647,94 @@ with execution time $C_2$.
 \label{fig:example}  
 \end{figure*}
 
-
-For the simplicity of presentation, we assume that $\Psi$ is a schedule of $\tau'$ that generates the worst-case response time of $\tau_k'$ in the proof of Theorem~\ref{theorem:general-framework}. This can be relaxed to start from an arbitrary job $J_k$ in any fixed-priority schedule by using the same proof flow with similar arguments.
-
-
-\section{Improved Analysis}
-
-\subsection{Direct Implication}
-
-We can enumerate all possible configurations of $\vec{x}$.
+\begin{Lemma}
+\label{lemma:Wj0-dominate}
+$\forall \Delta \geq 0$ and $\forall c_j^* \geq 0$,
+\[
+\widehat{W}_j^0(\Delta, C_j)  \geq \widehat{W}_j^0(\Delta, c_j^*),
+\]
+where $\widehat{W}_j^0(\Delta, 0)$ is defined in Eq.~(\ref{eq:execution-case2-precise0}) and
+ $\widehat{W}_j^0(\Delta, c_j^*)$ is defined in Eq.~(\ref{eq:execution-case2-precise}) if $c_j^* > 0$.
+\end{Lemma}
+\begin{proof}
   
-\subsection{Utilization Bounds}
+\end{proof}
+
+\section{Testing Different Vector Assignments}
+\label{sec:vector-assignment}
+
+To test the schedulability of task $\tau_k$,
+Corollary~\ref{corollary:general-framework} implies to test all the
+possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which there are $2^{k-1}$
+different combinations. Therefore, the time complexity becomes
+exponential if we consider all the vector assignments. This section
+provides a few tricks to reduce the time complexity while adopting
+Corollary~\ref{corollary:general-framework}. 
+
+\subsection{Linear Approximation}
+\label{sec:linear-approximation}
+
+Here, we explain how to use the linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}) to help derive a good vector assignment. By the definition of $\ceiling{x}$, we have the following inequality:
+{\small \begin{align}
+&C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(D_i-C_i)}{T_i}} C_i \nonumber\\
+\leq& C_k' +   \sum_{i=1}^{k-1} \left(\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell +(1-x_i)(D_i-C_i)}{T_i} +1\right) C_i \nonumber\\
+=& C_k' + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(D_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right)\nonumber\\
+=& C_k' + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(D_i-C_i) + x_i S_i\left(\sum_{\ell=1}^{i}U_\ell\right)\right)\label{eq:linear-approximation-upper-bound}
+\end{align}}
+
+By observing Eq.~(\ref{eq:linear-approximation-upper-bound}), the
+contribution of $x_i$ can be individually determined as $U_i(D_i-C_i)$
+when $x_i$ is $0$ or $S_i(\sum_{\ell=1}^{i}U_\ell)$ when $x_i$ is
+$1$. Therefore, whether $x_i$ should be set to $0$ or $1$ can be
+easily decided by individually comparing the two constants
+$U_i(D_i-C_i)$ and $S_i(\sum_{\ell=1}^{i}U_\ell)$. We denote the
+vector assignment obtained above by $\vec{x}^{linear}$. That is, for
+each higher-priority task $\tau_i$,
+\begin{itemize}
+\item if $U_i(D_i-C_i) > S_i(\sum_{\ell=1}^{i}U_\ell)$, we greedily set $x_i^{linear}$ to $1$; 
+\item otherwise, we greedily set $x_i^{linear}$ to $0$. 
+\end{itemize}
+
+For notational brevity, we denote the right-hand side of
+Eq.~(\ref{eq:linear-approximation-upper-bound}) as $rbf_k(t, \vec{x})$
+for any $t > 0$ and given $\vec{x}$.
+\begin{theorem}
+\label{theorem:linear-time-test}
+  For any $t > 0$, the vector assignment $\vec{x}^{linear}$ minimizes
+  $rbf_k(t, \vec{x})$ among all $2^{k-1}$ possible vector assignments
+  for the $k-1$ higher-priority tasks. Task $\tau_k$ is schedulable
+  under the fixed-priority scheduling if
+  \begin{equation}
+    \label{eq:linear-time-test}
+    rbf_k(D_k, \vec{x}^{linear}) \leq D_k.
+  \end{equation}
+  Deriving $\vec{x}^{linear}$ requires $O(k)$ time complexity and
+  testing Eq.~(\ref{eq:linear-approximation-upper-bound}) also
+  requires only $O(k)$ time complexity.
+\end{theorem}
+\begin{proof}
+  
+\end{proof}
+
+
+\begin{Corollary}
+  \label{corollary:linear-time-overall-test}
+  Considering task $\tau_k$ from $\tau_1, \tau_2, \ldots, \tau_n$, the
+  time complexity to test the schedulability of all these $n$ tasks is
+  $O(n)$ by using the test in
+  Theorem~\ref{theorem:linear-time-test}. Therefore, the amortized
+  time complexity to test task $\tau_k$ by using the test in
+  Theorem~\ref{theorem:linear-time-test} is constant.
+\end{Corollary}
+\begin{proof}
+  
+\end{proof}
+
+\subsection{Iterative Steps}
+
+\section{Utilization Bounds and Speedup Factors}
 Suppose that $S_i \leq \gamma C_i$ for every task $\tau_i \in hp(\tau_k)$. We will present the utilization bounds in this subsection. 
 
-\paragraph{Simple Test}
 We start from the analysis by Liu, which considers the self-suspension time as blocking time for such cases.
 By using the k2U framework, task $\tau_k$ in an implicit deadline system is schedulable by using RM scheduling if
 \[
@@ -672,27 +749,6 @@ This gives the immediate utilization bound to find the infimum $\sum_{i=1}^{k} U
 \end{align*}
 Therefore, the utilization bound for a given $0 \leq \gamma \leq 1$  is $\ln(\frac{2+\gamma}{1+\gamma})$.
 
-\paragraph{Tighter Analysis}
-
-This is much more involved and requires deeper knowledge of the k2U framework.   
-Now, suppose that $\sum_{i=1}^{k-1} C_i = $ 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
 \section{Conclusion}
 \label{sec:conclusion}
