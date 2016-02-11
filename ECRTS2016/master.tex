@@ -105,7 +105,8 @@ align =left,
 
 \begin{document}
 
-\title{AAAAA}
+\title{\LARGE Interference from Higher-Priority Self-Suspending Tasks Can Be
+  Arbitrarily Modelled as Jitter or Block Terms}
 
 \author{Jian-Jia Chen, Wen-Hung Huang, and Geoffrey Nelissen\\
 TU Dortmund University, Germany\\
@@ -115,14 +116,25 @@ Email: grrpn@isep.ipp.pt
 }
 
 \maketitle
-\section{Introduction}
 
-\section{Task Model}
+\begin{abstract}
+  
+\end{abstract}
+
+\section{Introduction}
 
 This paper presents a proof to support the correctness of the
 schedulability test for self-suspending real-time task systems proposed by Jane
 W. S. Liu in her book titled "Real-Time Systems" \cite[Pages 164-165]{Liu:2000:RS:518501}.
-The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending behaviour due to synchronization protocols in multiprocessor systems. 
+The same concept was also implicitly used by Rajkumar, Sha, and
+Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing
+self-suspending behaviour due to synchronization protocols in
+multiprocessor systems. 
+
+
+\section{Task Model}
+
+
 
 
 The system model and terminologies are defined as follows: We assume a system composed of $n$ sporadic self-suspending tasks. A sporadic task $\tau_i$ is released repeatedly, with each such invocation called a
@@ -140,7 +152,7 @@ $\tau_i$, and a relative deadline $D_i$, which specifies the maximum amount of t
 time $R_i$ of a task $\tau_i$ is the maximum response time among all its
 jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
-In this paper, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider preemptive fixed-priority scheduling on a single processor, in which each task is assigned with a unique priority level. We assume that the priority assignment is given.
+In this paper, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider \emph{preemptive fixed-priority scheduling on a single processor}, in which each task is assigned with a unique priority level. We assume that the priority assignment is given.
 
 %We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. 
 We assume that the tasks are numbered in a decreasing priority order. That is, a task with a smaller index has higher priority than any task with a higher index, i.e., task $\tau_i$ has a higher-priority level than task $\tau_{i+1}$. When performing the schedulability analysis of a specific task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines, i.e., that $R_i \leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$. 
