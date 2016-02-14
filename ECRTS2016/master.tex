@@ -123,13 +123,122 @@ Email: grrpn@isep.ipp.pt
 
 \section{Introduction}
 
-This paper presents a proof to support the correctness of the
-schedulability test for self-suspending real-time task systems proposed by Jane
-W. S. Liu in her book titled "Real-Time Systems" \cite[Pages 164-165]{Liu:2000:RS:518501}.
-The same concept was also implicitly used by Rajkumar, Sha, and
-Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing
-self-suspending behaviour due to synchronization protocols in
-multiprocessor systems. 
+The periodic/sporadic task model has been recognized as the basic
+model for real-time systems with recurring executions.  A sporadic
+real-time task $\tau_i$ is characterized by its \emph{minimum
+  inter-arrival time} (also called period) $T_i$ and its
+\emph{relative deadline} $D_i$. A sporadic task defines an infinite
+sequence of task instances, also called \emph{jobs}, that arrive with
+the minimum inter-arrival time constraint. When a job of task $\tau_i$
+arrives at time $t$, the job should finish no later than its
+\emph{absolute deadline} $t+D_i$, and the next job of task $\tau_i$
+can only be released no earlier than $t+T_i$. For the periodic task
+model, the next job is released at time $t+T_i$.
+
+
+The seminal work by Liu and Layland \cite{Liu_1973} considered the
+scheduling of periodic tasks and presented the schedulability analyses
+based on utilization bounds to verify whether the deadlines are met or
+not.  For over half a centry, researchers in real-time systems have
+devoted themselves to effective design and efficient analyses of
+different recurrent task models to ensure that tasks can meet their
+specified deadlines. In most of these studies, \emph{task suspensions
+  are usually not allowed}. That is, after a job is released, the job
+is either executed or stays in the ready queue, but it is not moved to
+the suspension state.  Such an assumption is valid only under the
+following conditions: (1) the latency of the memory accesses and I/O
+peripherals is considered to be part of the worst-case execution time
+of a job, (2) there is no external device for accelerating the
+computation, and (3) there is no synchronization between different
+tasks on different processors in a multiprocessor or distributed
+computing platform.
+
+
+If a job can suspend itself before it finishes all the computation,
+the above assumption becomes invalid.  Self-suspension behaviour has
+become more visible in designing real-time embedded systems.  The
+suspension-oblivious approach, which considers the suspension time as
+computation, can be very pessimistic if the suspension time is
+long. Self-suspensions have been even more pervasive in many emerging
+embedded cyber-physical systems in which the computational components
+frequently interact with external and physical
+devices~\cite{Kang:rtss07,Kato_2011}.  Typically, the resulting
+suspension delays range from a few microseconds (e.g., a write
+operation on a flash drive~\cite{Kang:rtss07}) to a few hundreds of
+milliseconds (e.g., offloading computation to
+GPUs~\cite{Kato_2011,Liu_2014}).
+
+\jj{above paragraph should be rewritten.}
+
+There are two typical models for self-suspending sporadic task
+systems: 1) the dynamic self-suspension task model, and 2) the
+segmented self-suspension task model. In the \emph{dynamic}
+self-suspension task model, each sporadic task $\tau_i$ is further
+specified with its worst-case execution time $C_i$ and its worst-case
+self-suspension time $S_i$. In the \emph{segmented} self-suspension
+task model, the execution behaviour of a job of task $\tau_i$ is
+specified by interleaved computation segments and self-suspension
+intervals.  From the system designer's perspective, the dynamic
+self-suspension model provides a simple specification by ignoring the
+juncture of I/O access, computation offloading, or
+synchronization. However, if the suspending patterns can be
+characterized to form segmented patterns, the segmented
+self-suspension task model can be more appropriate.
+
+In this paper, we focus on preemptive fixed-priority scheduling for
+the dynamic self-suspension task model on a uniprocessor platform. To
+verify the schedulability of a given task set, this problem has been
+specifically studied in
+\cite{RTCSA-KimCPKH95,MingLiRTCSA1994,ECRTS-AudsleyB04,RTAS-AudsleyB04,huangpass:dac2015}.
+The recent report by Chen et al. and the erratum by Bletsas et
+al. \cite{BletsasReport2015} have shown that the analysis by
+introducing the suspension time of a higher-priority task as its
+arrival jitter in
+\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}
+is unsafe.  This misconception was unfortunately adopted in
+\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}
+to analyze the worst-case response time for partitioned multiprocessor
+real-time locking protocols.
+
+Moreover, one concept to consider suspension-time as blocking time was
+used by Jane W. S. Liu in her book titled "Real-Time Systems"
+\cite[Pages 164-165]{Liu:2000:RS:518501}, and was also implicitly used
+by Rajkumar, Sha, and Lehoczky \cite[Page
+267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending
+behaviour due to synchronization protocols in multiprocessor systems.
+However, there is no proof in
+\cite{Liu:2000:RS:518501,DBLP:conf/rtss/RajkumarSL88} to support the
+correctness of the provided schedulability tests.
+
+The contributions of this paper are as follows:
+\begin{compactitem}
+\item We provide a general analysis framework in
+  Theorem~\ref{theorem:general-framework}. This theorem analytically
+  dominates the existing results in
+  \cite{BletsasReport2015,huangpass:dac2015} and \cite[Pages
+  164-165]{Liu:2000:RS:518501}. The key observation in the analysis
+  framework is that the \emph{interference from higher-priority
+    self-suspending tasks can be arbitrarily modelled as jitter or
+    block terms}. Therefore, these existing analyses are just special
+  cases in the analysis framework.  Moreover, the proof of
+  Theorem~\ref{theorem:general-framework} also supports the
+  correctness of the analysis in \cite[Pages
+  164-165]{Liu:2000:RS:518501} and
+  \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88}.\footnote{A simplified
+    version of the proof of Theorem~\ref{theorem:general-framework} to
+    support the correctness of \cite[Pages
+  164-165]{Liu:2000:RS:518501} and \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} is
+  provided in\cite{ChenHuangNelissen}. }
+\item We develop a few strategies to decide which higher-priority
+  tasks should be classified to associate with jitter terms and which
+  higher-priority tasks should be classified to associate with block
+  terms. The methods are presented in
+  Section~\ref{sec:vector-assignment}.
+\item utilization bounds..
+\item evaluation results...
+\end{compactitem}
+
+
 
 
 \section{Task Model}
@@ -199,7 +308,30 @@ The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky \cite[P
 $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable.}
 \end{quote}
   
-However, there is no proof in \cite{Liu:2000:RS:518501,DBLP:conf/rtss/RajkumarSL88} to support the correctness of the above tests. We will support the correctness of the above analysis by proving a more powerful analysis framework.
+However, there is no proof in
+\cite{Liu:2000:RS:518501,DBLP:conf/rtss/RajkumarSL88} to support the
+correctness of the above tests. 
+
+\subsection{Suspension-Oblivious Analysis}
+
+A constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+\begin{equation}
+\label{eq:TDA-SO}
+\exists t \mid 0 < t \leq D_k, \qquad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} (C_i+S_i) \leq t.
+\end{equation}
+
+This is the most pessimistic analysis. It is not difficult to see that
+the test in Eq.~\eqref{eq:TDA-suspension} dominates that in
+Eq.~\eqref{eq:TDA-SO}.
+
+\begin{Lemma}
+  The schedulability test of task $\tau_k$ in
+  Eq.~\eqref{eq:TDA-suspension} dominates that in
+  Eq.~\eqref{eq:TDA-SO}.
+\end{Lemma}
+\begin{proof}
+  This is rather trivial, and the proof is omitted.
+\end{proof}
 
 \section{Our General Analysis Framework}
 
@@ -288,8 +420,7 @@ under $0 < t \leq T_3$ that
        4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t.
      \end{equation}}Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+6}{10}}\cdot 4 + \ceiling{\frac{32+1}{19}}\cdot 6=32$.
 \end{itemize}
-Among the above four cases, the test in Case 4, i.e.,
-Eq.~(\ref{eq:example-case4}), is the tightest. By
+Among the above four cases, the tests in Cases 2 and 4 are tighter. By
 Corollary~\ref{corollary:general-framework}, task $\tau_3$ is
 schedulable by the fixed-priority scheduling policy.
 
@@ -301,15 +432,19 @@ tests in Eq.~(\ref{eq:TDA-jitter}) and Eq.~(\ref{eq:TDA-suspension}).
   \label{theorem:dominance}
   The schedulability test in
   Corollary~\ref{corollary:general-framework} dominates the
-  schedulability tests in Eq.~(\ref{eq:TDA-jitter}) and Eq.~(\ref{eq:TDA-suspension}).
+  schedulability tests in Eq.~(\ref{eq:TDA-jitter}),
+  Eq.~(\ref{eq:TDA-suspension}), and Eq.~\eqref{eq:TDA-SO}.
 \end{theorem}
 \begin{proof}
   The dominance of Eq.~(\ref{eq:TDA-jitter}) can be easily seen by
   considering the vector assignment $x_1=x_2=\cdots=x_{k-1}=0$. The
   resulting test in Eq.~(\ref{eq:TDA-suspension-tighter}) is identical
-  to Eq.~(\ref{eq:TDA-suspension}) for this vector assignment.
+  to Eq.~(\ref{eq:TDA-suspension}) for this vector assignment. Since
+  Eq.~\eqref{eq:TDA-suspension} dominates Eq.~\eqref{eq:TDA-SO}, we
+  only have to prove that Corollary~\ref{corollary:general-framework} dominates 
+Eq.~(\ref{eq:TDA-suspension}).
 
-  We now prove the dominance of Eq.~(\ref{eq:TDA-suspension}) by
+  We now prove that Eq.~(\ref{eq:TDA-suspension}) is dominated by
   considering the vector assignment $\vec{x}$ in which 
   \begin{equation*}
     x_i =
@@ -344,7 +479,8 @@ tests in Eq.~(\ref{eq:TDA-jitter}) and Eq.~(\ref{eq:TDA-suspension}).
     \end{equation}
     By the fact that $B_k$ is defined as $S_k + \sum_{i=1}^{k-1}(x_i
     S_i + (1-x_i) C_i)$, and $Q_1^{\vec{x}} \geq 0$, the above test in
-    Eq.~(\ref{eq:dominance-proof2}) is analytically tighter than that
+    Eq.~(\ref{eq:dominance-proof2}) is analytically tighter than or
+    the same as that
     in Eq.~(\ref{eq:TDA-suspension}), which concludes the proof.
 \end{proof}
 
@@ -623,14 +759,14 @@ The above inequation implies that the minimum $\theta$ with $\theta > 0$ such th
 $C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j = \theta$
  is larger than or equal to $f_k-t_k^* \geq f_k-t_k$. 
 
-However, the above condition requires the knowledge of $\sigma_i$. It is straightforward to see that $\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j$ reaches the worst case if $X_j$ is the largest. Since $X_j$ is upper bounded bo $Q_j^{\vec{x}}$ defined in Theorem~\ref{theorem:general-framework}, we reach the conclusion.
+However, the above condition requires the knowledge of $\sigma_i$. It is straightforward to see that $\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j$ reaches the worst case if $X_j$ is the largest. Since $X_j$ is upper bounded by $Q_j^{\vec{x}}$ defined in Theorem~\ref{theorem:general-framework}, we reach the conclusion.
 \end{appProof}
 
 To illustrate Step 1 in the above proof, we also provide one concrete example. Consider a task system with the following 4 tasks:
 \begin{itemize}
-\item $T_1 = 6, C_1 = 1, S_1 = 1$,
-\item $T_2 = 10, C_2 = 1, S_2 = 6$,
-\item $T_3 = 18, C_3 = 4, S_3 = 1$,
+\item $T_1 = 6, C_1 = 1, S_1 = 1, x_1=1$,
+\item $T_2 = 10, C_2 = 1, S_2 = 6, x_2=0$,
+\item $T_3 = 18, C_3 = 4, S_3 = 1, x_3=1$,
 \item $T_4 = 20, C_4 = 5, S_4 = 0$.
 \end{itemize}
 
@@ -644,7 +780,7 @@ of time, the first job of task $\tau_2$ suspends itself again from
 time $6+2\epsilon$ to $7$.   In this schedule, $f_k$ is set to $20-\epsilon$.
 
 We define $t_4$ as $7$. Then, we set $t_3$ to $6$. When considering
-task $\tau_2$, since it belongs to ${\bf T}_1$, we greedily set $t_2$
+task $\tau_2$, since it belongs to ${\bf T}_0$, we greedily set $t_2$
 to $t_3=6$ and the residual workload $C_2'$ is $1$. Then, $t_1$ is set
 to $4+\epsilon$. In the above schedule, the idle time from
 $4+\epsilon$ to $20-\epsilon$ is at most $2 = S_1+S_3$. We have to
@@ -768,6 +904,6 @@ Therefore, the utilization bound for a given $0 \leq \gamma \leq 1$  is $\ln(\fr
 
 {\bf Acknowledgement:} This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/).
 
-\bibliography{../bibliography/biblio}{}
+\bibliography{../bibliography/biblio-summary,../bibliography/biblio}{}
 
 \end{document}
