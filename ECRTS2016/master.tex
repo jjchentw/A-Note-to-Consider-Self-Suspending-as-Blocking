@@ -1149,22 +1149,26 @@ for any $t > 0$ and given $\vec{x}$.
   requires only $O(k)$ time complexity.
 \end{theorem}
 \begin{proof}
-  
+  The correctness to test Eq.~\eqref{eq:linear-time-test} is due to
+  the derivation in Eq.~\eqref{eq:linear-approximation-upper-bound}
+  and Corollary~\ref{corollary:general-framework}. The other
+  statements in this theorem are based on the above discussion in this
+  section and simple observations.
 \end{proof}
 
 
-\begin{Corollary}
-  \label{corollary:linear-time-overall-test}
-  Considering task $\tau_k$ from $\tau_1, \tau_2, \ldots, \tau_n$, the
-  time complexity to test the schedulability of all these $n$ tasks is
-  $O(n)$ by using the test in
-  Theorem~\ref{theorem:linear-time-test}. Therefore, the amortized
-  time complexity to test task $\tau_k$ by using the test in
-  Theorem~\ref{theorem:linear-time-test} is constant.
-\end{Corollary}
-\begin{proof}
+% \begin{Corollary}
+%   \label{corollary:linear-time-overall-test}
+%   Considering task $\tau_k$ from $\tau_1, \tau_2, \ldots, \tau_n$, the
+%   time complexity to test the schedulability of all these $n$ tasks is
+%   $O(n)$ by using the test in
+%   Theorem~\ref{theorem:linear-time-test}. Therefore, the amortized
+%   time complexity to test task $\tau_k$ by using the test in
+%   Theorem~\ref{theorem:linear-time-test} is constant.
+% \end{Corollary}
+% \begin{proof}
   
-\end{proof}
+% \end{proof}
 
 \subsection{Iterative Steps}
 
