@@ -1,4 +1,4 @@
-\documentclass[10pt,conference]{IEEEtran}
+\documentclass[10pt,conference,preprint]{IEEEtran}
 %\documentclass[conference, onecolumn]{IEEEtran}
 %\documentclass[10pt,twocolumn]{article} 
 %\usepackage{latex8}
@@ -101,12 +101,12 @@ align =left,
 \newif\ifpaper
 \paperfalse
 
-
+\pagestyle{plain}
 
 \begin{document}
 
 \title{\LARGE Interference from Higher-Priority Self-Suspending Tasks Can Be
-  Arbitrarily Modelled as Jitter or Block Terms}
+  Arbitrarily Modelled as Jitter or Carry-In Terms}
 
 \author{Jian-Jia Chen, Wen-Hung Huang, and Geoffrey Nelissen\\
 TU Dortmund University, Germany\\
@@ -126,24 +126,25 @@ Email: grrpn@isep.ipp.pt
 The periodic/sporadic task model has been recognized as the basic
 model for real-time systems with recurring executions.  A sporadic
 real-time task $\tau_i$ is characterized by its \emph{minimum
-  inter-arrival time} (also called period) $T_i$ and its
+  inter-arrival time} $T_i$ and its
 \emph{relative deadline} $D_i$. A sporadic task defines an infinite
 sequence of task instances, also called \emph{jobs}, that arrive with
 the minimum inter-arrival time constraint. When a job of task $\tau_i$
 arrives at time $t$, the job should finish no later than its
 \emph{absolute deadline} $t+D_i$, and the next job of task $\tau_i$
 can only be released no earlier than $t+T_i$. For the periodic task
-model, the next job is released at time $t+T_i$.
+model, the next job is released at time $t+T_i$, in which $T_i$ is
+also referred to as the \emph{period} of task $\tau_i$.
 
 
 The seminal work by Liu and Layland \cite{Liu_1973} considered the
 scheduling of periodic tasks and presented the schedulability analyses
 based on utilization bounds to verify whether the deadlines are met or
-not.  For over half a centry, researchers in real-time systems have
+not.  For over decades, researchers in real-time systems have
 devoted themselves to effective design and efficient analyses of
 different recurrent task models to ensure that tasks can meet their
-specified deadlines. In most of these studies, \emph{task suspensions
-  are usually not allowed}. That is, after a job is released, the job
+specified deadlines. In most of these studies, \emph{a task usually does not
+ suspend itself}. That is, after a job is released, the job
 is either executed or stays in the ready queue, but it is not moved to
 the suspension state.  Such an assumption is valid only under the
 following conditions: (1) the latency of the memory accesses and I/O
@@ -181,8 +182,8 @@ specified by interleaved computation segments and self-suspension
 intervals.  From the system designer's perspective, the dynamic
 self-suspension model provides a simple specification by ignoring the
 juncture of I/O access, computation offloading, or
-synchronization. However, if the suspending patterns can be
-characterized to form segmented patterns, the segmented
+synchronization. However, if the suspending behaviour can be
+characterized by using a segmented pattern, the segmented
 self-suspension task model can be more appropriate.
 
 In this paper, we focus on preemptive fixed-priority scheduling for
@@ -190,7 +191,7 @@ the dynamic self-suspension task model on a uniprocessor platform. To
 verify the schedulability of a given task set, this problem has been
 specifically studied in
 \cite{RTCSA-KimCPKH95,MingLiRTCSA1994,ECRTS-AudsleyB04,RTAS-AudsleyB04,huangpass:dac2015}.
-The recent report by Chen et al. and the erratum by Bletsas et
+The recent report by Chen et al. and the report by Bletsas et
 al. \cite{BletsasReport2015} have shown that the analysis by
 introducing the suspension time of a higher-priority task as its
 arrival jitter in
@@ -214,13 +215,12 @@ The contributions of this paper are as follows:
 \begin{compactitem}
 \item We provide a general analysis framework in
   Theorem~\ref{theorem:general-framework}. This theorem analytically
-  dominates the existing results in
+  dominates all the existing results in
   \cite{BletsasReport2015,huangpass:dac2015} and \cite[Pages
-  164-165]{Liu:2000:RS:518501}. The key observation in the analysis
+  164-165]{Liu:2000:RS:518501}, excluding the flawed ones. The key observation in the analysis
   framework is that the \emph{interference from higher-priority
     self-suspending tasks can be arbitrarily modelled as jitter or
-    block terms}. Therefore, these existing analyses are just special
-  cases in the analysis framework.  Moreover, the proof of
+    carry-in terms}. Moreover, the proof of
   Theorem~\ref{theorem:general-framework} also supports the
   correctness of the analysis in \cite[Pages
   164-165]{Liu:2000:RS:518501} and
@@ -231,7 +231,7 @@ The contributions of this paper are as follows:
   provided in\cite{ChenHuangNelissen}. }
 \item We develop a few strategies to decide which higher-priority
   tasks should be classified to associate with jitter terms and which
-  higher-priority tasks should be classified to associate with block
+  higher-priority tasks should be classified to associate with carry-in
   terms. The methods are presented in
   Section~\ref{sec:vector-assignment}.
 \item utilization bounds..
@@ -257,25 +257,50 @@ of a job is defined as its finishing time minus its release
 time. Successive jobs of the same task are required to execute in
 sequence. Associated with each task $\tau_i$ are a period (or minimum inter-arrival time) $T_i$, which
 specifies the minimum time between two consecutive job releases of
-$\tau_i$, and a relative deadline $D_i$, which specifies the maximum amount of time a job can take to complete its execution after its release, i.e., $d_{i,j}=r_{i,j}+D_i$. The worst-case response
-time $R_i$ of a task $\tau_i$ is the maximum response time among all its
-jobs.  The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
+$\tau_i$, and a relative deadline $D_i$, which specifies the maximum
+amount of time a job can take to complete its execution after its
+release, i.e., $d_{i,j}=r_{i,j}+D_i$. 
+ The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
-In this paper, we focus on constrained-deadline task systems, in which $D_i \leq T_i$ for every task $\tau_i$. We only consider \emph{preemptive fixed-priority scheduling on a single processor}, in which each task is assigned with a unique priority level. We assume that the priority assignment is given.
+In this paper, we focus on constrained-deadline task systems, in which
+$D_i \leq T_i$ for every task $\tau_i$. We only consider
+\emph{preemptive fixed-priority scheduling on a single processor}, in
+which each task is assigned with a unique priority level. We assume
+that the priority assignment is given. The worst-case response
+time $R_i$ of a task $\tau_i$ is the maximum response time among all its
+jobs. A schedulability test (analysis) of a task $\tau_k$
+is to verify whether the worst-case response time of the task is no more than the associated relative deadline $D_k$.
 
 %We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. 
-We assume that the tasks are numbered in a decreasing priority order. That is, a task with a smaller index has higher priority than any task with a higher index, i.e., task $\tau_i$ has a higher-priority level than task $\tau_{i+1}$. When performing the schedulability analysis of a specific task $\tau_k$, we assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines, i.e., that $R_i \leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$. 
+We assume that the tasks are numbered in a decreasing priority order. That is, a task with a smaller index has higher priority than any task with a higher index, i.e., task $\tau_i$ has a higher-priority level than task $\tau_{i+1}$. \emph{When performing the schedulability analysis of a specific task $\tau_k$, we will implicitly assume that $\tau_1, \tau_2, \ldots, \tau_{k-1}$ are already verified to meet their deadlines, i.e., that $R_i \leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$. }
 
 \section{Existing Analyses}
+\label{sec:existing-analyses}
 
 To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we usually need to quantify the worst-case interference caused by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when $\tau_k$ and all the higher-priority tasks release a job synchronously and the subsequent jobs are released as early as possible (i.e., with a rate equal to their period).  However, as proven in \cite{ecrts15nelissen}, this definition of the
 critical instant does not hold for self-suspending sporadic tasks.  
 
+\subsection{Suspension-Oblivious Analysis}
+The simplest approach is to convert the suspension time to computation
+time. Therefore, a constrained-deadline task $\tau_k$ can be feasibly
+scheduled by the fixed-priority scheduling if
+\begin{equation}
+\label{eq:TDA-SO}
+\exists t \mid 0 < t \leq D_k, \qquad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} (C_i+S_i) \leq t.
+\end{equation}
+
 \subsection{Model the Back-to-Back Hit as Jitter}
 \label{sec:jitter}
 
-
-A constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+Another approach is to model the impact due to self-suspension as
+jitter.  The recent report by Chen et al. and the report by Bletsas et
+al. \cite{BletsasReport2015} have shown that the analysis by
+introducing the suspension time of a higher-priority task as its
+arrival jitter in
+\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}
+is unsafe.  A rather safe way is to quantify the jitter of a higher-priority
+task $\tau_i$ as $D_i-C_i$. Therefore, a constrained-deadline task
+$\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
 \begin{equation}
 \label{eq:TDA-jitter}
 \exists t \mid 0 < t \leq D_k, \qquad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+D_i-C_i}{T_i}} C_i \leq t.
@@ -295,32 +320,24 @@ Therefore,
 B_k = S_k + \sum_{i=1}^{k-1} b_i.
 \end{equation}
 
-In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it is stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
-\begin{equation}
-\label{eq:TDA-suspension}
-\exists t \mid 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
-\end{equation}
+In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it is stated that if $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then task $\tau_k$ can be feasibly scheduled by using rate-monotonic scheduling if $T_i=D_i$ for every task $\tau_i$ in the given task set. 
   
 
-The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending behaviour due to synchronization protocols in multiprocessor systems. To account for the self-suspending behaviour, it reads as follows:\footnote{We rephrased the wordings and notations to be consistent with this paper.}
+The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending behaviour due to synchronization protocols in multiprocessor systems. To account for the self-suspending behaviour, it reads as follows:\footnote{We rephrased the wordings and notation to be consistent with this paper.}
 \begin{quote}
 \emph{For each higher priority job $J_i$ on the processor that suspends on global semaphores or for other reasons, add the term $min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $J_i$ can suspend itself. The sum ... yields $B_k$, which in turn can be used in 
 $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable.}
 \end{quote}
   
+If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
+\begin{equation}
+\label{eq:TDA-suspension}
+\exists t \mid 0 < t \leq D_k, \qquad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
+\end{equation}
 However, there is no proof in
 \cite{Liu:2000:RS:518501,DBLP:conf/rtss/RajkumarSL88} to support the
 correctness of the above tests. 
-
-\subsection{Suspension-Oblivious Analysis}
-
-A constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
-\begin{equation}
-\label{eq:TDA-SO}
-\exists t \mid 0 < t \leq D_k, \qquad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} (C_i+S_i) \leq t.
-\end{equation}
-
-This is the most pessimistic analysis. It is not difficult to see that
+It is not difficult to see that
 the test in Eq.~\eqref{eq:TDA-suspension} dominates that in
 Eq.~\eqref{eq:TDA-SO}.
 
@@ -332,6 +349,8 @@ Eq.~\eqref{eq:TDA-SO}.
 \begin{proof}
   This is rather trivial, and the proof is omitted.
 \end{proof}
+
+
 
 \section{Our General Analysis Framework}
 
@@ -346,7 +365,9 @@ was already shown in the previous works, e.g., Lemma~3 in
 is a safe upper bound on the worst-case response time of task $\tau_k$
 in the original task system.
 
-Our key result in this paper is the following theorem:
+Note that for the rest of this section we implicitly assume that $R_i
+\leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$.  Our key result in
+this paper is the following theorem:
 
 \begin{theorem}
    \label{theorem:general-framework}
@@ -358,10 +379,12 @@ Our key result in this paper is the following theorem:
    {\small \begin{equation} \label{eq:TDA-suspension-tighter0} 
        C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t,
      \end{equation}}where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$.
- \end{theorem}
-
- With Theorem~\ref{theorem:general-framework}, we can
- directly have the following corollary.
+ \end{theorem} 
+ We will explain the resulting properties from
+ Theorem~\ref{theorem:general-framework} first, by leaving the proof
+ to Section~\ref{sec:proof-th1} since it is pretty long.  With
+ Theorem~\ref{theorem:general-framework}, we can directly have the
+ following corollary.
 
  \begin{Corollary}
    \label{corollary:general-framework}
@@ -372,6 +395,8 @@ Our key result in this paper is the following theorem:
        C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t,
      \end{equation}}where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$, then a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling.
  \end{Corollary}
+ We will show later that Corollary~\ref{corollary:general-framework} in fact
+ dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
 
 \subsection{An Illustrative Example and Dominance}
 
@@ -426,14 +451,14 @@ schedulable by the fixed-priority scheduling policy.
 
 In fact, the following theorem shows that the test in Corollary
 \ref{corollary:general-framework} analytically dominates the existing
-tests in Eq.~(\ref{eq:TDA-jitter}) and Eq.~(\ref{eq:TDA-suspension}).
+tests in Eq.~\eqref{eq:TDA-SO}, Eq.~(\ref{eq:TDA-jitter}) and Eq.~(\ref{eq:TDA-suspension}).
 
 \begin{theorem}
   \label{theorem:dominance}
   The schedulability test in
   Corollary~\ref{corollary:general-framework} dominates the
-  schedulability tests in Eq.~(\ref{eq:TDA-jitter}),
-  Eq.~(\ref{eq:TDA-suspension}), and Eq.~\eqref{eq:TDA-SO}.
+  schedulability tests in Eq.~\eqref{eq:TDA-SO}, Eq.~(\ref{eq:TDA-jitter}), and
+  Eq.~(\ref{eq:TDA-suspension}).
 \end{theorem}
 \begin{proof}
   The dominance of Eq.~(\ref{eq:TDA-jitter}) can be easily seen by
@@ -466,7 +491,7 @@ Eq.~(\ref{eq:TDA-suspension}).
 \Rightarrow\;\;&C_k'+Q_1^{\vec{x}}+\sum_{i=1}^{k-1}\ceiling{\frac{\theta+(1-x_i)(D_i-C_i)}{T_i}}
       C_i \leq \theta.
     \end{align}
-    Moreover, by the fact that $D_i \leq T_i$ for $i=1,2,\ldots,k-1$,
+    Moreover, by the fact that $D_i \leq T_i$ and $x_i\in \setof{0, 1}$ for $i=1,2,\ldots,k-1$,
     we also have $\ceiling{\frac{\theta+(1-x_i)(D_i-C_i)}{T_i}} C_i
     \leq \ceiling{\frac{\theta+(1-x_i)T_i}{T_i}} C_i = (1-x_i) C_i +
     \ceiling{\frac{\theta}{T_i}} C_i$.  
@@ -487,6 +512,7 @@ Eq.~(\ref{eq:TDA-suspension}).
 
 
 \subsection{Proof of Theorem~\ref{theorem:general-framework}}  
+\label{sec:proof-th1}
 
 We now provide the proof to support the correctness of the test in
 Theorem~\ref{theorem:general-framework}.  Our proof strategy is to
@@ -496,7 +522,7 @@ higher-priority tasks when adopting
 Eq.~(\ref{eq:TDA-suspension-tighter0}) as the response time analysis.
 
 Throughout the proof, we consider any arbitrary assignment
-$\vec{x}$. For the sake of notational brevity, we classify the $k-1$
+$\vec{x}$, in which $x_i$ is either $0$ or $1$. For the sake of notational brevity, we classify the $k-1$
 higher-priority tasks into two sets: ${\bf T}_0$ and ${\bf T}_1$. A
 task $\tau_i$ is in ${\bf T}_0$ if $x_i$ is $0$; otherwise, it is in
 ${\bf T}_1$.
@@ -527,8 +553,36 @@ In a preemptive fixed-priority schedule, if the worst-case response time of task
 Since the worst-case response time of task $\tau_i$ is no more than its period, any job $\tau_{i,j}$ of task $\tau_i$ completes its execution before the release of the next job $\tau_{i,j+1}$. Hence, the execution of $\tau_{i,j}$ does not directly interfere with the execution of any other job of $\tau_i$, which then depends only on the schedule of the higher priority jobs. Furthermore, as stated in Property~\ref{prop:lower-priority}, the removal of $\tau_{i,j}$ has no impact on the schedule of the higher-priority jobs, thereby implying that the other jobs of task $\tau_i$ are not affected by the removal of $\tau_{i,j}$.
 \end{proof}
 
-With the above properties, we now present the proof of
-Theorem~\ref{theorem:general-framework} as follows:
+
+With the above properties, we can present the detailed proof of
+Theorem~\ref{theorem:general-framework}. However, the proof involves
+several transformation steps. To illustrate some important steps in
+the proof, we also provide one concrete example. Consider a task
+system with the following 4 tasks:
+\begin{itemize}
+\item $T_1 = 6, C_1 = 1, S_1 = 1, x_1=1$,
+\item $T_2 = 10, C_2 = 1, S_2 = 6, x_2=0$,
+\item $T_3 = 18, C_3 = 4, S_3 = 1, x_3=1$,
+\item $T_4 = 20, C_4 = 5, S_4 = 0$.
+\end{itemize}
+
+Figure~\ref{fig:example} demonstrates a schedule for the jobs of the
+above 4 tasks. We assume that the first job of task $\tau_1$ arrives
+at time $4+\epsilon$ with a very small $\epsilon > 0$. The first job
+of task $\tau_2$ suspends itself from time $0$ to time $5+\epsilon$,
+and is blocked by task $\tau_1$ from time $5+\epsilon$ to time
+$6+\epsilon$. After some very short computation with $\epsilon$ amount
+of time, the first job of task $\tau_2$ suspends itself again from
+time $6+2\epsilon$ to $7$.   
+
+
+
+\begin{figure*}[t]
+  \centering
+  \input{../figures/example/example-body.tex}
+\caption{An illustrative example of Step 1 in the proof of Theorem~\ref{theorem:general-framework}.}
+\label{fig:example}  
+\end{figure*}
 
 
 \begin{appProof}{Theorem~\ref{theorem:general-framework}}
@@ -592,6 +646,16 @@ The above construction of $\Psi^{k-1}, \Psi^{k-2}, \ldots, \Psi^1$ is repeated u
 %(Note that $J_j$ is defined as the carry-in job of task $\tau_j$ at time $t_k$.) Therefore, the reduced schedule after the above procedure does not change the execution of $J_j$ after time $t_j$ if $\tau_j$ is in ${\bf T}_0$. For a task $\tau_j$ in ${\bf T}_1$, its corresponding carry-in job $J_j$ may be changed, but its execution after $t_j$ remains identical as in the original schedule. 
 %Therefore, the resulting schedule above does not change any execution behavior of the (at most) $k-1$ carry-in jobs at time $t_k$.
 
+
+\noindent\underline{An example of the procedures in Step 1:}  
+In this schedule illustrated in Figure~\ref{fig:example}, $f_k$ is set to $20-\epsilon$.
+We define $t_4$ as $7$. Then, we set $t_3$ to $6$. When considering
+task $\tau_2$, since it belongs to ${\bf T}_0$, we greedily set $t_2$
+to $t_3=6$ and the residual workload $c_2^*$ is $1$. Then, $t_1$ is set
+to $4+\epsilon$. In the above schedule, the idle time from
+$4+\epsilon$ to $20-\epsilon$ is at most $2 = S_1+S_3$. We have to
+further consider one job of task $\tau_2$ arrived before time $t_1$
+with execution time $C_2$.
 ~
 
 \noindent{\bf Step 2: Analyzing the final reduced schedule $\Psi^1$}
@@ -606,7 +670,7 @@ where $\operatorname{exec}(t_1, t)$ is the amount of time during which the proce
 
 If $t_i < t_{i+1}$, the processor may idle in the time interval $[t_i,
 t_{i+1})$ in $\Psi^1$. Suppose that $\sigma_i$ is the sum of the idle time in this
-interval $[t_i, t_{i+1})$ in $\Psi^1$. Therefore, we have
+interval $[t_i, t_{i+1})$ in $\Psi^1$.  If $t_i$ is equal to $t_{i+1}$, then $\sigma_i$ is set to $0$. Therefore, we have
 \begin{align}
 \label{eq:sumof-sigma}
 \operatorname{idle}(t_1, t) \leq \sum_{i: t_i < t} \sigma_i.
@@ -619,9 +683,9 @@ $\tau_k'$ in $\Psi^1$, we only focus on the execution patterns of the
 tasks $(\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k')$. According to
 Step 1, we should consider two cases:
 \begin{itemize}
-\item If task $\tau_j$ is in ${\bf T}_1$, there is no job arrived
+\item If task $\tau_j$ is in ${\bf T}_1$, there is no job of task $\tau_j$ arrived
   before $t_j$ in $\Psi^1$. This corresponds to both subcases in case
-  (a) in Step 1.  In this case, for any $\Delta \geq 0$, the workload contributed from task
+  (a) in Step 1.  In this case, for any $\Delta \geq 0$, the workload, defined as $W_j^1(\Delta)$, contributed from task
   $\tau_j$ from $t_j$ to $t_j+\Delta$ that is executed on the
   processor is at most
 \begin{equation}
@@ -630,7 +694,9 @@ Step 1, we should consider two cases:
 \end{equation}
 \item If task $\tau_j$ is in ${\bf T}_0$, there may be a job arrived
   before $t_j$ with residual workload $c_j^*$ at time $t_j$.  This
-  corresponds to case (b) in Step 1.  There are two subcases.
+  corresponds to case (b) in Step 1.  In this case, for any $\Delta
+  \geq 0$, the workload, defined as $\widehat{W}_j^0(\Delta, c_j^*)$, contributed from
+  task $\tau_j$ from $t_j$ to $t_j+\Delta$ has to consider two subcases:
   \begin{itemize}
   \item If the residual workload $c_j^*$
   of task $\tau_j$ is $0$, the earliest arrival time of task $\tau_j$
@@ -694,7 +760,180 @@ Moreover, $\forall t \mid t_k \leq t < f_k$, we have
 C_k'+\sum_{j=1}^{k-1} x_j\cdot (W_j^1(t-t_j) +\sigma_j) + (1-x_j)\cdot W_j^0(t-t_j) > t-t_1.
 \end{equation}
 
+\noindent\underline{An example of the procedures in Step 2:} 
+In the example used in Figure~\ref{fig:example}, we have $\sigma_1=1,
+\sigma_2=0$, and $\sigma_3=1$. The corresponding functions
+$W_1^1(t-t_1)$, $W_2^0(t-t_2)$, $W_3^1(t-t_3)$ are illustrated in
+Figure~\ref{fig:example-step2}. Therefore, it is rather clear that all
+the conditions in Eq.~\eqref{eq:exec_plus_idle-2} and
+Eq.~\eqref{eq:exec_plus_idle-3} hold by simple arithmetics.
+
+
+\begin{figure}[t]
+  \centering
+
+		\def\ux{0.32cm}\def\uy{0.5cm} 
+		\begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
+		\tikzset{
+			task/.style={fill=#1,  rectangle, text height=.3cm},
+			task1a/.style={task=green!30},
+			task1b/.style={task=green},
+			task2a/.style={task=orange!30},
+			task2b/.style={task=orange, minimum width=1mm},
+			task3a/.style={task=pink, minimum width=1mm},
+			task3b/.style={task=pink!80, minimum width=1mm},
+			task4a/.style={task=cyan, minimum width=1mm},
+			task4b/.style={task=cyan!50},
+			task5/.style={task=blue},
+			task6/.style={task=purple},
+			task7/.style={minimum height=\ux,draw},
+			task8/.style={minimum height=\ux,draw,thick},
+			task9/.style={task=gray,minimum height=0.7cm,draw},
+		}
+		\tikzstyle{jobs}=[ fill=black!50];
+		
+		\draw[->] (0,0) -- coordinate (xaxis) (25,0) node[anchor=west] {$t$};
+		\foreach \x in {0,...,24}{
+			\draw[-](\x,0.1) -- (\x,-0.1)
+			node[below] {\footnotesize $\x$};
+			
+		}
+		\draw[->] (0,0) node[anchor=east] {}-- coordinate (xaxis) (0,4.5);
+		\foreach \y in {0,...,4}{
+			\draw[-](0.1, \y) -- (-0.1, \y)
+			node[left] {\small $\y$};
+			
+		}
+
+                \draw (20, -1.5) node {\small $f_4$};
+                \draw (7, -1.5) node {\small $t_4$};
+                \draw (6, -1.5) node {\small $t_3$};
+                \draw (6, -2) node {\small $t_2$};
+                \draw (4, -1.5) node {\small $t_1$};
+
+                \draw[-,thick] (4,0) -- (5, 1) -- (10, 1) -- (11, 2) -- (16, 2)
+                -- (17, 3) -- (22, 3) -- (23, 3) -- (24, 3);
+                \draw[-,dashed] (6,0) -- (7, 1) -- (8, 2) -- (17, 2) -- (18, 3)
+                -- (24, 3);
+                \draw[-,dotted] (6,0) -- (10, 4) -- (24, 4);
+		\end{tikzpicture}    
+  \caption{The workload function for the three higher-priority tasks in Figure~\ref{fig:example-step2}. Solid line: $W_1^1(t-t_1)$, Dashed line: $W_2^0(t-t_2)$, Dotted line: $W_3^1(t-t_3)$, where the functions are $0$ if $t-t_j < 0$ for $j=1,2,3$.}
+  \label{fig:example-step2}
+\end{figure}
+
 {\bf Step 3: Creating Safe Response-Time Analysis}
+
+
+\begin{figure*}[t]
+  \centering
+
+		\def\ux{0.25cm}\def\uy{0.5cm} 
+		\begin{tikzpicture}[y=\uy, font=\sffamily,thick]  
+		\tikzset{
+			task/.style={fill=#1,  rectangle, text height=.3cm},
+			task1a/.style={task=green!30},
+			task1b/.style={task=green},
+			task2a/.style={task=orange!30},
+			task2b/.style={task=orange, minimum width=1mm},
+			task3a/.style={task=pink, minimum width=1mm},
+			task3b/.style={task=pink!80, minimum width=1mm},
+			task4a/.style={task=cyan, minimum width=1mm},
+			task4b/.style={task=cyan!50},
+			task5/.style={task=blue},
+			task6/.style={task=purple},
+			task7/.style={minimum height=\ux,draw},
+			task8/.style={minimum height=\ux,draw,thick},
+			task9/.style={task=gray,minimum height=0.7cm,draw},
+		}
+		\tikzstyle{jobs}=[ fill=black!50];
+
+		\begin{scope}[shift={(0,0)}]
+		
+		\draw[<-](2,1.1) -- (2,0);
+		\draw[<-](5,1.1) -- (5,0);
+		\draw[<-](8,1.1) -- (8,0);
+		\draw[<-](11,1.1) -- (11,0);
+		
+		
+		\draw[->] (0,0) node[anchor=east] {$\tau_1$}-- coordinate (xaxis) (12.5,0);
+
+		
+		\node[task7, minimum width=2*\ux,
+		anchor=south west]at (3, 0){};
+		\node[task7, minimum width=2*\ux,
+		anchor=south west]at (5, 0){};
+		\node[task7, minimum width=2*\ux,
+		anchor=south west]at (8, 0){};
+		\node[task7, minimum width=2*\ux,
+		anchor=south west]at (11, 0){};
+		\draw[(-), thin] (2, 1.5) -- (3, 1.5);
+		\node[anchor=south] at (2.5, 1.5) {$\sum_{i=1}^{k-1} x_i \cdot \sigma_i=2$};
+
+		\end{scope}
+		
+		
+		\begin{scope}[shift={(0,-1.5)}]
+		%%timeline
+		
+		
+		\draw[<-](2.5,1.1) -- (2.5,0);
+		\draw[<-](3,1.1) -- (3,0);
+		\draw[<-](8,1.1) -- (8,0);
+		
+		
+		\node[task7, minimum width=2*\ux,
+		anchor=south west] at (3.5, 0){};
+		\node[task7, minimum width=2*\ux,
+		anchor=south west] at (4, 0){};
+		\node[task7, minimum width=2*\ux,
+		anchor=south west] at (8.5, 0){};
+
+		\draw[->] (0,0)node[anchor=east] {$\tau_2$} -- coordinate (xaxis) (12.5,0);
+		
+		
+		\end{scope}
+
+		\begin{scope}[shift={(0,-3)}]
+		%%timeline
+		
+		\draw[<-](2.5,1.1) -- (2.5,0);
+		\draw[<-](11.5,1.1) -- (11.5,0);
+		
+
+		\draw[->] (0,0)node[anchor=east] {$\tau_3$} -- coordinate (xaxis) (12.5,0);
+		
+		\node[task7, minimum width=2*\ux,
+		anchor=south west]  at ( 4.5, 0){};
+		\node[task7, minimum width=6*\ux,
+		anchor=south west]  at ( 5.5, 0){};
+		
+		\end{scope}
+
+		\begin{scope}[shift={(0,-4.5)}]
+		\draw[->] (0,0) node[anchor=east] {$\tau_4$}-- coordinate (xaxis) (12.5,0);
+		\draw[<-](3.5,1.1) -- (3.5,0)node[anchor=north] {$$};
+				\node[task7, minimum width=4*\ux,anchor=south west]at (7, 0){};
+		\node[task7, minimum width=6*\ux,anchor=south west]at (9, 0){};
+		
+		\foreach \x in {0,...,24}{
+			\draw[-](.5*\x,0.1) -- (.5*\x,-0.1)
+			node[below] {\small $\x$};
+			
+		}
+
+                \draw (10, -1.5) node {\small $f_4$};
+                \draw (3, -1.5) node {\small $t_4^*$};
+                \draw (3.5, -1.5) node {\small $t_4$};
+                \draw (2.5, -1.5) node {\small $t_3^*$};
+                \draw (2.5, -2.2) node {\small $t_2^*$};
+                \draw (2, -1.5) node {\small $t_1^*$};
+		\end{scope}
+		
+		\end{tikzpicture}  
+
+\caption{An illustrative example of Step 3 in the proof of Theorem~\ref{theorem:general-framework} based on an \emph{imaginary} schedule.}
+\label{fig:example-proof-final}  
+\end{figure*}
 
 This step constructs a safe response-time analysis based on the
 conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
@@ -731,7 +970,7 @@ Eqs.~(\ref{eq:exec_plus_idle-2}) $\forall t \mid t_k^* \leq t < t_k$ leads to
 \label{eq:exec_plus_idle-4}
 \end{align}}
 Similarly, putting these into 
-Eqs.~(\ref{eq:exec_plus_idle-3})  leads to 
+Eqs.~(\ref{eq:exec_plus_idle-3}) $\forall t \mid t_k \leq t < f_k$ leads to 
 \begin{equation}
 \label{eq:exec_plus_idle-5}
 C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-t_k^*.
@@ -739,6 +978,7 @@ C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-
  By the assumption that $C_k' \geq C_k > 0$, we can unify the above inequalities in Eq.~(\ref{eq:exec_plus_idle-4}) and Eq.~(\ref{eq:exec_plus_idle-5}) as follows:
 $\forall t \mid t_k^* \leq t < f_k$
 \begin{equation}
+\label{eq:exec_plus_idle-almost-final} 
 C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-t_k^*.
 \end{equation}
 
@@ -763,40 +1003,29 @@ $C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j = \
  is larger than or equal to $f_k-t_k^* \geq f_k-t_k$. 
 
 However, the above condition requires the knowledge of $\sigma_i$. It is straightforward to see that $\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j$ reaches the worst case if $X_j$ is the largest. Since $X_j$ is upper bounded by $Q_j^{\vec{x}}$ defined in Theorem~\ref{theorem:general-framework}, we reach the conclusion.
+
+\noindent\underline{An example of the procedures in Step 3:} This can
+be demonstrated in Figure~\ref{fig:example-proof-final} based on the
+previous example in
+Figure~\ref{fig:example}. Figure~\ref{fig:example-proof-final}
+provides the imaginary workload and an imaginary execution plan based
+on the test behind the condition in
+Eq.~\eqref{eq:exec_plus_idle-almost-final}. \emph{Note that this is
+  not an actual schedule since task $\tau_2$ is artificially alerted
+  to release two jobs within a short time interval. This is only for
+  illustrative purposes.}
+For such a case, $t_1^*=4,
+t_2^*=5, t_3^*=5$, and $t_4^*=6$. The two idle time units are used
+between time $4$ and time $6$. The accumulated workload is then
+started to be executed at time $6$ and the processor does not
+idle. Over here, we see that two jobs of task $\tau_2$ are executed
+back to back from time 7 to time 9. As
+shown in the imaginary schedule in
+Figure~\ref{fig:example-proof-final}, the processor is busy executing
+the workload from time $6$ to time $21$, which is more pessimistic
+than the actual in Figure~\ref{fig:example}. The conclusion we have in the final statement of the theorem is that $20-7=f_k-r_k \leq 21-6$.
 \end{appProof}
 
-To illustrate Step 1 in the above proof, we also provide one concrete example. Consider a task system with the following 4 tasks:
-\begin{itemize}
-\item $T_1 = 6, C_1 = 1, S_1 = 1, x_1=1$,
-\item $T_2 = 10, C_2 = 1, S_2 = 6, x_2=0$,
-\item $T_3 = 18, C_3 = 4, S_3 = 1, x_3=1$,
-\item $T_4 = 20, C_4 = 5, S_4 = 0$.
-\end{itemize}
-
-Figure~\ref{fig:example} demonstrates a schedule for the jobs of the
-above 4 tasks. We assume that the first job of task $\tau_1$ arrives
-at time $4+\epsilon$ with a very small $\epsilon > 0$. The first job
-of task $\tau_2$ suspends itself from time $0$ to time $5+\epsilon$,
-and is blocked by task $\tau_1$ from time $5+\epsilon$ to time
-$6+\epsilon$. After some very short computation with $\epsilon$ amount
-of time, the first job of task $\tau_2$ suspends itself again from
-time $6+2\epsilon$ to $7$.   In this schedule, $f_k$ is set to $20-\epsilon$.
-
-We define $t_4$ as $7$. Then, we set $t_3$ to $6$. When considering
-task $\tau_2$, since it belongs to ${\bf T}_0$, we greedily set $t_2$
-to $t_3=6$ and the residual workload $C_2'$ is $1$. Then, $t_1$ is set
-to $4+\epsilon$. In the above schedule, the idle time from
-$4+\epsilon$ to $20-\epsilon$ is at most $2 = S_1+S_3$. We have to
-further consider one job of task $\tau_2$ arrived before time $t_1$
-with execution time $C_2$.
-  
-  
-\begin{figure*}[t]
-  \centering
-  \input{../figures/example/example-body.tex}
-\caption{An illustrative example of Step 1 in the proof of Theorem~\ref{theorem:general-framework}.}
-\label{fig:example}  
-\end{figure*}
 
 \begin{Lemma}
 \label{lemma:Wj0-dominate}
@@ -808,8 +1037,64 @@ where $\widehat{W}_j^0(\Delta, 0)$ is defined in Eq.~(\ref{eq:execution-case2-pr
  $\widehat{W}_j^0(\Delta, c_j^*)$ is defined in Eq.~(\ref{eq:execution-case2-precise}) if $c_j^* > 0$.
 \end{Lemma}
 \begin{proof}
-  
+  The proof is based on simple observations of the workload function. 
+  We first prove that $\widehat{W}_j^0(\Delta, C_j) \geq
+  W_j^1(\Delta)$ defined in Eq.~\eqref{eq:execution-case2-precise0}.  By the definition of $\rho_j=T_j-D_j+C_j$ when $c_j^*$ is $C_j$ and the
+  assumption $C_j \leq D_j \leq T_j$, we have $0 \leq \rho_j \leq
+  T_j$. Therefore, for $\Delta \geq T_j$, we have $W_j^1(\Delta) = C_j
+  + W_j^1(\Delta-T_j) \leq C_j + W_j^1(\Delta - \rho_j) \leq
+  \widehat{W}_j^0(\Delta, C_j)$. For $0 \leq \Delta < T_j$, it is also
+  obvious that $\widehat{W}_j^0(\Delta, C_j) \geq \min\{\Delta, C_j\}
+  = W_j^1(\Delta)$.
+
+  We then prove that $\widehat{W}_j^0(\Delta, C_j) \geq
+  \widehat{W}_j^0(\Delta, c_j^*)$ for any $0 < c_j^* \leq C_j$ based on the definition in Eq.~\eqref{eq:execution-case2-precise}. Figure~\ref{fig:example-lemma-workload} provides an illustrative example for $\widehat{W}_j^0(\Delta, c_j^*)$. We consider three subcases:
+  \begin{compactitem}
+  \item For $0 \leq \Delta \leq C_j$, it is obvious that
+    $\widehat{W}_j^0(\Delta, C_j) \geq \widehat{W}_j^0(\Delta,
+    c_j^*)$.
+  \item For $C_j < \Delta \leq T_j-D_j+C_j$, we have
+    $\widehat{W}_j^0(\Delta, C_j) = C_j$, and it is obvious that
+    $\widehat{W}_j^0(\Delta, c_j^*) = c_j^* + \max\{0,
+    \Delta-(T_j-D_j+c_j^*)\} \leq c_j^* + C_j - c_j^* = C_j$.
+
+  \item For $T_j-D_j+C_j < \Delta$, we have $\widehat{W}_j^0(\Delta,
+    C_j) = C_j + W_j^1(\Delta - (T_j-D_j+C_j))$.  Moreover, by
+    definition, we also know $\widehat{W}_j^0(\Delta, c_j^*) \leq
+    \delta+\widehat{W}_j^0(\Delta-\delta, c_j^*)$ for any $\delta$ with $0 < \delta \leq
+    \Delta$. Therefore, for such a case, we can conclude
+    $\widehat{W}_j^0(\Delta, c_j^*) = c_j^* + W_j^1(\Delta -
+    (T_j-D_j+c_j^*)) \leq C_j + W_j^1(\Delta - (T_j-D_j+C_j))$ by
+    setting $\delta$ to $C_j - c_j^*$ with the previous inequality.
+  \end{compactitem}
 \end{proof}
+
+
+\begin{figure}[t]
+  \centering
+
+		\def\ux{0.32cm}\def\uy{0.3cm} 
+		\begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
+		\draw[->] (0,0) -- coordinate (xaxis) (21,0) node[anchor=west] {$t$};
+		\foreach \x in {0,...,20}{
+			\draw[-](\x,0.1) -- (\x,-0.1)
+			node[below] {\footnotesize $\x$};
+			
+		}
+		\draw[->] (0,0) node[anchor=east] {}-- coordinate (xaxis) (0,10.5);
+		\foreach \y in {0,...,10}{
+			\draw[-](0.1, \y) -- (-0.1, \y)
+			node[left] {\small $\y$};
+			
+		}
+
+                \draw[-,thick] (0, 0) -- (3, 3) -- (7, 3) -- (10, 6) -- (17, 6) -- (20, 9);
+                \draw[-,dashed] (0 ,0) -- (2,2) -- (6, 2) -- (9, 5) -- (16, 5) -- (19, 8) -- (20, 8);
+                \draw[-,dotted] (0, 0) -- (1, 1) -- (5, 1) -- (8, 4) -- (15, 4) -- (18, 7) -- (20, 7);
+		\end{tikzpicture}    
+  \caption{The workload function $\widehat{W}_j^0(\Delta, c_j^*)$ when $T_j=10$, $C_j=3$, and $D_j=6$. Solid line: $c_j^*$ is $3$, Dashed line: $c_j^*$ is $2$, Dotted line: $c_j^*$ is $1$.}
+  \label{fig:example-lemma-workload}
+\end{figure}
 
 \section{Testing Different Vector Assignments}
 \label{sec:vector-assignment}
