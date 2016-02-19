@@ -125,7 +125,8 @@ Email: grrpn@isep.ipp.pt
 
 The periodic/sporadic task model has been recognized as the basic
 model for real-time systems with recurring executions.  A sporadic
-real-time task $\tau_i$ is characterized by its \emph{minimum
+real-time task $\tau_i$ is characterized by its \emph{worst-case execution
+time} $C_i$, its \emph{minimum
   inter-arrival time} $T_i$ and its
 \emph{relative deadline} $D_i$. A sporadic task defines an infinite
 sequence of task instances, also called \emph{jobs}, that arrive with
@@ -155,28 +156,21 @@ tasks on different processors in a multiprocessor or distributed
 computing platform.
 
 
-If a job can suspend itself before it finishes all the computation,
-the above assumption becomes invalid.  Self-suspension behaviour has
-become more visible in designing real-time embedded systems.  The
-suspension-oblivious approach, which considers the suspension time as
-computation, can be very pessimistic if the suspension time is
-long. Self-suspensions have been even more pervasive in many emerging
-embedded cyber-physical systems in which the computational components
-frequently interact with external and physical
-devices~\cite{Kang:rtss07,Kato_2011}.  Typically, the resulting
-suspension delays range from a few microseconds (e.g., a write
-operation on a flash drive~\cite{Kang:rtss07}) to a few hundreds of
-milliseconds (e.g., offloading computation to
-GPUs~\cite{Kato_2011,Liu_2014}).
-
-\jj{above paragraph should be rewritten.}
+If a job can suspend itself before it finishes its computation,
+self-suspension behaviour has to be considered. Due to the interaction
+with other system components and synchronization, self-suspension
+behaviour has become more visible in designing real-time embedded
+systems.  Typically, the resulting suspension delays range from a few
+microseconds (e.g., a write operation on a flash
+drive~\cite{Kang:rtss07}) to a few hundreds of milliseconds (e.g.,
+offloading computation to GPUs~\cite{Kato_2011,Liu_2014}).
 
 There are two typical models for self-suspending sporadic task
 systems: 1) the dynamic self-suspension task model, and 2) the
 segmented self-suspension task model. In the \emph{dynamic}
-self-suspension task model, each sporadic task $\tau_i$ is further
-specified with its worst-case execution time $C_i$ and its worst-case
-self-suspension time $S_i$. In the \emph{segmented} self-suspension
+self-suspension task model, in addition the worst-case execution time
+$C_i$ of sporadic task $\tau_i$, we have also the worst-case
+self-suspension time $S_i$ of task $\tau_i$. In the \emph{segmented} self-suspension
 task model, the execution behaviour of a job of task $\tau_i$ is
 specified by interleaved computation segments and self-suspension
 intervals.  From the system designer's perspective, the dynamic
@@ -205,7 +199,7 @@ Moreover, one concept to consider suspension-time as blocking time was
 used by Jane W. S. Liu in her book titled "Real-Time Systems"
 \cite[Pages 164-165]{Liu:2000:RS:518501}, and was also implicitly used
 by Rajkumar, Sha, and Lehoczky \cite[Page
-267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending
+267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the self-suspending
 behaviour due to synchronization protocols in multiprocessor systems.
 However, there is no proof in
 \cite{Liu:2000:RS:518501,DBLP:conf/rtss/RajkumarSL88} to support the
@@ -214,7 +208,8 @@ correctness of the provided schedulability tests.
 The contributions of this paper are as follows:
 \begin{compactitem}
 \item We provide a general analysis framework in
-  Theorem~\ref{theorem:general-framework}. This theorem analytically
+  Theorem~\ref{theorem:general-framework} for dynamic self-suspending
+  sporadic real-time tasks on a uniprocessor platform. This theorem analytically
   dominates all the existing results in
   \cite{BletsasReport2015,huangpass:dac2015} and \cite[Pages
   164-165]{Liu:2000:RS:518501}, excluding the flawed ones. The key observation in the analysis
@@ -277,11 +272,37 @@ We assume that the tasks are numbered in a decreasing priority order. That is, a
 \section{Existing Analyses}
 \label{sec:existing-analyses}
 
-To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we usually need to quantify the worst-case interference caused by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when $\tau_k$ and all the higher-priority tasks release a job synchronously and the subsequent jobs are released as early as possible (i.e., with a rate equal to their period).  However, as proven in \cite{ecrts15nelissen}, this definition of the
+To analyze the worst-case response time (or the schedulability) of task $\tau_k$, we usually need to quantify the worst-case interference caused by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when $\tau_k$ and all the higher-priority tasks release a job synchronously and the subsequent jobs are released as early as possible (i.e., with a rate equal to their period).  However,  this definition of the
 critical instant does not hold for self-suspending sporadic tasks.  
 
+
+The analysis of self-suspending task systems should consider the
+impact due to self-suspension in two parts. \emph{First}, for task
+$\tau_k$ that is under analysis, we need to consider the worst case in
+which a job of task $\tau_k$ suspends whenever there is no
+higher-priority job in the system and the job can still suspend itself
+(i.e., no more than $S_k$). Therefore, this can be thought as if the
+suspension time $S_k$ of task $\tau_k$ is effectively also converted
+into computation time. \emph{Second}, for the higher-priority tasks,
+we need to account the self-suspension behaviour that may result in
+more interference to task $\tau_k$, that is under analysis.
+
+With the above concept in mind, there are three existing approaches
+that are potentially sound to quantify the higher-priority
+interference:
+\begin{compactitem}
+\item Suspension-oblivious analysis in
+  Section~\ref{sec:suspension-oblivious}.
+\item Back-to-back hit as jitter in Section~\ref{sec:jitter}.
+\item Suspension as blocking in Section~\ref{sec:suspension-blocking}.
+\end{compactitem}
+In the next section, we will prove that all these approaches are
+analytically correct. 
+
 \subsection{Suspension-Oblivious Analysis}
-The simplest approach is to convert the suspension time to computation
+\label{sec:suspension-oblivious} 
+The simplest approach is to convert the suspension time $S_i$ of a
+higher-priority task $\tau_i$ to be part of its computation
 time. Therefore, a constrained-deadline task $\tau_k$ can be feasibly
 scheduled by the fixed-priority scheduling if
 \begin{equation}
@@ -307,10 +328,11 @@ $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling if
 \end{equation}
 
 \subsection{Model Suspension Time as Blocking Time}
+\label{sec:suspension-blocking}
 
 In \cite[Pages 164-165]{Liu:2000:RS:518501}, Jane W. S. Liu proposed a solution to study the schedulability of self-suspending tasks by modeling the \emph{extra delay} suffered by a task $\tau_k$ due to the self-suspending behavior of the tasks as a blocking time denoted as $B_k$ and defined as follows:
 \begin{itemize}
-\item The blocking time contributed from task $\tau_k$ is $S_k$.
+\item The blocking time contributed from task $\tau_k$ is $S_k$. 
 \item A higher-priority task $\tau_i$ can only block the execution of task $\tau_k$ by at most $b_i=min(C_i, S_i)$ time units.
 \end{itemize}
 %As a result, if $S_i < C_i$, then the blocking time contributed from task $\tau_i$ is at most $S_i$. Therefore, the contribution of a higher-priority task $\tau_i$  to $B_k$ is at most $b_i=min(C_i, S_i)$.
@@ -590,10 +612,13 @@ Let us consider the task set $\tau'$ composed of $\left\{\tau_1, \tau_2, \ldots,
 Suppose that a job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$. We will prove that the response time analysis in Eq.~\eqref{eq:TDA-suspension-tighter0} gives us a safe upper bound on $f_k-r_k$ for any job $J_k$ in $\Psi$.
 
 
-The proof is built upon the two following steps:
+The proof is built upon the three following steps:
 \begin{enumerate}
 \item We discard all the jobs that do not contribute to the response time of $J_k$ in the schedule $\Psi$. We follow an inductive strategy by iteratively inspecting the schedule of the higher priority tasks in $\Psi$, starting with $\tau_{k-1}$ until the highest priority task $\tau_1$. At each iteration, a time instant $t_j$ is identified such that $t_j \leq t_{j+1}$ ($1 \leq j < k$). Then, all the jobs of task $\tau_j$ released before $t_j$ are removed from the schedule and, if needed, replaced by an artificial job mimicking the interference caused by the residual workload of task $\tau_j$ at time $t_j$ on the response time of job $J_k$. 
-\item The final reduced schedule is analyzed so as to characterize the worst-case response time of $\tau_k'$ in $\Psi$. We then prove that the response time analysis in Eq.~(\ref{eq:TDA-suspension-tighter0}) is indeed an upper bound on the worst-case response time $R_k'$ of $\tau_k'$.
+\item The final reduced schedule is analyzed so as to characterize the
+  worst-case response time of $\tau_k'$ in $\Psi$ by using workload
+  functions.
+\item We then prove that the response time analysis in Eq.~(\ref{eq:TDA-suspension-tighter0}) is indeed an upper bound on the worst-case response time $R_k'$ of $\tau_k'$.
 \end{enumerate}
 
 %Suppose that the job $J_{k}$ of task $\tau_k'$ with the largest response time in $\Psi$ arrives at time $r_k$ and finishes at time $f_k$.
