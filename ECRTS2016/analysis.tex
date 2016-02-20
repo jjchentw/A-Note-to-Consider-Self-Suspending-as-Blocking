@@ -1,4 +1,4 @@
-\section{A Unificating Analysis Framework}
+\section{A Unifying Analysis Framework}
 \label{sec:analysis}
 
 
@@ -23,13 +23,13 @@ this paper is the following theorem:
 
 \begin{theorem}
    \label{theorem:general-framework}
-   Suppose that $R_k' \leq T_k$.
+   Suppose that $R_k \leq T_k$.
    For any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots,
    x_{k-1})$, in which $x_i$ is either $0$ or $1$, the worst-case
-   response time $R_k'$ is upper bounded by the minimum $t$ (with $t > 0$) that
+   response time $R_k$ is upper bounded by the minimum $t$ (with $t > 0$) that
    satisfies 
    {\small \begin{equation} \label{eq:TDA-suspension-tighter0} 
-       C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t,
+       C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t,
      \end{equation}}where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$.
  \end{theorem} 
  We will explain the resulting properties from
@@ -42,10 +42,12 @@ this paper is the following theorem:
    \label{corollary:general-framework}
    If there exists a vector assignment $\vec{x} = (x_1, x_2, \ldots,
    x_{k-1})$, in which $x_i$ is either $0$ or $1$, such that 
-   {\small \begin{equation} \label{eq:TDA-suspension-tighter} 
-       \exists t | 0 < t \leq D_k, \\
-       C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t,
-     \end{equation}}where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$, then a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling.
+   {\small \begin{align} 
+   \label{eq:TDA-suspension-tighter} 
+       & \exists t | 0 < t \leq D_k,  \nonumber \\
+       & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t
+     \end{align}}
+     where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$, then a constrained-deadline task $\tau_k$ can be feasibly scheduled under fixed-priority.
  \end{Corollary}
  We will show later that Corollary~\ref{corollary:general-framework} in fact
  dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
@@ -101,8 +103,6 @@ Corollary~\ref{corollary:general-framework}, task $\tau_3$ is
 schedulable by the fixed-priority scheduling policy.
  \end{example}
 
-
-\input{dominance}
 
 
 

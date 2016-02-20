@@ -24,7 +24,7 @@ that are potentially sound to perform the schedulability analysis of self-suspen
 \item modeling the suspension as a release jitter (see Section~\ref{sec:jitter});
 \item modeling the suspension as blocking time (see Section~\ref{sec:suspension-blocking}).
 \end{compactitem}
-We later prove in Section~\ref{sec:analysis} that all these approaches are analytically correct. 
+We later prove in Section~\ref{sec:dominance} that all these approaches are analytically correct. 
 
 \subsection{Suspension-Oblivious Analysis}
 \label{sec:suspension-oblivious} 
@@ -79,7 +79,7 @@ If the above argument is correct, we can further prove that a constrained-deadli
 \exists t \mid 0 < t \leq D_k, \quad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
 However, there is no proof in
-\cite{Liu:2000:RS:518501} nor in \cite{DBLP:conf/rtss/RajkumarSL88} to support the correctness of those tests. Therefore, in Section~\ref{sec:analysis}, we provide a proof of the correctness of Equation~\eqref{eq:TDA-suspension}.
+\cite{Liu:2000:RS:518501} nor in \cite{DBLP:conf/rtss/RajkumarSL88} to support the correctness of those tests. Therefore, in Section~\ref{sec:dominance}, we provide a proof (see Theorem~\ref{theorem:correctness_soa}) of the correctness of Equation~\eqref{eq:TDA-suspension}.
 
 %It is not difficult to see that
 %the test in Eq.~\eqref{eq:TDA-suspension} dominates that in
