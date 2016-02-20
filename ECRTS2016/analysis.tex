@@ -1,10 +1,6 @@
 \section{A Unifying Analysis Framework}
 \label{sec:analysis}
 
-
-\subsection{Modeling the the Task Under Analysis}
-
-
 \subsection{A new Response time Analysis}
 
 We can greedily convert the suspension time of task $\tau_k$ to its
@@ -29,7 +25,7 @@ this paper is the following theorem:
    response time $R_k$ is upper bounded by the minimum $t$ (with $t > 0$) that
    satisfies 
    {\small \begin{equation} \label{eq:TDA-suspension-tighter0} 
-       C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t,
+       C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i \leq t,
      \end{equation}}where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$.
  \end{theorem} 
  We will explain the resulting properties from
@@ -40,17 +36,17 @@ this paper is the following theorem:
 
  \begin{Corollary}
    \label{corollary:general-framework}
-   If there exists a vector assignment $\vec{x} = (x_1, x_2, \ldots,
-   x_{k-1})$, in which $x_i$ is either $0$ or $1$, such that 
+   If there is a vector $\vec{x} = (x_1, x_2, \ldots,
+   x_{k-1})$ with $x_i \in \{ 0, 1\}$, such that 
    {\small \begin{align} 
    \label{eq:TDA-suspension-tighter} 
        & \exists t | 0 < t \leq D_k,  \nonumber \\
-       & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}} C_i \leq t
+       & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i \leq t
      \end{align}}
-     where $Q_i^{\vec{x}}$ is $\sum_{j=i}^{k-1} S_j \cdot x_j$, then a constrained-deadline task $\tau_k$ can be feasibly scheduled under fixed-priority.
+     where $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} S_j \cdot x_j$, then a constrained-deadline task $\tau_k$ is schedulable under fixed-priority.
  \end{Corollary}
- We will show later that Corollary~\ref{corollary:general-framework} in fact
- dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
+ 
+ We will later prove in Section~\ref{sec:dominance}, that Corollary~\ref{corollary:general-framework} in fact dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
  
  \begin{example}
  We use an example to demonstrate how
@@ -67,40 +63,32 @@ the fixed-priority scheduling by using Eq.~(\ref{eq:TDA-jitter}).
 We focus on task $\tau_3$.  
 For task $\tau_3$, the blocking term $B_3$ is $4+1=5$ by
 Eq.~(\ref{eq:Bk}). The minimum $t$ to satisfy $C_k + B_k +
-\sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t$ happens when $t=37$, i.e., $4+5+\ceiling{\frac{37}{10}}\cdot 4+\ceiling{\frac{37}{19}}\cdot 6=37$. Therefore, task $\tau_3$ cannot pass the schedulability test in Eq.~(\ref{eq:TDA-suspension}).
+\sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t$ happens when $t=37$, i.e., $4+5+\ceiling{\frac{37}{10}} 4+\ceiling{\frac{37}{19}} 6=37$. Therefore, task $\tau_3$ cannot pass the schedulability test in Eq.~(\ref{eq:TDA-suspension}).
 There are four
-possible vector assignments $\vec{x}$ when we consider the schedulability of task $\tau_3$:
+possible vector assignments $\vec{x}$ when we consider the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}:
 \begin{itemize}
-\item Case 1 $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by the minimum $t$ under $0 < t \leq T_3$ that
-   satisfies 
-   {\small \begin{equation}\label{eq:example-case1} 
-       4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+13}{19}}\cdot 6 \leq t.
-     \end{equation}}Such a value $t$ does not exist for this case.
-\item Case 2 $\vec{x} = (0 , 1)$:
+\item Case 1. $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by the minimum $t$ under $0 < t \leq T_3$ that $4+ \ceiling{\frac{t+6}{10}} 4 + \ceiling{\frac{t+13}{19}} 6 \leq t$. Such $t$ does not exist for this case.
+\item Case 2. $\vec{x} = (0 , 1)$:
  In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
 under $0 < t \leq T_3$ that
-   satisfies 
-   {\small \begin{equation}\label{eq:example-case2} 
-       4+ \ceiling{\frac{t+7}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t.
-     \end{equation}}Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+7}{10}}\cdot 4 + \ceiling{\frac{32+1}{19}}\cdot 6=32$.
-\item Case 3 $\vec{x} = (1 , 0)$:
+   satisfies $ 
+       4+ \ceiling{\frac{t+7}{10}} 4 + \ceiling{\frac{t+1}{19}} 6 \leq t$. Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+7}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
+\item Case 3. $\vec{x} = (1 , 0)$:
+ In this case, there is no value of $t$ that satisfies Eq.~\eqref{eq:TDA-suspension-tighter0}. %Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
+%under $0 < t \leq T_3$ that
+%   satisfies 
+%   {\small \begin{equation}\label{eq:example-case3} 
+%       4+ \ceiling{\frac{t+5}{10}}\cdot 4 + \ceiling{\frac{t+13}{19}}\cdot 6 \leq t.
+%     \end{equation}}Such a value $t$ does not exist for this case.
+\item Case 4. $\vec{x} = (1 , 1)$:
  In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
 under $0 < t \leq T_3$ that
-   satisfies 
-   {\small \begin{equation}\label{eq:example-case3} 
-       4+ \ceiling{\frac{t+5}{10}}\cdot 4 + \ceiling{\frac{t+13}{19}}\cdot 6 \leq t.
-     \end{equation}}Such a value $t$ does not exist for this case.
-\item Case 4 $\vec{x} = (1 , 1)$:
- In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
-under $0 < t \leq T_3$ that
-   satisfies 
-   {\small \begin{equation}\label{eq:example-case4} 
-       4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t.
-     \end{equation}}Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+6}{10}}\cdot 4 + \ceiling{\frac{32+1}{19}}\cdot 6=32$.
+   satisfies $
+       4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t$. Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+6}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
 \end{itemize}
 Among the above four cases, the tests in Cases 2 and 4 are tighter. By
 Corollary~\ref{corollary:general-framework}, task $\tau_3$ is
-schedulable by the fixed-priority scheduling policy.
+schedulable under fixed-priority.
  \end{example}
 
 

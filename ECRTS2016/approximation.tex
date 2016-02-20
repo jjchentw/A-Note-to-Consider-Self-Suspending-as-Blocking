@@ -1,33 +1,34 @@
 \section{Linear Approximation}
 \label{sec:linear-approximation}
 
-To test the schedulability of task $\tau_k$,
+To test the schedulability of a task $\tau_k$,
 Corollary~\ref{corollary:general-framework} implies to test all the
-possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which there are $2^{k-1}$
-different combinations. Therefore, the time complexity becomes
-exponential if we consider all the vector assignments. Therefore, in this section, we provide a solution to reduce the time complexity associated to
-Corollary~\ref{corollary:general-framework}. 
+possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$. $2^{k-1}$ possible combinations must therefore be tested, implying an exponential time complexity. In this section, we therefore provide a solution to reduce the time complexity associated to
+Corollary~\ref{corollary:general-framework}. Indeed, using a linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}), a good vector assignment can be derived in linear time. 
 
-Hence, we explain how to use the linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}) to help derive a good vector assignment. By the definition of $\ceiling{x}$, we have the following inequality:
+By definition of the ceiling operator, it holds that:
 {\small \begin{align}
-&C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(D_i-C_i)}{T_i}} C_i \nonumber\\
-\leq& C_k' +   \sum_{i=1}^{k-1} \left(\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell +(1-x_i)(D_i-C_i)}{T_i} +1\right) C_i \nonumber\\
-=& C_k' + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(D_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right)\nonumber\\
-=& C_k' + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(D_i-C_i) + x_i S_i\left(\sum_{\ell=1}^{i}U_\ell\right)\right)\label{eq:linear-approximation-upper-bound}
+&C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(R_i-C_i)}{T_i}} C_i \nonumber\\
+\leq& C_k' +   \sum_{i=1}^{k-1} \left(\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell +(1-x_i)(R_i-C_i)}{T_i} +1\right) C_i \nonumber\\
+=& C_k' + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(R_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right)\nonumber\\
+=& C_k' + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(R_i-C_i) + x_i S_i\left(\sum_{\ell=1}^{i}U_\ell\right)\right)\label{eq:linear-approximation-upper-bound}
 \end{align}}
 
 By observing Eq.~(\ref{eq:linear-approximation-upper-bound}), the
-contribution of $x_i$ can be individually determined as $U_i(D_i-C_i)$
+contribution of $x_i$ can be individually determined as $U_i(R_i-C_i)$
 when $x_i$ is $0$ or $S_i(\sum_{\ell=1}^{i}U_\ell)$ when $x_i$ is
-$1$. Therefore, whether $x_i$ should be set to $0$ or $1$ can be
-easily decided by individually comparing the two constants
-$U_i(D_i-C_i)$ and $S_i(\sum_{\ell=1}^{i}U_\ell)$. We denote the
-vector assignment obtained above by $\vec{x}^{linear}$. That is, for
+$1$. Therefore, whether $x_i$ should be set to $0$ or $1$ can be 
+decided by individually comparing the two constants
+$U_i(R_i-C_i)$ and $S_i(\sum_{\ell=1}^{i}U_\ell)$. We denote the
+vector assignment obtained with this technique by $\vec{x}^{\mathit{lin}}$, where, for
 each higher-priority task $\tau_i$,
-\begin{itemize}
-\item if $U_i(D_i-C_i) > S_i(\sum_{\ell=1}^{i}U_\ell)$, we greedily set $x_i^{linear}$ to $1$; 
-\item otherwise, we greedily set $x_i^{linear}$ to $0$. 
-\end{itemize}
+\begin{equation*}
+x_i^{\mathit{lin}} =
+\begin{cases}
+1 & \text{if~} U_i(R_i-C_i) > S_i(\sum_{\ell=1}^{i}U_\ell) \\
+0 & \text{otherwise}
+\end{cases}
+\end{equation*}
 
 For notational brevity, we denote the right-hand side of
 Eq.~(\ref{eq:linear-approximation-upper-bound}) as $rbf_k(t, \vec{x})$

@@ -1,3 +1,44 @@
 \section{Rationale}
 \label{sec:rationale}
 
+Even though it can be proven that the response time analysis associated with Eq.\eqref{eq:TDA-suspension} dominates the suspension oblivious one (see Lemma~\ref{lem:dominance_oblivious} in Section~\ref{sec:dominance}), none of the analyses presented in Section~\ref{sec:existing-analyses} dominates all the others. Hence, Eq.~\eqref{eq:TDA-suspension} and \ref{eq:TDA-jitter} are incomparable. That is, in some cases Eq.~\eqref{eq:TDA-suspension} performs better than Eq.~\eqref{eq:TDA-jitter}, while in others Eq.~\eqref{eq:TDA-jitter} outperforms Eq.~\eqref{eq:TDA-suspension}.
+
+\begin{example} 
+\label{ex:rationale_1}  
+Consider the two tasks $\tau_1 = (1, 8, 10, 10)$ and $\tau_2 = (1, 0, 15, 15)$. The worst-case response time of $\tau_1$ is obviously $9$ whatever the analysis employed. However, the upper bound on the WCRT of $\tau_2$ obtained with Eq.~\eqref{eq:TDA-jitter} is $2$, while 
+%the minimum $t$ larger than $0$ such that 
+%$$t=C_2 + S_2+ \ceiling{ \frac{t + R_1 - C_1}{T_1} } C_1 = 1 + 0 + \ceiling{\frac{t + 9 - 1}{10}} 1$$ 
+%leading to a value of $2$.
+the upper bound on the WCRT of $\tau_2$ obtained with Eq.~\eqref{eq:TDA-suspension} is $3$. %the minimum $t$ larger than $0$ such that 
+%$$t=C_2 + S_2 + C_1 \ceiling{ \frac{t}{T_1} } C_1 = 1 + 0 + 1 + \ceiling{\frac{t}{10}} 1$$ 
+%which results in a value of $3$.  
+\end{example}
+
+\begin{example}   
+Consider the three tasks $\tau_1 = (xxx)$, $\tau_2 = (yyyy)$ and $\tau_3 = (zzz)$. With both Eqs~\eqref{eq:TDA-jitter} and~\eqref{eq:TDA-suspension}, the upper bounds computed on the WCRT of $\tau_1$ and $\tau_2$ are $x$ and $y$, respectively. 
+
+Using Eq.~\eqref{eq:TDA-jitter}, the worst-case response time of task $\tau_3$ is upper bounded by $z$. %the minimum $t$ larger than $0$ such that 
+%\begin{align*}
+%t & = C_3 + S_3 +\sum_{i=1}^2 \left\lceil \frac{t + R_i - C_i}{T_i} \right\rceil C_i = 1 +\left\lceil \frac{t + 8}{10} \right\rceil 1 +\left\lceil \frac{t + 12}{15} \right\rceil 1
+%\end{align*} 
+%which turns to be $xxx$.
+However, with Eq.~\eqref{eq:TDA-suspension}, the computed upper bound on the WCRT of $\tau_3$ turns out to be $v$. %the minimum positive $t$ such that 
+%\begin{align*}
+%t & = C_3 + C_2 + C_1 + \sum_{i=1}^2 \left\lceil \frac{t}{T_i} \right\rceil C_i = 12 +\left\lceil \frac{t}{10} \right\rceil 1 +\left\lceil \frac{t}{14} \right\rceil 1.
+%\end{align*} 
+%This equality holds when $t=xxx$. 
+Therefore, in this example, the upper bound on the WCRT of $\tau_3$ computed with Eq.~\eqref{eq:TDA-suspension} is smaller than the value obtained with Eq.~\eqref{eq:TDA-jitter}, while the opposite was true in Example~\ref{ex:rationale_1}. 
+\end{example}
+
+Similarly, the analysis associated with Eq.~\eqref{eq:TDA-jitter} cannot be compared with the suspension oblivious approach.
+
+\begin{example}  
+An example where Eq.~\eqref{eq:TDA-jitter} performs better than oblivious. 
+\end{example}
+
+\begin{example}   
+An example where oblivious performs better than Eq.~\eqref{eq:TDA-jitter} 
+\end{example}
+
+In this paper, we derive a response time analysis that draws inspiration from both Eq.~\eqref{eq:TDA-jitter} and Eq.~\eqref{eq:TDA-suspension}, combining the best of each of them. As further proven in Section~\ref{sec:dominance}, the resulting schedulability test dominates all the tests discussed in Section~\ref{sec:existing-analyses}.
+

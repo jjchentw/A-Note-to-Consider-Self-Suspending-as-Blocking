@@ -49,9 +49,9 @@
 
 
 %%%%%%%%%%%%%%%
- \def\myendproof{{\ \vbox{\hrule\hbox{%
-   \vrule height1.3ex\hskip0.8ex\vrule}\hrule }}\par}
-% \renewenvironment{proof}{\noindent{\bf Proof. }}{\myendproof}
+ \def\myendproof{\qed}%{\ \vbox{\hrule\hbox{%
+   %\vrule height1.3ex\hskip0.8ex\vrule}\hrule }}\par}
+ \renewenvironment{proof}{\noindent{\bf Proof. }}{\myendproof}
 %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%
  \newenvironment{appProof}[1]{\noindent{\bf Proof of

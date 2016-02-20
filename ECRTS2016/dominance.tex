@@ -40,7 +40,7 @@ Therefore, Eq.~\eqref{eq:TDA-suspension} will always have a solution which is sm
   schedulability test provided by Eq.~\eqref{eq:TDA-suspension}.
 \end{Lemma}
 \begin{proof}
-  In this proof, we first transform the worst-case response time analysis presented in Corollary~\ref{corollary:general-framework} in a more pessimistic analysis. We then prove that this more pessimistic version of Corollary~\ref{corollary:general-framework} provides the same solution than Eq.~\eqref{eq:TDA-suspension}, which will then prove the lemma.
+  In this proof, we first transform the worst-case response time analysis presented in Corollary~\ref{corollary:general-framework} in a more pessimistic analysis. We then prove that this more pessimistic version of Corollary~\ref{corollary:general-framework} provides the same solution than Eq.~\eqref{eq:TDA-suspension}, which then proves the lemma.
   
   Since $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} S_j \times x_j$, it holds that $Q_i^{\vec{x}} \leq  Q_1^{\vec{x}}$ for $i=1,2,\ldots,k-1$. It follows that
   \begin{align*}
@@ -55,9 +55,9 @@ Therefore, Eq.~\eqref{eq:TDA-suspension} will always have a solution which is sm
   \label{eq:proof_dominance_blocking}
   C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}}{T_i}} \leq t
   \end{equation}
-  is always larger than or equal to Equation \eqref{eq:TDA-suspension-tighter}'s solution. 
+  is always larger than or equal to the solution to Eq.~\eqref{eq:TDA-suspension-tighter}. 
   
-  Replacing $(t+Q_1^{\vec{x}})$ by $\theta$ in Eq.~\eqref{eq:proof_dominance_blocking}, we get that $R_k$ is upper bounded by the smallest $\theta-Q_1^{\vec{x}} > 0$ and therefore by the smallest positive $\theta$ such that 
+  Replacing $(t+Q_1^{\vec{x}})$ by $\theta$ in Eq.~\eqref{eq:proof_dominance_blocking}, we get that $R_k$ is upper bounded by the minimum value $(\theta-Q_1^{\vec{x}})$ greater than $0$ (and therefore by the smallest $\theta > 0$) such that 
   \begin{align}
   & C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}\leq \theta-Q_1^{\vec{x}} \nonumber \\
   \Leftrightarrow \;\; & C_k + S_k + Q_1^{\vec{x}} + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}\leq \theta \nonumber \\
@@ -75,9 +75,9 @@ Therefore, Eq.~\eqref{eq:TDA-suspension} will always have a solution which is sm
   \end{equation*}
   for $i=1,2,\ldots,k-1$. 
     By the definition of $B_k$ (i.e., Eq.~\eqref{eq:Bk}), we get that 
-    $$B_k = S_k + \sum_{i=1}^{k-1} \min(C_i, S_i) = S_k + \sum_{i=1}^{k-1}(x_i
-    S_i + (1-x_i) C_i)$$
-and Eq.~\eqref{eq:proof_dominance_blocking_final} thus becomes identical to Eq.~\eqref{eq:TDA-suspension}. Therefore, if Eq.~\eqref{eq:TDA-suspension} deems a task set as being schedulable, so does Corollary~\ref{corollary:general-framework}. 
+    $$B_k = S_k + \sum_{i=1}^{k-1} \min(C_i, S_i) = S_k + \sum_{i=1}^{k-1} \left(x_i
+    S_i + (1-x_i) C_i\right)$$
+Eq.~\eqref{eq:proof_dominance_blocking_final} thus becomes identical to Eq.~\eqref{eq:TDA-suspension}. Therefore, if Eq.~\eqref{eq:TDA-suspension} deems a task set as being schedulable, so does Corollary~\ref{corollary:general-framework}. 
 \end{proof}
 
 \begin{theorem}
@@ -85,7 +85,7 @@ and Eq.~\eqref{eq:proof_dominance_blocking_final} thus becomes identical to Eq.~
   The schedulability test presented in Corollary~\ref{corollary:general-framework} dominates the schedulability tests provided by Equations~\eqref{eq:TDA-SO}, \eqref{eq:TDA-jitter}, and~\eqref{eq:TDA-suspension}.
 \end{theorem}
 \begin{proof}
-It directly follows from Lemmas~\ref{lem:dominance_oblivious}, \ref{lem:dominance_jitter} and~\ref{lem:dominance_blocking}.
+It ias a direct application of Lemmas~\ref{lem:dominance_oblivious}, \ref{lem:dominance_jitter} and~\ref{lem:dominance_blocking}.
 \end{proof}
 
 
@@ -93,7 +93,7 @@ As a corollary of this theorem, it directly follows that all the response time a
 
 \begin{theorem}
   \label{theorem:correctness_soa}
-  The schedulability tests provided by Equations~\eqref{eq:TDA-SO}, \eqref{eq:TDA-jitter}, and~\eqref{eq:TDA-suspension} are all correct.
+  The schedulability tests provided by Eqs~\eqref{eq:TDA-SO}, \eqref{eq:TDA-jitter}, and~\eqref{eq:TDA-suspension} are all correct.
 \end{theorem}
 \begin{proof}
 It directly results from the two following facts,
