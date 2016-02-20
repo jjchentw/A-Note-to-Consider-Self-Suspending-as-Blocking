@@ -1,5 +1,11 @@
-\section{A General Analysis Framework}
+\section{A Unificating Analysis Framework}
 \label{sec:analysis}
+
+
+\subsection{Modeling the the Task Under Analysis}
+
+
+\subsection{A new Response time Analysis}
 
 We can greedily convert the suspension time of task $\tau_k$ to its
 computation time. For the sake of notational brevity, let $C_k'$ be
@@ -43,10 +49,9 @@ this paper is the following theorem:
  \end{Corollary}
  We will show later that Corollary~\ref{corollary:general-framework} in fact
  dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
-
-\subsection{An Illustrative Example and Dominance}
-
-We use an example to demonstrate how
+ 
+ \begin{example}
+ We use an example to demonstrate how
 Corollary~\ref{corollary:general-framework} can be applied. Suppose
 that we have three tasks
 \begin{itemize}
@@ -94,79 +99,14 @@ under $0 < t \leq T_3$ that
 Among the above four cases, the tests in Cases 2 and 4 are tighter. By
 Corollary~\ref{corollary:general-framework}, task $\tau_3$ is
 schedulable by the fixed-priority scheduling policy.
+ \end{example}
 
-In fact, the following theorem shows that the test in Corollary
-\ref{corollary:general-framework} analytically dominates the existing
-tests in Eq.~\eqref{eq:TDA-SO}, Eq.~(\ref{eq:TDA-jitter}) and Eq.~(\ref{eq:TDA-suspension}).
 
-\begin{Lemma}
-  The schedulability test of task $\tau_k$ provided by
-  Eq.~\eqref{eq:TDA-suspension} dominates that of
-  Eq.~\eqref{eq:TDA-SO}.
-\end{Lemma}
-\begin{proof}
-  This is rather trivial, and the proof is omitted.
-\end{proof}
-
-\begin{theorem}
-  \label{theorem:dominance}
-  The schedulability test in
-  Corollary~\ref{corollary:general-framework} dominates the
-  schedulability tests in Eq.~\eqref{eq:TDA-SO}, Eq.~(\ref{eq:TDA-jitter}), and
-  Eq.~(\ref{eq:TDA-suspension}).
-\end{theorem}
-\begin{proof}
-  The dominance of Eq.~(\ref{eq:TDA-jitter}) can be easily seen by
-  considering the vector assignment $x_1=x_2=\cdots=x_{k-1}=0$. The
-  resulting test in Eq.~(\ref{eq:TDA-suspension-tighter}) is identical
-  to Eq.~(\ref{eq:TDA-suspension}) for this vector assignment. Since
-  Eq.~\eqref{eq:TDA-suspension} dominates Eq.~\eqref{eq:TDA-SO}, we
-  only have to prove that Corollary~\ref{corollary:general-framework} dominates 
-Eq.~(\ref{eq:TDA-suspension}).
-
-  We now prove that Eq.~(\ref{eq:TDA-suspension}) is dominated by
-  considering the vector assignment $\vec{x}$ in which 
-  \begin{equation*}
-    x_i =
-    \begin{cases}
-      1 &\mbox{if } S_i \leq    C_i\\
-      0 & \mbox{otherwise},
-    \end{cases}
-  \end{equation*}
-  for $i=1,2,\ldots,k-1$. By the fact that $Q_i^{\vec{x}} \leq
-  Q_1^{\vec{x}}$ for $i=1,2,\ldots,k-1$, we know that it is more
-  pessimistic if we test $C_k'+
-  \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}+(1-x_i)(D_i-C_i)}{T_i}}
-  C_i \leq t$ instead of testing Eq.~\eqref{eq:TDA-suspension-tighter}. Let $\theta$ be $t+Q_1^{\vec{x}}$. Therefore, we know
-  that $R_k'$ is upper bounded by the minimum $\theta-Q_1^{\vec{x}} >
-  0$ such that 
-  \begin{align} 
-&      C_k'+\sum_{i=1}^{k-1}\ceiling{\frac{\theta+(1-x_i)(D_i-C_i)}{T_i}}
-      C_i \leq \theta-Q_1^{\vec{x}}\\
-\Rightarrow\;\;&C_k'+Q_1^{\vec{x}}+\sum_{i=1}^{k-1}\ceiling{\frac{\theta+(1-x_i)(D_i-C_i)}{T_i}}
-      C_i \leq \theta.
-    \end{align}
-    Moreover, by the fact that $D_i \leq T_i$ and $x_i\in \setof{0, 1}$ for $i=1,2,\ldots,k-1$,
-    we also have $\ceiling{\frac{\theta+(1-x_i)(D_i-C_i)}{T_i}} C_i
-    \leq \ceiling{\frac{\theta+(1-x_i)T_i}{T_i}} C_i = (1-x_i) C_i +
-    \ceiling{\frac{\theta}{T_i}} C_i$.  
-    Therefore, we know that $R_k'$
-    is upper bounded by the minimum $\theta-Q_1^{\vec{x}} > 0$ such
-    that 
-    \begin{equation}
-      \label{eq:dominance-proof2}
-    C_k + S_k + \sum_{i=1}^{k-1}(x_i S_i + (1-x_i) C_i) + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i \leq \theta.      
-    \end{equation}
-    By the fact that $B_k$ is defined as $S_k + \sum_{i=1}^{k-1}(x_i
-    S_i + (1-x_i) C_i)$, and $Q_1^{\vec{x}} \geq 0$, the above test in
-    Eq.~(\ref{eq:dominance-proof2}) is analytically tighter than or
-    the same as that
-    in Eq.~(\ref{eq:TDA-suspension}), which concludes the proof.
-\end{proof}
+\input{dominance}
 
 
 
-\subsection{Proof of Theorem~\ref{theorem:general-framework}}  
+\subsection{Proof of Correctness}  
 \label{sec:proof-th1}
 
 We now provide the proof to support the correctness of the test in
