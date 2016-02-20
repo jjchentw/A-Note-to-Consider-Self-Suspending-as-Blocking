@@ -1,7 +1,7 @@
 \section{Rationale}
 \label{sec:rationale}
 
-Even though it can be proven that the response time analysis associated with Eq.\eqref{eq:TDA-suspension} dominates the suspension oblivious one (see Lemma~\ref{lem:dominance_oblivious} in Section~\ref{sec:dominance}), none of the analyses presented in Section~\ref{sec:existing-analyses} dominates all the others. Hence, Eq.~\eqref{eq:TDA-suspension} and \ref{eq:TDA-jitter} are incomparable. That is, in some cases Eq.~\eqref{eq:TDA-suspension} performs better than Eq.~\eqref{eq:TDA-jitter}, while in others Eq.~\eqref{eq:TDA-jitter} outperforms Eq.~\eqref{eq:TDA-suspension}.
+Even though it can be proven that the response time analysis associated with Eq.\eqref{eq:TDA-suspension} dominates the suspension oblivious one (see Lemma~\ref{lem:dominance_oblivious} in Section~\ref{sec:dominance}), none of the analyses presented in Section~\ref{sec:existing-analyses} dominates all the others. Hence, Eqs.~\eqref{eq:TDA-jitter} and \eqref{eq:TDA-suspension} are incomparable. That is, in some cases Eq.~\eqref{eq:TDA-suspension} performs better than Eq.~\eqref{eq:TDA-jitter}, while in others Eq.~\eqref{eq:TDA-jitter} outperforms Eq.~\eqref{eq:TDA-suspension}.
 
 \begin{example} 
 \label{ex:rationale_1}  
@@ -30,15 +30,19 @@ However, with Eq.~\eqref{eq:TDA-suspension}, the computed upper bound on the WCR
 Therefore, in this example, the upper bound on the WCRT of $\tau_3$ computed with Eq.~\eqref{eq:TDA-suspension} is smaller than the value obtained with Eq.~\eqref{eq:TDA-jitter}, while the opposite was true in Example~\ref{ex:rationale_1}. 
 \end{example}
 
-Similarly, the analysis associated with Eq.~\eqref{eq:TDA-jitter} cannot be compared with the suspension oblivious approach.
-
+Furthermore, there might be task sets that are indeed schedulable but that are rejected by both Eqs.~\eqref{eq:TDA-jitter} and \eqref{eq:TDA-suspension}.
+ 
 \begin{example}  
-An example where Eq.~\eqref{eq:TDA-jitter} performs better than oblivious. 
+Consider the three tasks $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 35, 35)$. According to Eqs.~\eqref{eq:TDA-jitter} and \ref{eq:TDA-suspension}, $\tau_1$ and $\tau_2$ are both schedulable and have a respective worst-case response time of $9$ and $15$. 
+
+For task $\tau_3$, 
+
+Similarly, using Eq.~\eqref{eq:TDA-suspension}, the blocking term $B_3$ given by Eq.~\eqref{eq:Bk} is $4+1=5$. Therefore, the minimum $t$ larger than $0$ to satisfy $C_k + B_k +
+\sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t$ is $t=37$. 
+
+Therefore, task $\tau_3$ cannot pass the schedulability test in Eq.~(\ref{eq:TDA-suspension}). 
 \end{example}
 
-\begin{example}   
-An example where oblivious performs better than Eq.~\eqref{eq:TDA-jitter} 
-\end{example}
 
 In this paper, we derive a response time analysis that draws inspiration from both Eq.~\eqref{eq:TDA-jitter} and Eq.~\eqref{eq:TDA-suspension}, combining the best of each of them. As further proven in Section~\ref{sec:dominance}, the resulting schedulability test dominates all the tests discussed in Section~\ref{sec:existing-analyses}.
 
