@@ -241,7 +241,8 @@ The contributions of this paper are as follows:
 
 
 
-The system model and terminologies are defined as follows: We assume a system $\tau$ composed of $n$ sporadic self-suspending tasks. A sporadic task $\tau_i$ is released repeatedly, with each such invocation called a
+T%he system model and terminologies are defined as follows: 
+We assume a system $\tau$ composed of $n$ sporadic self-suspending tasks. A sporadic task $\tau_i$ is released repeatedly, with each such invocation called a
 job. The $j^{th}$ job of $\tau_i$, denoted by $\tau_{i,j}$, is released
 at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
 job of task $\tau_i$ is assumed to have a worst-case execution time $C_i$. Furthermore, a job of task $\tau_i$ may suspend itself for at most $S_i$ time units (across all of its suspension phases). When a job suspends itself, it releases the processor and another job can be executed. The response time of a job is defined as its finishing time minus its release
@@ -338,7 +339,7 @@ In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utiliza
 
 The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the impact of the self-suspendion of a task due to the utilization of synchronization protocols in multiprocessor systems. The statement in \cite{DBLP:conf/rtss/RajkumarSL88} reads as follows:\footnote{We rephrased the wording and notations in order to be consistent with the rest of this paper.}
 \begin{quote}
-\emph{``For each higher priority job $J_{i,j}$ that suspends on global semaphores or for other reasons, add the term $\min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $J_{i,j}$ can suspend itself. [...] The sum [...] yields $B_k$, which in turn can be used in 
+\emph{``For each higher priority job $\tau_{i,j}$ that suspends on global semaphores or for other reasons, add the term $\min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $\tau_{i,j}$ can suspend itself. [...] The sum [...] yields $B_k$, which in turn can be used in 
 $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable."}
 \end{quote}
   
@@ -348,8 +349,7 @@ If the above argument is correct, we can further prove that a constrained-deadli
 \exists t \mid 0 < t \leq D_k, \quad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
 \end{equation}
 However, there is no proof in
-\cite{Liu:2000:RS:518501} nor in \cite{DBLP:conf/rtss/RajkumarSL88} to support the correctness of those tests. 
-
+\cite{Liu:2000:RS:518501} nor in \cite{DBLP:conf/rtss/RajkumarSL88} to support the correctness of those tests. Therefore, in Section~\ref{sec:analysis}, we provide a proof of the correctness of Equation~\eqref{eq:TDA-suspension}.
 
 %It is not difficult to see that
 %the test in Eq.~\eqref{eq:TDA-suspension} dominates that in
@@ -364,9 +364,13 @@ However, there is no proof in
 %  This is rather trivial, and the proof is omitted.
 %\end{proof}
 
+\section{Rationale}
+\label{sec:rationale}
 
 
-\section{Our General Analysis Framework}
+
+
+\section{A General Analysis Framework}
 \label{sec:analysis}
 
 We can greedily convert the suspension time of task $\tau_k$ to its
@@ -1122,21 +1126,18 @@ where $\widehat{W}_j^0(\Delta, 0)$ is defined in Eq.~(\ref{eq:execution-case2-pr
   \label{fig:example-lemma-workload}
 \end{figure}
 
-\section{Testing Different Vector Assignments}
-\label{sec:vector-assignment}
+
+\section{Linear Approximation}
+\label{sec:linear-approximation}
 
 To test the schedulability of task $\tau_k$,
 Corollary~\ref{corollary:general-framework} implies to test all the
 possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which there are $2^{k-1}$
 different combinations. Therefore, the time complexity becomes
-exponential if we consider all the vector assignments. This section
-provides a few tricks to reduce the time complexity while adopting
+exponential if we consider all the vector assignments. Therefore, in this section, we provide a solution to reduce the time complexity associated to
 Corollary~\ref{corollary:general-framework}. 
 
-\subsection{Linear Approximation}
-\label{sec:linear-approximation}
-
-Here, we explain how to use the linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}) to help derive a good vector assignment. By the definition of $\ceiling{x}$, we have the following inequality:
+Hence, we explain how to use the linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}) to help derive a good vector assignment. By the definition of $\ceiling{x}$, we have the following inequality:
 {\small \begin{align}
 &C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(D_i-C_i)}{T_i}} C_i \nonumber\\
 \leq& C_k' +   \sum_{i=1}^{k-1} \left(\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell +(1-x_i)(D_i-C_i)}{T_i} +1\right) C_i \nonumber\\
