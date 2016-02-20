@@ -1,0 +1,95 @@
+\section{Background}
+\label{sec:existing-analyses}
+
+To analyze the worst-case response time (or the schedulability) of a task $\tau_k$, one usually needs to quantify the worst-case interference exerted by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when (i) $\tau_k$ and all the higher-priority tasks release their first job synchronously and (ii) all their subsequent jobs are released as early as possible (i.e., with a rate equal to their period).  However,  this definition of the
+critical instant does not hold for self-suspending sporadic tasks.  
+
+
+%The analysis of self-suspending task systems should consider the
+%impact due to self-suspension in two parts. \emph{First}, for task
+%$\tau_k$ that is under analysis, we need to consider the worst case in
+%which a job of task $\tau_k$ suspends whenever there is no
+%higher-priority job in the system and the job can still suspend itself
+%(i.e., no more than $S_k$). Therefore, this can be thought as if the
+%suspension time $S_k$ of task $\tau_k$ is effectively also converted
+%into computation time. \emph{Second}, for the higher-priority tasks,
+%we need to account the self-suspension behaviour that may result in
+%more interference to task $\tau_k$, that is under analysis.
+
+%With the above concept in mind, 
+There exist three different approaches in the state-of-the-art 
+that are potentially sound to perform the schedulability analysis of self-suspending tasks:
+\begin{compactitem}
+\item modeling the suspension as execution, also known as the suspension-oblivious analysis (see Section~\ref{sec:suspension-oblivious});
+\item modeling the suspension as a release jitter (see Section~\ref{sec:jitter});
+\item modeling the suspension as blocking time (see Section~\ref{sec:suspension-blocking}).
+\end{compactitem}
+We later prove in Section~\ref{sec:analysis} that all these approaches are analytically correct. 
+
+\subsection{Suspension-Oblivious Analysis}
+\label{sec:suspension-oblivious} 
+The simplest analysis consists in converting the suspension time $S_i$ of each %higher-priority 
+task $\tau_i$ as a part of its computation
+time. Therefore, a constrained-deadline task $\tau_k$ can be feasibly
+scheduled by a fixed-priority scheduling algorithm if
+\begin{equation}
+\label{eq:TDA-SO}
+\exists t \mid 0 < t \leq D_k, \quad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} (C_i+S_i) \leq t.
+\end{equation}
+
+\subsection{Modeling the Suspension as a Release Jitter}
+\label{sec:jitter}
+
+Another approach consists in modeling the impact of the self-suspension $S_i$ of each higher priority task $\tau_i$ as a release jitter $J_i$. Several works in the state-of-the-art \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994} upper bounded $J_i$ with $S_i$. However, it has been recently shown in~\cite{BletsasReport2015} that this upper bound is unsafe and $J_i$ can in fact be larger than $S_i$. 
+
+Nevertheless, it was proven in the same document \cite{BletsasReport2015} that the jitter of a higher-priority task $\tau_i$ can be safely upper bounded by $R_i-C_i$. It results that a task
+$\tau_k$ with a constrained deadline can be feasibly scheduled under fixed-priority if
+\begin{equation}
+\label{eq:TDA-jitter}
+\exists t \mid 0 < t \leq D_k, \quad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+R_i-C_i}{T_i}} C_i \leq t.
+\end{equation}
+
+\subsection{Modeling the Suspension as Blocking Time}
+\label{sec:suspension-blocking}
+
+In \cite[p. 164-165]{Liu:2000:RS:518501}, Liu proposed a solution to study the schedulability of a self-suspending task $\tau_k$ by modeling the extra delay suffered by $\tau_k$ due to the self-suspension behavior of each task in $\tau$ as a blocking time. This blocking time has been defined as follows:
+\begin{itemize}
+\item The blocking time contributed from task $\tau_k$ is $S_k$. 
+\item A higher-priority task $\tau_i$ can block the execution of task $\tau_k$ for at most $\min(C_i, S_i)$ time units.
+\end{itemize}
+%As a result, if $S_i < C_i$, then the blocking time contributed from task $\tau_i$ is at most $S_i$. Therefore, the contribution of a higher-priority task $\tau_i$  to $B_k$ is at most $b_i=min(C_i, S_i)$.
+An upper bound on the blocking time is therefore given by:
+\begin{equation}
+\label{eq:Bk}
+B_k = S_k + \sum_{i=1}^{k-1} \min(C_i, S_i).
+\end{equation}
+
+In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it is stated that, if $T_i=D_i$ for every task $\tau_i \in \tau$ and $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then $\tau_k$ can be feasibly scheduled with rate-monotonic. 
+  
+
+The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the impact of the self-suspendion of a task due to the utilization of synchronization protocols in multiprocessor systems. The statement in \cite{DBLP:conf/rtss/RajkumarSL88} reads as follows:\footnote{We rephrased the wording and notations in order to be consistent with the rest of this paper.}
+\begin{quote}
+\emph{``For each higher priority job $\tau_{i,j}$ that suspends on global semaphores or for other reasons, add the term $\min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $\tau_{i,j}$ can suspend itself. [...] The sum [...] yields $B_k$, which in turn can be used in 
+$\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable."}
+\end{quote}
+  
+If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled under fixed-priority scheduling if
+\begin{equation}
+\label{eq:TDA-suspension}
+\exists t \mid 0 < t \leq D_k, \quad C_k + B_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t.
+\end{equation}
+However, there is no proof in
+\cite{Liu:2000:RS:518501} nor in \cite{DBLP:conf/rtss/RajkumarSL88} to support the correctness of those tests. Therefore, in Section~\ref{sec:analysis}, we provide a proof of the correctness of Equation~\eqref{eq:TDA-suspension}.
+
+%It is not difficult to see that
+%the test in Eq.~\eqref{eq:TDA-suspension} dominates that in
+%Eq.~\eqref{eq:TDA-SO}.
+%
+%\begin{Lemma}
+%  The schedulability test of task $\tau_k$ provided by
+%  Eq.~\eqref{eq:TDA-suspension} dominates that of
+%  Eq.~\eqref{eq:TDA-SO}.
+%\end{Lemma}
+%\begin{proof}
+%  This is rather trivial, and the proof is omitted.
+%\end{proof}

@@ -1,0 +1,69 @@
+\section{Linear Approximation}
+\label{sec:linear-approximation}
+
+To test the schedulability of task $\tau_k$,
+Corollary~\ref{corollary:general-framework} implies to test all the
+possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which there are $2^{k-1}$
+different combinations. Therefore, the time complexity becomes
+exponential if we consider all the vector assignments. Therefore, in this section, we provide a solution to reduce the time complexity associated to
+Corollary~\ref{corollary:general-framework}. 
+
+Hence, we explain how to use the linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}) to help derive a good vector assignment. By the definition of $\ceiling{x}$, we have the following inequality:
+{\small \begin{align}
+&C_k'+ \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(D_i-C_i)}{T_i}} C_i \nonumber\\
+\leq& C_k' +   \sum_{i=1}^{k-1} \left(\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell +(1-x_i)(D_i-C_i)}{T_i} +1\right) C_i \nonumber\\
+=& C_k' + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(D_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right)\nonumber\\
+=& C_k' + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(D_i-C_i) + x_i S_i\left(\sum_{\ell=1}^{i}U_\ell\right)\right)\label{eq:linear-approximation-upper-bound}
+\end{align}}
+
+By observing Eq.~(\ref{eq:linear-approximation-upper-bound}), the
+contribution of $x_i$ can be individually determined as $U_i(D_i-C_i)$
+when $x_i$ is $0$ or $S_i(\sum_{\ell=1}^{i}U_\ell)$ when $x_i$ is
+$1$. Therefore, whether $x_i$ should be set to $0$ or $1$ can be
+easily decided by individually comparing the two constants
+$U_i(D_i-C_i)$ and $S_i(\sum_{\ell=1}^{i}U_\ell)$. We denote the
+vector assignment obtained above by $\vec{x}^{linear}$. That is, for
+each higher-priority task $\tau_i$,
+\begin{itemize}
+\item if $U_i(D_i-C_i) > S_i(\sum_{\ell=1}^{i}U_\ell)$, we greedily set $x_i^{linear}$ to $1$; 
+\item otherwise, we greedily set $x_i^{linear}$ to $0$. 
+\end{itemize}
+
+For notational brevity, we denote the right-hand side of
+Eq.~(\ref{eq:linear-approximation-upper-bound}) as $rbf_k(t, \vec{x})$
+for any $t > 0$ and given $\vec{x}$.
+\begin{theorem}
+\label{theorem:linear-time-test}
+  For any $t > 0$, the vector assignment $\vec{x}^{linear}$ minimizes
+  $rbf_k(t, \vec{x})$ among all $2^{k-1}$ possible vector assignments
+  for the $k-1$ higher-priority tasks. Task $\tau_k$ is schedulable
+  under the fixed-priority scheduling if
+  \begin{equation}
+    \label{eq:linear-time-test}
+    rbf_k(D_k, \vec{x}^{linear}) \leq D_k.
+  \end{equation}
+  Deriving $\vec{x}^{linear}$ requires $O(k)$ time complexity and
+  testing Eq.~(\ref{eq:linear-approximation-upper-bound}) also
+  requires only $O(k)$ time complexity.
+\end{theorem}
+\begin{proof}
+  The correctness to test Eq.~\eqref{eq:linear-time-test} is due to
+  the derivation in Eq.~\eqref{eq:linear-approximation-upper-bound}
+  and Corollary~\ref{corollary:general-framework}. The other
+  statements in this theorem are based on the above discussion in this
+  section and simple observations.
+\end{proof}
+
+
+% \begin{Corollary}
+%   \label{corollary:linear-time-overall-test}
+%   Considering task $\tau_k$ from $\tau_1, \tau_2, \ldots, \tau_n$, the
+%   time complexity to test the schedulability of all these $n$ tasks is
+%   $O(n)$ by using the test in
+%   Theorem~\ref{theorem:linear-time-test}. Therefore, the amortized
+%   time complexity to test task $\tau_k$ by using the test in
+%   Theorem~\ref{theorem:linear-time-test} is constant.
+% \end{Corollary}
+% \begin{proof}
+  
+% \end{proof}

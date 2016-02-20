@@ -1,0 +1,29 @@
+\section{Task Model}
+
+
+%The system model and terminologies are defined as follows: 
+We assume a system $\tau$ composed of $n$ sporadic self-suspending tasks. A sporadic task $\tau_i$ is released repeatedly, with each such invocation called a
+job. The $j^{th}$ job of $\tau_i$, denoted by $\tau_{i,j}$, is released
+at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
+job of task $\tau_i$ is assumed to have a worst-case execution time $C_i$. Furthermore, a job of task $\tau_i$ may suspend itself for at most $S_i$ time units (across all of its suspension phases). When a job suspends itself, it releases the processor and another job can be executed. The response time of a job is defined as its finishing time minus its release
+time. Successive jobs of the same task are required to execute in
+sequence. 
+
+Associated with each task $\tau_i$ are a period (or minimum inter-arrival time) $T_i$, which
+specifies the minimum time between two consecutive job releases of
+$\tau_i$, and a relative deadline $D_i$, which specifies the maximum
+amount of time a job can take to complete its execution after its
+release. It results that for each job $\tau_{i,j}$, there is $d_{i,j}=r_{i,j}+D_i$ and $r_{i,j+1} \geq r_{i,j} + T_i$. In this paper, we focus on constrained-deadline tasks, for which
+$D_i \leq T_i$. The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$. 
+
+The worst-case response
+time $R_i$ of a task $\tau_i$ is the maximum response time among all its
+jobs. A schedulability test for a task $\tau_k$
+is therefore to verify whether its worst-case response time is no more than its associated relative deadline $D_k$.
+
+%We will focus on the analysis of task $\tau_k$. There are $k-1$ higher-priority tasks, i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$, than task $\tau_k$. 
+In this paper, we only consider \emph{preemptive fixed-priority scheduling running on a single processor platform}, in
+which each task is assigned with a unique priority level. We assume
+that the priority assignment is given beforehand and that the tasks are numbered in a decreasing priority order. That is, a task with a smaller index has a higher priority than any task with a higher index, i.e., task $\tau_i$ has a higher-priority than task $\tau_{j}$ if $i < j$. 
+
+When performing the schedulability analysis of a specific task $\tau_k$, we will implicitly assume that all the higher priority tasks (i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$) are already verified to meet their deadlines, i.e., that $R_i \leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$. 
