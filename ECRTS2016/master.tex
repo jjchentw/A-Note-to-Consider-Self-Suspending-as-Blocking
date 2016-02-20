@@ -1044,7 +1044,7 @@ For such a case, $t_1^*=4,
 t_2^*=5, t_3^*=5$, and $t_4^*=6$. The two idle time units are used
 between time $4$ and time $6$. The accumulated workload is then
 started to be executed at time $6$ and the processor does not
-idle. Over here, we see that two jobs of task $\tau_2$ are executed
+idle after time $6$. Over here, we see that two jobs of task $\tau_2$ are executed
 back to back from time 7 to time 9. As
 shown in the imaginary schedule in
 Figure~\ref{fig:example-proof-final}, the processor is busy executing
@@ -1055,7 +1055,7 @@ than the actual in Figure~\ref{fig:example}. The conclusion we have in the final
 
 \begin{Lemma}
 \label{lemma:Wj0-dominate}
-$\forall \Delta \geq 0$ and $\forall c_j^* \geq 0$,
+$\forall \Delta \geq 0$ and $\forall C_j\geq c_j^* \geq 0$,
 \[
 \widehat{W}_j^0(\Delta, C_j)  \geq \widehat{W}_j^0(\Delta, c_j^*),
 \]
