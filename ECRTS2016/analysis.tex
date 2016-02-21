@@ -52,23 +52,17 @@ this paper is the following theorem:
 Corollary~\ref{corollary:general-framework} can be applied.
  
  \begin{example}
-  Consider the three tasks $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 35, 35)$.
-
-According to Eq.~(\ref{eq:TDA-jitter}), $\tau_1$ and $\tau_2$ are schedulable under
-fixed-priority. 
-
-For task $\tau_3$, the blocking term $B_3$ is $4+1=5$ by
-Eq.~(\ref{eq:Bk}). The minimum $t$ to satisfy $C_k + B_k +
-\sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i \leq t$ happens when $t=37$, i.e., $4+5+\ceiling{\frac{37}{10}} 4+\ceiling{\frac{37}{19}} 6=37$. Therefore, task $\tau_3$ cannot pass the schedulability test in Eq.~(\ref{eq:TDA-suspension}).
+ \label{ex:general_framework}
+  Consider the same three tasks than in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$.
 
 There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}:
 \begin{itemize}
-\item Case 1. $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by the minimum $t$ under $0 < t \leq T_3$ that $4+ \ceiling{\frac{t+6}{10}} 4 + \ceiling{\frac{t+13}{19}} 6 \leq t$. Such $t$ does not exist for this case.
+\item Case 1. $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by the minimum $t$ under $0 < t \leq T_3$ that $4+ \ceiling{\frac{t+6}{10}} 4 + \ceiling{\frac{t+13}{19}} 6 \leq t$. Such $t$ does not exist for this case.
 \item Case 2. $\vec{x} = (0 , 1)$:
- In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
+ In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by  the minimum $t$
 under $0 < t \leq T_3$ that
    satisfies $ 
-       4+ \ceiling{\frac{t+7}{10}} 4 + \ceiling{\frac{t+1}{19}} 6 \leq t$. Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+7}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
+       4+ \ceiling{\frac{t+7}{10}} 4 + \ceiling{\frac{t+1}{19}} 6 \leq t$. Therefore, $R_k \leq 32$ due to $4+ \ceiling{\frac{32+7}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
 \item Case 3. $\vec{x} = (1 , 0)$:
  In this case, there is no value of $t$ that satisfies Eq.~\eqref{eq:TDA-suspension-tighter0}. %Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
 %under $0 < t \leq T_3$ that
@@ -77,16 +71,17 @@ under $0 < t \leq T_3$ that
 %       4+ \ceiling{\frac{t+5}{10}}\cdot 4 + \ceiling{\frac{t+13}{19}}\cdot 6 \leq t.
 %     \end{equation}}Such a value $t$ does not exist for this case.
 \item Case 4. $\vec{x} = (1 , 1)$:
- In this case, Theorem~\ref{theorem:general-framework} states that $R_k'$ is upper bounded by  the minimum $t$
+ In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by  the minimum $t$
 under $0 < t \leq T_3$ that
    satisfies $
-       4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t$. Therefore, $R_k' \leq 32$ due to $4+ \ceiling{\frac{32+6}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
+       4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t$. Therefore, $R_k \leq 32$ due to $4+ \ceiling{\frac{32+6}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
 \end{itemize}
-Among the above four cases, the tests in Cases 2 and 4 are the tightest. By
-Corollary~\ref{corollary:general-framework}, task $\tau_3$ is
+Among the above four cases, the tests in Cases 2 and 4 are the tightest. Therefore, by
+Corollary~\ref{corollary:general-framework}, $\tau_3$ is
 schedulable under fixed-priority.
  \end{example}
 
+Note that the upper bound on $\tau_3$'s WCRT computed in Example~\ref{ex:general_framework}, is lower than the WCRT estimate obtained in Example~\ref{ex:rationale_2}. The response time analysis presented in Corollary~\ref{corollary:general-framework} is therefore tighter than the simple combination of existing analysis techniques proposed in Example~\ref{ex:rationale_2}.
 
 
 
