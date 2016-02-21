@@ -9,11 +9,10 @@ job of task $\tau_i$ is assumed to have a worst-case execution time $C_i$. Furth
 time. Successive jobs of the same task are required to execute in
 sequence. 
 
-Associated with each task $\tau_i$ are a period (or minimum inter-arrival time) $T_i$, which
-specifies the minimum time between two consecutive job releases of
-$\tau_i$, and a relative deadline $D_i$, which specifies the maximum
+Each task $\tau_i$ is characterized by the tuple $(C_i, S_i, D_i, T_i)$, where $T_i$ is the period (or minimum inter-arrival time) of $\tau_i$ and $D_i$ is its relative deadline. $T_i$ specifies the minimum time between two consecutive job releases of
+$\tau_i$, while $D_i$ defines the maximum
 amount of time a job can take to complete its execution after its
-release. It results that for each job $\tau_{i,j}$, there is $d_{i,j}=r_{i,j}+D_i$ and $r_{i,j+1} \geq r_{i,j} + T_i$. In this paper, we focus on constrained-deadline tasks, for which
+release. It results that for each job $\tau_{i,j}$, $d_{i,j}=r_{i,j}+D_i$ and $r_{i,j+1} \geq r_{i,j} + T_i$. In this paper, we focus on constrained-deadline tasks, for which
 $D_i \leq T_i$. The utilization of a task $\tau_i$ is defined as $U_i=C_i/T_i$. 
 
 The worst-case response
