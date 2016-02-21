@@ -1,15 +1,15 @@
 \subsection{Proof of Correctness}  
 \label{sec:proof-th1}
 
-We now provide the proof to support the correctness of the test in
-Theorem~\ref{theorem:general-framework}.  Our proof strategy is to
-show that the worst-case response time of task $\tau_k$ can be safely
-upper-bounded by any assignment of $\vec{x}$ of the $k-1$
-higher-priority tasks when adopting
-Eq.~(\ref{eq:TDA-suspension-tighter0}) as the response time analysis.
+We now provide the proof to support the correctness of the response time analysis presented in
+Theorem~\ref{theorem:general-framework}, whatever the value of vector $\vec{x}$.  %The proof strategy is to
+%show that the worst-case response time of task $\tau_k$ can be safely
+%upper-bounded by any assignment of $\vec{x}$ of the $k-1$
+%higher-priority tasks when adopting
+%Eq.~(\ref{eq:TDA-suspension-tighter0}) as the response time analysis.
 
 Throughout the proof, we consider any arbitrary assignment
-$\vec{x}$, in which $x_i$ is either $0$ or $1$. For the sake of notational brevity, we classify the $k-1$
+$\vec{x}$, in which $x_i$ is either $0$ or $1$. For the sake of clarity, we classify the $k-1$
 higher-priority tasks into two sets: ${\bf T}_0$ and ${\bf T}_1$. A
 task $\tau_i$ is in ${\bf T}_0$ if $x_i$ is $0$; otherwise, it is in
 ${\bf T}_1$.
@@ -37,7 +37,7 @@ In a preemptive fixed-priority schedule, the lower-priority jobs do not impact t
 In a preemptive fixed-priority schedule, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, preventing the release of a job of task $\tau_i$ does not affect the schedule of any other job of task $\tau_i$.
 \end{Lemma}
 \begin{proof}
-Since the worst-case response time of task $\tau_i$ is no more than its period, any job $\tau_{i,j}$ of task $\tau_i$ completes its execution before the release of the next job $\tau_{i,j+1}$. Hence, the execution of $\tau_{i,j}$ does not directly interfere with the execution of any other job of $\tau_i$, which then depends only on the schedule of the higher priority jobs. Furthermore, as stated in Property~\ref{prop:lower-priority}, the removal of $\tau_{i,j}$ has no impact on the schedule of the higher-priority jobs, thereby implying that the other jobs of task $\tau_i$ are not affected by the removal of $\tau_{i,j}$.
+Since, by assumption, the worst-case response time of task $\tau_i$ is no more than its period, any job $\tau_{i,j}$ of task $\tau_i$ completes its execution before the release of the next job $\tau_{i,j+1}$. Hence, the execution of $\tau_{i,j}$ does not directly interfere with the execution of any other job of $\tau_i$, which then depends only on the schedule of the higher priority jobs. Furthermore, as stated in Property~\ref{prop:lower-priority}, the removal of $\tau_{i,j}$ has no impact on the schedule of the higher-priority jobs, thereby implying that the other jobs of task $\tau_i$ are not affected by the removal of $\tau_{i,j}$.
 \end{proof}
 
 
@@ -73,45 +73,30 @@ time $6+2\epsilon$ to $7$.
 
 
 \begin{appProof}{Theorem~\ref{theorem:general-framework}}
-Let us consider the task set $\tau'$ composed of $\left\{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots \right\}$ and let $\Psi$ be a schedule of $\tau'$, in which $R_k' \leq T_k$ by our assumption.  
-Suppose that a job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$. We will prove that the response time analysis in Eq.~\eqref{eq:TDA-suspension-tighter0} gives us a safe upper bound on $f_k-r_k$ for any job $J_k$ in $\Psi$.
+Consider the modified task set $\tau'$ composed of $\left\{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots \right\}$ where $\tau_k' = (C_k + S_k, 0, D_k, T_k)$. Let $\Psi$ be a schedule of $\tau'$ such that $R_k' \leq T_k$.  
+Suppose that a job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$. We prove that Eq.~\eqref{eq:TDA-suspension-tighter0} gives us a safe upper bound on $f_k-r_k$ for any job $J_k$ in $\Psi$.
 
 
 The proof is built upon the three following steps:
 \begin{enumerate}
-\item We discard all the jobs that do not contribute to the response time of $J_k$ in the schedule $\Psi$. We follow an inductive strategy by iteratively inspecting the schedule of the higher priority tasks in $\Psi$, starting with $\tau_{k-1}$ until the highest priority task $\tau_1$. At each iteration, a time instant $t_j$ is identified such that $t_j \leq t_{j+1}$ ($1 \leq j < k$). Then, all the jobs of task $\tau_j$ released before $t_j$ are removed from the schedule and, if needed, replaced by an artificial job mimicking the interference caused by the residual workload of task $\tau_j$ at time $t_j$ on the response time of job $J_k$. 
+\item We discard all the jobs that do not contribute to the response time of $J_k$ in the schedule $\Psi$. We follow an inductive strategy by iteratively inspecting the schedule of the higher priority tasks in $\Psi$, starting with $\tau_{k-1}$ until the highest priority task $\tau_1$. At each iteration, a time instant $t_j$ is identified such that $t_j \leq t_{j+1}$ ($1 \leq j < k$). Then, all the jobs of task $\tau_j$ released before $t_j$ are removed from the schedule and, if needed, replaced by an artificial job mimicking the interference caused by the residual workload of task $\tau_j$ at time $t_j$. %on the response time of job $J_k$. 
 \item The final reduced schedule is analyzed so as to characterize the
-  worst-case response time of $\tau_k'$ in $\Psi$ by using workload
-  functions.
+  worst-case response time of $\tau_k'$ in $\Psi$. %by using workload functions.
 \item We then prove that the response time analysis in Eq.~(\ref{eq:TDA-suspension-tighter0}) is indeed an upper bound on the worst-case response time $R_k'$ of $\tau_k'$.
 \end{enumerate}
-
-%Suppose that the job $J_{k}$ of task $\tau_k'$ with the largest response time in $\Psi$ arrives at time $r_k$ and finishes at time $f_k$.
-%We know by Property~\ref{prop:lower-priority} that the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ do not impact the response time of $J_{k}$. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, Lemma~\ref{lemma:remove-same-task} proves that removing all the jobs of task $\tau_k'$ but $J_{k}$ has no impact on the schedule of $J_{k}$ arrived at time $r_k$. Therefore, let $\Psi^{red}$ be a schedule identical to $\Psi$ but removing all the jobs released by the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots$ as well as all the jobs released by $\tau_k'$ at the exception of $J_{k}$. The response time of $J_{k}$ in $\Psi^{red}$ is identical to the response time of $J_{k}$ in $\Psi$.
-
-
-%Therefore, for the rest of the proof, we only have to consider this \emph{reduced} schedule $\Psi^{red}$. Note that by construction of $\Psi^{red}$, the processor is busy only when executing higher-priority tasks than $\tau'_k$ or the job of task $\tau_k'$ released at time $r_k$ and completing at time $f_k$. In $\Psi^{red}$, let $t_{k}$ be the latest moment before $r_k$ such that the processor does not execute any job. That is, from $t_k$ to $r_k$, the processor executes tasks with higher priorities than $\tau_k'$. Apparently, one can change the release time of the unique job of task $\tau_k'$ in $\Psi^{red}$ to time $t_k$, and hence increase the response time of the job to $f_k-t_k \geq f_k-r_k$. It however contradicts our assumption that the response time of $J_{k}$ is the worst-case response time of $\tau_k'$. Consequently, $t_k$ is equal to the release $r_k$ of $J_{k}$ in $\Psi^{red}$ and the processor is idle before $t_k$.
-
-%Up to here, the proof is basically similar to the proof of the critical instant theorem of the usual sporadic sequential real-time task model. However, for self-suspending tasks, one needs to consider that a job of a higher priority task $\tau_i$ can suspend itself before $t_k$ and resume its execution after $t_k$. Such jobs are usually referred to as \emph{carry-in} jobs. 
-
-%Fortunately, each higher-priority task has only one carry-in job due to the assumption that the higher-priority tasks are assumed to finish before their periods. However, analyzing the accurate workload of such jobs due to self-suspension is non-trivial. 
-%One can conclude that each job of task $\tau_i$ has execution time up to $C_i$. This is fine with $S_i \geq C_i$. If $S_i < C_i$, we explain how to further extend the analysis window further iteratively. For the simplicity of presentation, let $J_i$ be the carry-in job of task $\tau_i$ at time $t_k$.
-
 
 
 \noindent{\bf Step 1: Reducing the schedule $\Psi$} 
 
 During this step, we iteratively build an artificial schedule $\Psi^j$ from $\Psi^{j+1}$ (with $1 \leq j < k$) so that the response time of $\tau_{k}'$ remains identical. At each iteration, we define $t_j$ for task $\tau_j$ in the schedule $\Psi^{j+1}$ (with $j=k-1, k-2, \ldots, 1$) and build $\Psi^j$ by removing all the jobs released by $\tau_j$ before $t_j$.
 
-~
 
 \noindent\textit{Basic step (definition of $\Psi^k$ and $t_k$):} 
 
-Recall that the job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$ in schedule $\Psi$. We know by Property~\ref{prop:lower-priority} that the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots, \tau_n$ do not impact the response time of $J_{k}$. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, Lemma~\ref{lemma:remove-same-task} proves that removing all the jobs of task $\tau_k'$ but $J_{k}$ has no impact on the schedule of $J_{k}$. Therefore, let $\Psi^k$ be a schedule identical to $\Psi$ but removing all the jobs released by the lower priority tasks $\tau_{k+1}, \ldots, \tau_n$ as well as all the jobs released by $\tau_k'$ at the exception of $J_{k}$. The response time of $J_{k}$ in $\Psi^{k}$ is thus identical to the response time of $J_{k}$ in $\Psi$.
+Recall that the job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$ in schedule $\Psi$. We know by Property~\ref{prop:lower-priority} that the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots, \tau_n$ do not impact the response time of $J_{k}$. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, Lemma~\ref{lemma:remove-same-task} proves that removing all the jobs of task $\tau_k'$ but $J_{k}$ has no impact on the schedule of $J_{k}$. Therefore, let $\Psi^k$ be a schedule identical to $\Psi$ but removing all the jobs released by the lower priority tasks $\tau_{k+1}, \ldots, \tau_n$ as well as all the jobs released by $\tau_k'$ at the exception of $J_{k}$. The response time of $J_{k}$ in $\Psi^{k}$ is identical to the response time of $J_{k}$ in $\Psi$.
 
 We define $t_k$ as the release time of $J_k$ (i.e., $t_k = r_k$).
 
-~
 
 \noindent\textit{Induction step (definition of $\Psi^j$ and $t_j$ with $1 \leq j < k$):}
 
@@ -119,22 +104,20 @@ Let $r_j$ be the arrival time of the last job released by $\tau_j$ before $t_{j+
 %\begin{itemize}
 %\item $J_{j}$ completed its execution no later than $t_{j+1}$. Then, we simply set $t_j$ to $t_{j+1}$ and generate $\Psi^j$ by removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ in the schedule $\Psi^{j+1}$. By Lemma~\ref{lemma:remove-same-task} and Property \ref{prop:lower-priority}, removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (jobs released by $\tau_1, \ldots, \tau_{j-1}$) and the jobs of $\tau_j$ released after $t_{j+1}$. Moreover, because no task with a priority lower than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. The response time of $J_{k}$ in $\Psi^j$ thus remains unchanged in comparison to its response time in $\Psi^{j+1}$. 
 %\item $J_{j}$ did not complete its execution before $t_{j+1}$.
-Removing all the jobs of task $\tau_j$ arrived before $r_j$ has no impact on the schedule of any other job released by $\tau_j$ (Lemma~\ref{lemma:remove-same-task}) or any higher priority job released by $\tau_1, \ldots, \tau_{j-1}$ (Property \ref{prop:lower-priority}). Moreover, because by the construction of $\Psi^{j+1}$, no task with a priority lower than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. Therefore, we can safely remove all the jobs of task $\tau_j$ arrived before $r_j$ without impacting the response time of $J_{k}$. Two cases must then be considered:
+Removing all the jobs of task $\tau_j$ arrived before $r_j$ has no impact on the schedule of any other job released by $\tau_j$ (Lemma~\ref{lemma:remove-same-task}) or any higher priority job released by $\tau_1, \ldots, \tau_{j-1}$ (Property \ref{prop:lower-priority}). Moreover, because by construction of $\Psi^{j+1}$, no task with a priority lower than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. Therefore, we can safely remove all the jobs of task $\tau_j$ arrived before $r_j$ without impacting the response time of $J_{k}$. Two cases must then be considered:
 \begin{enumerate}[(a)]
 \item $\tau_j \in {\bf T}_1$. In this case, we analyze two different subcases:
 \begin{itemize}
+\item $J_{j}$ did not complete its execution by $t_{j+1}$. For such a case, $t_{j}$ is set to $r_j$ and hence $\Psi^j$ is built from $\Psi^{j+1}$ by removing all the jobs released by $\tau_j$ before $r_j$.
 \item $J_{j}$ completed its execution before or at $t_{j+1}$. By Lemma~\ref{lemma:remove-same-task} and Property \ref{prop:lower-priority}, removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (jobs released by $\tau_1, \ldots, \tau_{j-1}$) and the jobs of $\tau_j$ released after or at $t_{j+1}$. 
-Moreover, because no task with lower priority than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. Therefore, $t_j$ is set to $t_{j+1}$ and $\Psi^j$ is generated by removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$. The response time of $J_{k}$ in $\Psi^j$ thus remains unchanged in comparison to its response time in $\Psi^{j+1}$. 
-\item $J_{j}$ did not complete its execution by $t_{j+1}$. For such a case, $t_{j}$ is set to $r_j$ and hence $\Psi^j$ is built from $\Psi^{j+1}$ by removing all the jobs released by $\tau_j$ before $r_j$. 
+Moreover, because no task with lower priority than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. Therefore, $t_j$ is set to $t_{j+1}$ and $\Psi^j$ is generated by removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$. The response time of $J_{k}$ in $\Psi^j$ thus remains unchanged in comparison to its response time in $\Psi^{j+1}$.  
 \end{itemize}
-Note that because by the construction of $\Psi^{j+1}$ and hence $\Psi^j$ there is no job with priority lower than $\tau_j$ available to be executed before $t_{j+1}$, the maximum amount of time during which the processor remains idle within $[t_j, t_{j+1})$ is at most $S_j$ time units.
-\item $\tau_j \in {\bf T}_0$. For such a case, we set $t_{j}$ to $t_{j+1}$. Let $c_j^*$ be the remaining execution time for the job of task $\tau_j$ at time $t_j$. We know that $c_j^*$ is at most $C_j$. Since by the construction of $\Psi^j$, all the jobs of $\tau_j$ released before $t_j$ are removed, the job of task $\tau_j$ arrived at time $r_j$ ($< t_j$) is replaced by a new job released at time $t_j$ with execution time $c_j^*$ and the same priority than $\tau_j$. Clearly, this has no impact on the execution of any job executed after $t_j$ and thus on the response time of $J_k$. The remaining execution time $c_j^*$ of $\tau_j$ at time $t_j$ is called the \emph{residual workload} of task $\tau_j$ for the rest of the proof.
+Note that if $t_j \not= t_{j+1}$, then $t_j = r_j$ and the job $J_j$ did not complete its execution yet. Therefore, the amount of time during which the processor may remain idle within $[t_j, t_{j+1})$ is at most $S_j$ time units.
+\item $\tau_j \in {\bf T}_0$. For such a case, we set $t_{j}$ to $t_{j+1}$. Let $c_j^*$ be the remaining execution time for the job of task $\tau_j$ at time $t_j$. We know that $c_j^*$ is at most $C_j$. Since by construction of $\Psi^j$, all the jobs of $\tau_j$ released before $t_j$ are removed, the job of task $\tau_j$ arrived at time $r_j$ ($< t_j$) is replaced by a new job released at time $t_j$ with execution time $c_j^*$ and the same priority than $\tau_j$. Clearly, this has no impact on the execution of any job executed after $t_j$ and thus on the response time of $J_k$. The remaining execution time $c_j^*$ of $\tau_j$ at time $t_j$ is called the \emph{residual workload} of task $\tau_j$ in the rest of the proof.
 \end{enumerate}
 %\end{itemize}
  
-The above construction of $\Psi^{k-1}, \Psi^{k-2}, \ldots, \Psi^1$ is repeated until producing $\Psi^1$. The procedures are well-defined. Therefore, it is guaranteed that $\Psi^1$ can be constructed. Note that after each iteration, the number of jobs considered in the schedule have been reduced, yet without affecting the response time of $J_k$. 
-%(Note that $J_j$ is defined as the carry-in job of task $\tau_j$ at time $t_k$.) Therefore, the reduced schedule after the above procedure does not change the execution of $J_j$ after time $t_j$ if $\tau_j$ is in ${\bf T}_0$. For a task $\tau_j$ in ${\bf T}_1$, its corresponding carry-in job $J_j$ may be changed, but its execution after $t_j$ remains identical as in the original schedule. 
-%Therefore, the resulting schedule above does not change any execution behavior of the (at most) $k-1$ carry-in jobs at time $t_k$.
+This iterative process is repeated until producing $\Psi^1$. The procedures are well-defined and it is therefore guaranteed that $\Psi^1$ can be constructed. Note that after each iteration, the number of jobs considered in the resulting schedule has been reduced, yet without affecting the response time of $J_k$. 
 
 
 \noindent\underline{An example of the procedures in Step 1:}  
@@ -311,7 +294,7 @@ Eq.~\eqref{eq:exec_plus_idle-3} hold by simple arithmetics.
   \label{fig:example-step2}
 \end{figure}
 
-{\bf Step 3: Creating Safe Response-Time Analysis}
+{\bf Step 3: Creating a Safe Response-Time Analysis}
 
 
 \begin{figure*}[t]
