@@ -426,8 +426,8 @@ Eq.~\eqref{eq:exec_plus_idle-3} hold by simple arithmetics.
 \end{figure*}
 
 This step constructs a safe response-time analysis based on the
-conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
-(\ref{eq:exec_plus_idle-3}). We will construct another release pattern
+conditions specified by Eqs.~(\ref{eq:exec_plus_idle-2}) and
+(\ref{eq:exec_plus_idle-3}). To do so, we construct another release pattern
 which moves $t_i$ to $t_i^*$ for $i=2,3,\ldots,k$ such that $t_i^*
 \leq t_i$ and the corresponding conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
 (\ref{eq:exec_plus_idle-3}) will become worse when we use $t_i^*$. We start
@@ -465,7 +465,7 @@ Eqs.~(\ref{eq:exec_plus_idle-3}) $\forall t \mid t_k \leq t < f_k$ leads to
 \label{eq:exec_plus_idle-5}
 C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-t_k^*.
 \end{equation}
- By the assumption that $C_k' \geq C_k > 0$, we can unify the above inequalities in Eq.~(\ref{eq:exec_plus_idle-4}) and Eq.~(\ref{eq:exec_plus_idle-5}) as follows:
+ By the fact that $C_k' \geq C_k > 0$, we can unify the above inequalities in Eq.~(\ref{eq:exec_plus_idle-4}) and Eq.~(\ref{eq:exec_plus_idle-5}) as follows:
 $\forall t \mid t_k^* \leq t < f_k$
 \begin{equation}
 \label{eq:exec_plus_idle-almost-final} 
@@ -474,7 +474,7 @@ C_k'+\sum_{j=1}^{k-1} x_j\cdot W_j^1(t-t_j^*) + (1-x_j)\cdot W_j^0(t-t_j^*) > t-
 
 
 
-By definition, $\forall t \mid t_k^* \leq t < f_k$, we have
+By definition of $t_j^*$, $\forall t \mid t_k^* \leq t < f_k$, we have
 $t-t_j^* = t - t_k^* + \sum_{\ell=j}^{k-1} x_\ell\sigma_\ell$ for every
 $j=1,2,\ldots,k-1$. Therefore, we know that
  $W_j^1(t-t_j^*) \leq
