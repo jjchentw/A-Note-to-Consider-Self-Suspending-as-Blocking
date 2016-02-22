@@ -7,20 +7,19 @@ possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$. $2^{k-1}$ p
 Corollary~\ref{corollary:general-framework}. Indeed, using a linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}), a good vector assignment can be derived in linear time. 
 
 By definition of the ceiling operator, it holds that:
-{\small \begin{align*}
+{\small \begin{align}
 &C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(R_i-C_i)}{T_i}} C_i \nonumber\\
 \leq& C_k + S_k  +   \sum_{i=1}^{k-1} \left(\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell +(1-x_i)(R_i-C_i)}{T_i} +1\right) C_i \nonumber\\
-=& C_k + S_k  + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(R_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right)
-\end{align*}
+=& C_k + S_k  + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(R_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right) \label{eq:linear_step1}
+\end{align}
 
-!!some explanations about the last transformation!! 
-$U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell = x_i S_i\left(\sum_{\ell=1}^{i}U_\ell \right)$
-
+Moreover, using the simple algebra property that for any two vectors $\vec{a}$ and $\vec{b}$ of size $(k-1)$ there is $\sum_{i=1}^{k} a_i \sum_{j=i}^{k} b_j = \sum_{j=1}^{k} b_j \sum_{i=1}^{j} a_i$, we get that $\sum_{i=1}^{k-1} U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell = \sum_{i=1}^{k-1} x_i S_i \sum_{\ell=1}^{i}U_\ell $. Hence, injecting this last expression in Eq.~\ref{eq:linear_step1}, it holds that
 \begin{align*}
-=& C_k' + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(R_i-C_i) + x_i S_i\sum_{\ell=1}^{i}U_\ell \right)
+& C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(R_i-C_i)}{T_i}} C_i\\
+\leq & C_k + S_k + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(R_i-C_i) + x_i S_i\sum_{\ell=1}^{i}U_\ell \right)
 \end{align*}
 
-It result that the minimum positive $t$ such that
+It result that the minimum positive value for $t$ such that
 \begin{align}
 \label{eq:linear-approximation-upper-bound}
 C_k + S_k + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(R_i-C_i) + x_i S_i\sum_{\ell=1}^{i}U_\ell \right) \leq t

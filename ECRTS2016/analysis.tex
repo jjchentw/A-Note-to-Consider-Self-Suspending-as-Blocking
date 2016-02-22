@@ -6,7 +6,7 @@
 As already discussed in Section~\ref{sec:existing-analyses}, one can greedily convert the suspension time of task $\tau_k$ in computation time. Let $\tau_k'$ be this converted version of task $\tau_k$, i.e., $\tau_k' = (C_k + S_k, 0, D_k, T_k)$.  Suppose that $R_k'$ is the worst-case response time of $\tau_k'$ in the modified task set $\setof{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k'}$. It was already shown in previous works, e.g., Lemma~3 in
 \cite{Liu_2014}, that $R_k'$ is a safe upper bound on the worst-case response time of task $\tau_k$ in the original task set.
 
-Note that for the rest of this section, we implicitly assume that $R_i
+Note that in all this section, we implicitly assume that $R_i
 \leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$.  Our key result in
 this paper is the following theorem:
 
