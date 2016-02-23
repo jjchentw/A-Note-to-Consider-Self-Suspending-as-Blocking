@@ -43,7 +43,7 @@ Corollary~\ref{corollary:general-framework} can be applied.
  
  \begin{example}
  \label{ex:general_framework}
-  Consider the same three tasks than in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$. There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}:
+  Consider the same three tasks used in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$. There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}:
 
 \noindent\textbf{Case 1.} $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by the minimum $t$ under $0 < t \leq D_3$ such that $4+ \ceiling{\frac{t+5}{10}} 4 + \ceiling{\frac{t+9}{19}} 6 \leq t$. Note that this equation is identical to the schedulability test discussed in Section~\ref{sec:jitter}, and hence, as shown in Example~\ref{ex:rationale_1}, we get that $R_k \leq 42$.
 

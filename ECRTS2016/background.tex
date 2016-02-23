@@ -40,7 +40,7 @@ scheduled by a fixed-priority scheduling algorithm if
 \subsection{Modeling the Suspension as a Release Jitter}
 \label{sec:jitter}
 
-Another approach consists in modeling the impact of the self-suspension $S_i$ of each higher priority task $\tau_i$ as a release jitter $J_i$. Several works in the state-of-the-art \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994} upper bounded $J_i$ with $S_i$. However, it has been recently shown in~\cite{BletsasReport2015} that this upper bound is unsafe and $J_i$ can in fact be larger than $S_i$. 
+Another approach consists in modeling the impact of the self-suspension $S_i$ of each higher priority task $\tau_i$ as a release jitter. Several works in the state-of-the-art \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994} upper bounded the release jitter with $S_i$. However, it has been recently shown in~\cite{BletsasReport2015} that this upper bound is unsafe and  the release jitter of task $\tau_i$ can in fact be larger than $S_i$. 
 
 Nevertheless, it was proven in the same document \cite{BletsasReport2015} that the jitter of a higher-priority task $\tau_i$ can be safely upper bounded by $R_i-C_i$. It results that a task
 $\tau_k$ with a constrained deadline can be feasibly scheduled under fixed-priority if

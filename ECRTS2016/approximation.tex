@@ -3,27 +3,28 @@
 
 To test the schedulability of a task $\tau_k$,
 Corollary~\ref{corollary:general-framework} implies to test all the
-possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$. $2^{k-1}$ possible combinations must therefore be tested, implying an exponential time complexity. In this section, we thus provide a solution to reduce the time complexity associated to
+possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$. Therefore, $2^{k-1}$ possible combinations must therefore be tested, implying exponential time complexity. In this section, we thus provide a solution to reduce the time complexity associated to
 Corollary~\ref{corollary:general-framework}. Indeed, using a linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}), a good vector assignment can be derived in linear time. 
 
-By definition of the ceiling operator, it holds that:
+By the definition of the ceiling operator, it holds that:
 {\small \begin{align}
 &C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(R_i-C_i)}{T_i}} C_i \nonumber\\
 \leq& C_k + S_k  +   \sum_{i=1}^{k-1} \left(\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell +(1-x_i)(R_i-C_i)}{T_i} +1\right) C_i \nonumber\\
 =& C_k + S_k  + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(R_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right) \label{eq:linear_step1}
-\end{align}
+\end{align}}
 
-Moreover, using the simple algebra property that for any two vectors $\vec{a}$ and $\vec{b}$ of size $(k-1)$ there is $\sum_{i=1}^{k} a_i \sum_{j=i}^{k} b_j = \sum_{j=1}^{k} b_j \sum_{i=1}^{j} a_i$, we get that $\sum_{i=1}^{k-1} U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell = \sum_{i=1}^{k-1} x_i S_i \sum_{\ell=1}^{i}U_\ell $. Hence, injecting this last expression in Eq.~\ref{eq:linear_step1}, it holds that
+Moreover, using the simple algebra property that for any two vectors $\vec{a}$ and $\vec{b}$ of size $(k-1)$ there is $\sum_{i=1}^{k} a_i \sum_{j=i}^{k} b_j = \sum_{j=1}^{k} b_j \sum_{i=1}^{j} a_i$, we get that $\sum_{i=1}^{k-1} U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell = \sum_{i=1}^{k-1} x_i S_i \sum_{\ell=1}^{i}U_\ell $. Hence, injecting this last expression in Eq.~\eqref{eq:linear_step1}, it holds that
+{\footnotesize
 \begin{align*}
 & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(R_i-C_i)}{T_i}} C_i\\
 \leq & C_k + S_k + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(R_i-C_i) + x_i S_i\sum_{\ell=1}^{i}U_\ell \right)
-\end{align*}
+\end{align*}}
 
-It result that the minimum positive value for $t$ such that
-\begin{align}
+It results that the minimum positive value for $t$ such that
+{\footnotesize\begin{align}
 \label{eq:linear-approximation-upper-bound}
 C_k + S_k + \sum_{i=1}^{k-1}  \left(U_i\cdot t + C_i + U_i (1-x_i)(R_i-C_i) + x_i S_i\sum_{\ell=1}^{i}U_\ell \right) \leq t
-\end{align}
+\end{align}}
 is an upper bound on the WCRT of $\tau_k$.
 
 Observing Eq.~(\ref{eq:linear-approximation-upper-bound}), the
@@ -31,7 +32,7 @@ contribution of $x_i$ can be individually determined as $U_i(R_i-C_i)$
 when $x_i$ is $0$ or $S_i(\sum_{\ell=1}^{i}U_\ell)$ when $x_i$ is
 $1$. Therefore, whether $x_i$ should be set to $0$ or $1$ can be 
 decided by individually comparing the two constants
-$U_i(R_i-C_i)$ and $S_i(\sum_{\ell=1}^{i}U_\ell)$. Eq.~\eqref{eq:linear-approximation-upper-bound} is therefore minimized when $x_i=1$ when $U_i(R_i-C_i) > S_i(\sum_{\ell=1}^{i}U_\ell)$ and $x_i = 0$ otherwise. We denote the resulting vector by $\vec{x}^{\mathit{lin}}$, where, for
+$U_i(R_i-C_i)$ and $S_i(\sum_{\ell=1}^{i}U_\ell)$. Eq.~\eqref{eq:linear-approximation-upper-bound} is therefore minimized when $x_i=1$ if $U_i(R_i-C_i) > S_i(\sum_{\ell=1}^{i}U_\ell)$ and when $x_i = 0$ otherwise. We denote the resulting vector by $\vec{x}^{\mathit{lin}}$, where, for
 each higher-priority task $\tau_i$,
 \begin{equation*}
 x_i^{\mathit{lin}} =
