@@ -5,17 +5,17 @@ To analyze the worst-case response time (or the schedulability) of a task $\tau_
 critical instant does not hold for self-suspending sporadic tasks.  
 
 
-%The analysis of self-suspending task systems should consider the
-%impact due to self-suspension in two parts. \emph{First}, for task
-%$\tau_k$ that is under analysis, we need to consider the worst case in
-%which a job of task $\tau_k$ suspends whenever there is no
-%higher-priority job in the system and the job can still suspend itself
-%(i.e., no more than $S_k$). Therefore, this can be thought as if the
-%suspension time $S_k$ of task $\tau_k$ is effectively also converted
-%into computation time. \emph{Second}, for the higher-priority tasks,
-%we need to account the self-suspension behaviour that may result in
-%more interference to task $\tau_k$, that is under analysis.
-
+The analysis of self-suspending task systems should consider the
+impact due to self-suspension in two parts. \emph{First}, for task
+$\tau_k$ that is under analysis, we need to consider the worst case in
+which a job of task $\tau_k$ suspends whenever there is no
+higher-priority job in the system and the job of task $\tau_k$ can still suspend itself
+(i.e., the total suspension time is no more than $S_k$). Therefore, this can be thought as if the
+suspension time $S_k$ of task $\tau_k$ is effectively also converted
+into computation time. 
+\emph{Second}, for the higher-priority tasks,
+we need to consider the self-suspension behaviour that may result in
+more interference to task $\tau_k$, that is under analysis.
 %With the above concept in mind, 
 There exist three different approaches in the state-of-the-art 
 that are potentially sound to perform the schedulability analysis of self-suspending tasks:
