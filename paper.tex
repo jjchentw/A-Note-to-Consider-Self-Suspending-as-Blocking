@@ -50,7 +50,7 @@ In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utiliza
 \end{equation}
   
 
-The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending behaviour due to synchronization protocols in multiprocessor systems. To account for the self-suspending behaviour, it reads as follows:\footnote{We rephrased the wordings and notations to be consistent with this report.}
+The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky \cite[Page 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing self-suspending behaviour due to synchronization protocols in multiprocessor systems. To account for the self-suspending behaviour, it reads as follows:\footnote{We rephrased the wordings and notation to be consistent with this report.}
 \begin{quote}
 \emph{For each higher priority job $J_i$ on the processor that suspends on global semaphores or for other reasons, add the term $min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $J_i$ can suspend itself. The sum ... yields $B_k$, which in turn can be used in 
 $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable.}
