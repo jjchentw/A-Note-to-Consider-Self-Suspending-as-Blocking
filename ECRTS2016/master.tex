@@ -95,7 +95,7 @@ align =left,
 
 \begin{document}
   
-\title{A Unifying Response Time Analysis Framework for Self-Suspending Tasks}
+\title{A Unifying Response Time Analysis Framework for Dynamic Self-Suspending Tasks}
 
 \author{Jian-Jia Chen\IEEEauthorrefmark{1}, Geoffrey Nelissen\IEEEauthorrefmark{4}, Wen-Hung Huang\IEEEauthorrefmark{1}\\
 \IEEEauthorrefmark{1} TU Dortmund University, Germany\\
@@ -106,22 +106,27 @@ Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt
 \maketitle
 
 \begin{abstract}
-. \\
-. \\
-. \\
-. \\
-. \\
-. \\
-. \\
-. \\
-. \\
-. \\
-. \\
-. \\
-. \\
-. 
-
-
+  For real-time embedded systems, self-suspending behaviour can cause
+  substantial performance/schedulability degradation. In this paper,
+  we focus on preemptive fixed-priority scheduling for the dynamic
+  self-suspension task model on a uniprocessor platform. In this
+  model, a job of a sporadic task can suspend itself dynamically under
+  a specified upper bound on the self-suspension across all of its
+  suspension phases. To quantify the higher-priority interferences,
+  the results in the literature for this task model can be classified
+  into three classes (i) suspension as computation, (ii)
+  suspension-induced release jitter, and (iii) suspension as blocking.
+  However, the suspension-induced release jitter has to be carefully
+  specified, and the concept to model suspension as blocking was never
+  proven to be correct in the past. This paper presents a unifying
+  response time analysis framework for the dynamic self-suspending
+  task model. We provide a rigorous proof and show that all the three
+  classes mentioned above are analytically dominated by this unifying
+  framework. Therefore, all of them are in fact correct, and are
+  inferior to the proposed response time analysis in this paper.  The
+  evaluation results show that the analysis framework can have a huge
+  improvement (an increase of up to $50\%$ of the number of task sets
+  deemed schedulable) over these state-of-the-art analyses.
 \end{abstract}
 
 \input{introduction}

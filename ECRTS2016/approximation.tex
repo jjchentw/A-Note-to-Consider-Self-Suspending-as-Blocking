@@ -7,7 +7,7 @@ possible vector assignments $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$. Therefore, 
 Corollary~\ref{corollary:general-framework}. Indeed, using a linear approximation of the test in Eq.~(\ref{eq:TDA-suspension-tighter}), a good vector assignment can be derived in linear time. 
 
 By the definition of the ceiling operator, it holds that:
-{\small \begin{align}
+{\footnotesize \begin{align}
 &C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(R_i-C_i)}{T_i}} C_i \nonumber\\
 \leq& C_k + S_k  +   \sum_{i=1}^{k-1} \left(\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell +(1-x_i)(R_i-C_i)}{T_i} +1\right) C_i \nonumber\\
 =& C_k + S_k  + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(R_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right) \label{eq:linear_step1}
@@ -34,13 +34,14 @@ $1$. Therefore, whether $x_i$ should be set to $0$ or $1$ can be
 decided by individually comparing the two constants
 $U_i(R_i-C_i)$ and $S_i(\sum_{\ell=1}^{i}U_\ell)$. Eq.~\eqref{eq:linear-approximation-upper-bound} is therefore minimized when $x_i=1$ if $U_i(R_i-C_i) > S_i(\sum_{\ell=1}^{i}U_\ell)$ and when $x_i = 0$ otherwise. We denote the resulting vector by $\vec{x}^{\mathit{lin}}$, where, for
 each higher-priority task $\tau_i$,
-\begin{equation*}
+\begin{equation}
+\label{eq:x-linear}
 x_i^{\mathit{lin}} =
 \begin{cases}
 1 & \text{if~} U_i(R_i-C_i) > S_i(\sum_{\ell=1}^{i}U_\ell) \\
 0 & \text{otherwise}
 \end{cases}
-\end{equation*}
+\end{equation}
 
 The following properties directly follow.
 \begin{Property}
