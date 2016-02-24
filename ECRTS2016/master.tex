@@ -13,25 +13,16 @@
 %\renewcommand\thesubsubsectiondis{\thesubsectiondis.\arabic{subsubsection}}
 
 
-\usepackage{verbatim} 
+
 \usepackage[pdftex]{graphicx}
-\usepackage{setspace}
-\usepackage[cmex10]{amsmath}
-\usepackage{amsmath, amsthm, amssymb}
-\usepackage{algorithmic}
-\usepackage{algorithm}
+\usepackage{epsfig}
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage{subfig}
-\usepackage{caption}
-%\usepackage[compact]{titlesec}
-%\addtolength{\itemsep}{-0.05in}
-%\usepackage{subcaption}
-\usepackage{paralist}
-\usepackage{cases}
 \usepackage{cite}
 
 \usepackage{tikz}
 
-\usepackage{etoolbox}
+%\usepackage{etoolbox}
 
 \usepackage{color}
 
@@ -51,7 +42,7 @@
 %%%%%%%%%%%%%%%
  \def\myendproof{\qed}%{\ \vbox{\hrule\hbox{%
    %\vrule height1.3ex\hskip0.8ex\vrule}\hrule }}\par}
- \renewenvironment{proof}{\noindent{\bf Proof. }}{\myendproof}
+ %\renewenvironment{proof}{\noindent{\bf Proof. }}{\myendproof}
 %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%
  \newenvironment{appProof}[1]{\noindent{\bf Proof of
@@ -69,8 +60,6 @@
 \newtheorem{observation}{Observation}
 \newtheorem{Property}{Property}
 
-
-\graphicspath{{fig/multiframe/}{fig/arbitrary/}{fig/dag/}} %pdf file searching path
 
 \usetikzlibrary{%
   arrows,%
@@ -99,14 +88,12 @@ align =left,
 
 \bibliographystyle{abbrv} 
 
-\newif\ifpaper
-\paperfalse
+%\newif\ifpaper
+%\paperfalse
 
-\pagestyle{plain}
+%\pagestyle{plain}
 
 \begin{document}
-
-%\title{\LARGE Interference from Higher-Priority Self-Suspending Tasks Can Be Arbitrarily Modelled as Jitter or Carry-In Terms}
   
 \title{A Unifying Response Time Analysis Framework for Self-Suspending Tasks}
 
@@ -171,7 +158,7 @@ Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt
 
 
 
-{\bf Acknowledgement:} This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/).
+\noindent{\bf Acknowledgement:} This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/). This work was also partially supported by National Funds through FCT/MEC (Portuguese Foundation for Science and Technology) and co-financed by ERDF (European Regional Development Fund) under the PT2020 Partnership, within project UID/CEC/04234/2013 (CISTER); also by FCT/MEC and the EU ARTEMIS JU within project(s) ARTEMIS/0003/2012 - JU grant nr. 333053 (CONCERTO) and ARTEMIS/0001/2013 - JU grant nr. 621429 (EMC2).
 
 \bibliography{../bibliography/biblio-summary,../bibliography/biblio}{}
 
