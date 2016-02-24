@@ -3824,7 +3824,7 @@ between column types.}%
 \def\@IEEEsectpunct{.\ }
 \fi\fi
 
-\def\@seccntformat#1{\hb@xt@ 2.4em{\csname the#1dis\endcsname\hss\relax}}
+\def\@seccntformat#1{\hb@xt@ 1.4em{\csname the#1dis\endcsname\hss\relax}}
 \def\@seccntformatinl#1{\hb@xt@ 1.1em{\csname the#1dis\endcsname\hss\relax}}
 \def\@seccntformatch#1{\csname the#1dis\endcsname\hskip 1em\relax}
 
@@ -3904,14 +3904,10 @@ between column types.}%
 % idea to let LaTeX have quite this much rubber.
 \ifCLASSOPTIONconference%
 % IEEE wants section heading spacing to decrease for conference mode
-% \def\section{\@startsection{section}{1}{\z@}{1.5ex plus 1.5ex minus 0.5ex}%
-% {1sp}{\normalfont\normalsize\centering\scshape}}%
-% \def\subsection{\@startsection{subsection}{2}{\z@}{1.5ex plus 1.5ex minus 0.5ex}%
-% {1sp}{\normalfont\normalsize\itshape}}%
- \def\section{\@startsection{section}{1}{\z@}{1.5ex plus 1.5ex minus 0.5ex}%
- {1sp}{\normalfont\large\bfseries}}%
- \def\subsection{\@startsection{subsection}{2}{\z@}{1.5ex plus 1.5ex minus 0.5ex}%
- {1sp}{\normalfont\large\bfseries}}%
+\def\section{\@startsection{section}{1}{\z@}{1.5ex plus 1.5ex minus 0.5ex}%
+{1sp}{\normalfont\normalsize\centering\scshape}}%
+\def\subsection{\@startsection{subsection}{2}{\z@}{1.5ex plus 1.5ex minus 0.5ex}%
+{1sp}{\normalfont\normalsize\itshape}}%
 \else % for journals
 \def\section{\@startsection{section}{1}{\z@}{3.0ex plus 1.5ex minus 1.5ex}% V1.6 3.0ex from 3.5ex
 {0.7ex plus 1ex minus 0ex}{\normalfont\normalsize\centering\scshape}}%
