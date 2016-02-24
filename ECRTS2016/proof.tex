@@ -254,16 +254,17 @@ C'_k +\sum_{j=1}^{k-1} x_j\cdot (W_j^1(t-t_j) +\sigma_j) + (1-x_j)\cdot W_j^0(t-
 \begin{example}
 Consider the same 4 tasks as in Example~\ref{ex:proof_step1}, for which a possible schedule was depicted in Figure~\ref{fig:example}. We have $\sigma_1=1$, $\sigma_2=0$ and $\sigma_3=1$. The corresponding functions
 $W_1^1(t-t_1)$, $W_2^0(t-t_2)$, $W_3^1(t-t_3)$ are illustrated in
-Figure~\ref{fig:example-step2}. Therefore, it is rather clear that all
+Figure~\ref{fig:example-step2}.  Furthermore, the inequalities of
 the conditions in Eq.~\eqref{eq:exec_plus_idle-2} and
-Eq.~\eqref{eq:exec_plus_idle-3} hold by simple arithmetics.
+Eq.~\eqref{eq:exec_plus_idle-3} are also shown to hold by simple arithmetics and
+demonstrated in Figure~\ref{fig:example-step2}.
 \end{example}
 
 
 \begin{figure}[t]
   \centering
 
-		\def\ux{0.32cm}\def\uy{0.5cm} 
+		\def\ux{0.32cm}\def\uy{0.2cm} 
 		\begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
 		\tikzset{
 			task/.style={fill=#1,  rectangle, text height=.3cm},
@@ -289,26 +290,41 @@ Eq.~\eqref{eq:exec_plus_idle-3} hold by simple arithmetics.
 			node[below] {\footnotesize $\x$};
 			
 		}
-		\draw[->] (0,0) node[anchor=east] {}-- coordinate (xaxis) (0,4.5);
-		\foreach \y in {0,...,4}{
+		\draw[->] (0,0) node[anchor=east] {}-- coordinate (xaxis) (0,18.5);
+		\foreach \y in {0,2,...,18}{
 			\draw[-](0.1, \y) -- (-0.1, \y)
 			node[left] {\small $\y$};
 			
 		}
 
-                \draw (20, -1.5) node {\small $f_4$};
-                \draw (7, -1.5) node {\small $t_4$};
-                \draw (6, -1.5) node {\small $t_3$};
-                \draw (6, -2) node {\small $t_2$};
-                \draw (4, -1.5) node {\small $t_1$};
+		\foreach \y in {1,2,...,18}{
+                  \draw[-,very thin,lightgray, dashed](0,\y) -- (24,\y);
+                }
+		\foreach \x in {4,7,20,18}{
+                  \draw[-,very thin,lightgray, dashed](\x,0) -- (\x,18);
+                }
+                  
+                \draw (20, -3) node {\small $f_4$};
+                \draw (7, -3) node {\small $t_4$};
+                \draw (6, -3) node {\small $t_3$};
+                \draw (6, -4) node {\small $t_2$};
+                \draw (4, -3) node {\small $t_1$};
+
+                \draw[-, dashed, very thick, red] (4,0) -- (4, 1) -- (5, 2) -- (6,2) -- (6, 3)
+                -- (7, 5);
+                \draw[-, very thick, red] (7, 10) -- (8, 12) -- (10, 14) -- (11,
+                15) -- (16, 15) -- (17, 16) -- (18, 17) -- (20, 17);
+                \draw[-, very thick, blue] (7,3) --(20,16);
+                \draw[-, dashed, very thick, blue] (4,0) --(7,3);
 
                 \draw[-,thick] (4,0) -- (5, 1) -- (10, 1) -- (11, 2) -- (16, 2)
                 -- (17, 3) -- (22, 3) -- (23, 3) -- (24, 3);
                 \draw[-,dashed] (6,0) -- (7, 1) -- (8, 2) -- (17, 2) -- (18, 3)
                 -- (24, 3);
                 \draw[-,dotted] (6,0) -- (10, 4) -- (24, 4);
+
 		\end{tikzpicture}    
-  \caption{The workload function for the three higher-priority tasks in Figure~\ref{fig:example-step2}. Solid line: $W_1^1(t-t_1)$, Dashed line: $W_2^0(t-t_2)$, Dotted line: $W_3^1(t-t_3)$, where the functions are $0$ if $t-t_j < 0$ for $j=1,2,3$.}
+  \caption{The workload function for the three higher-priority tasks in Figure~\ref{fig:example-step2}. Solid black line: $W_1^1(t-t_1)$, Dashed black line: $W_2^0(t-t_2)$, Dotted black line: $W_3^1(t-t_3)$, where the functions are $0$ if $t-t_j < 0$ for $j=1,2,3$, Blue line: $t-t_1$, Red line: left-hand side of Eq.~(\ref{eq:exec_plus_idle-2}) when $t < 7$ and left-hand side of Eq.~(\ref{eq:exec_plus_idle-3}) when $ 7 \leq t < 20$.}
   \label{fig:example-step2}
 \end{figure}
 
