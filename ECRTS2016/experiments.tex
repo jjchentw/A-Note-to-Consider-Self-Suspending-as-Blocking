@@ -1,0 +1,18 @@
+\section{Experiments}
+\label{sec:experiments}
+
+In this section, we present experiments conducted on randomly generated task sets. Five schedulability tests for dynamic self-suspending tasks are compared, namely, the suspension oblivious approach (Section~\ref{sec:suspension-oblivious}), the modeling of suspension as a release jitter (Section~\ref{sec:jitter}), the analysis proposed by Jane W.S. Liu and proven correct in this paper, which models the suspension as blocking (Section~\ref{sec:suspension-blocking}), the generic framework of Corollary~\ref{corollary:general-framework} (called ECRTS 16 in the graph) and the test based on the linear approximation presented in Section~\ref{sec:linear-approximation}. Each point in the plots of Figure~\ref{fig:exp} represents the number of task sets that were deemed schedulable by the respective algorithm over $1000$ experiments.
+
+The task sets were generated using the \texttt{randfixedsum} algorithm presented in \cite{Emberson-taskSetGeneration-2010}.
+
+
+\begin{figure*}[t!]
+  \centering
+  \small
+  \subfloat[$U=0.95$, $S_i \in (0.05, 0.50) \times C_i$]{\label{fig:plot1} \includegraphics[width=0.48\textwidth]{../figures/experiments/varyingn_smin=5_smax=50_U=0_95_T=100-10000_1000runs.pdf}} 
+  \subfloat[$U=1$, $n=8$]{\label{fig:plot2} \includegraphics[width=0.48\textwidth]{../figures/experiments/varyingSmax_smin=5_U=1_n=8_T=100-10000_1000runs.pdf}}\\ 
+  \subfloat[$U=1$, $n=8$, $S_i\in (0.05, 0.50) \times C_i$]{\label{fig:plot3} \includegraphics[width=0.48\textwidth]{../figures/experiments/varyingU_smin=5_smax=50_n=8_T=100-10000_1000runs.pdf}}
+  \subfloat[$U=1$, $n=8$, $S_i\in (0.50, 0.90) \times C_i$]{\label{fig:plot4} \includegraphics[width=0.48\textwidth]{../figures/experiments/varyingU_smin=50_smax=90_n=8_T=100-10000_1000runs.pdf}} 
+  \caption{Number of schedulable task sets over $1000$ randomly generated task sets.}
+  \label{fig:exp}
+\end{figure*}
