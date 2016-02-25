@@ -59,7 +59,7 @@
 \newtheorem{remark}{Remark}
 \newtheorem{observation}{Observation}
 \newtheorem{Property}{Property}
-\addtolength{\textheight}{10pt}
+\addtolength{\textheight}{8pt}
 
 \usetikzlibrary{%
   arrows,%
@@ -115,10 +115,10 @@ Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt
   suspension phases. To quantify the higher-priority interferences,
   the results in the literature for this task model can be classified
   into three classes (i) suspension as computation, (ii)
-  suspension-induced release jitter, and (iii) suspension as blocking.
-  However, the suspension-induced release jitter has to be carefully
-  specified, and the concept to model suspension as blocking was never
-  proven to be correct in the past. This paper presents a unifying
+  suspension-induced release jitter (with a proper quantification of
+  release jitter), and (iii) suspension as blocking.
+ The concept to model suspension as blocking was never
+  formally proven to be correct in the past. This paper presents a unifying
   response time analysis framework for the dynamic self-suspending
   task model. We provide a rigorous proof and show that all the three
   classes mentioned above are analytically dominated by this unifying

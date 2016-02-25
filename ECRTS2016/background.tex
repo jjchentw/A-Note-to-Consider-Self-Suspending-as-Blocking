@@ -17,7 +17,7 @@ There exist three different approaches in the state-of-the-art
 that are potentially sound to perform the schedulability analysis of self-suspending tasks:
 \begin{itemize}
 \item modeling the suspension as execution, also known as the suspension-oblivious analysis (see Section~\ref{sec:suspension-oblivious});
-\item modeling the suspension as a release jitter (see Section~\ref{sec:jitter});
+\item modeling the suspension as release jitter (see Section~\ref{sec:jitter});
 \item modeling the suspension as blocking time (see Section~\ref{sec:suspension-blocking}).
 \end{itemize}
 We later prove in Section~\ref{sec:dominance} that all these approaches are analytically correct. 
@@ -33,10 +33,10 @@ scheduled by a fixed-priority scheduling algorithm if
 \exists t \mid 0 < t \leq D_k, \quad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} (C_i+S_i) \leq t.
 \end{equation}
 
-\subsection{Modeling the Suspension as a Release Jitter}
+\subsection{Modeling the Suspension as Release Jitter}
 \label{sec:jitter}
 
-Another approach consists in modeling the impact of the self-suspension $S_i$ of each higher priority task $\tau_i$ as a release jitter. Several works in the state-of-the-art \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994} upper bounded the release jitter with $S_i$. However, it has been recently shown in~\cite{BletsasReport2015} that this upper bound is unsafe and  the release jitter of task $\tau_i$ can in fact be larger than $S_i$. 
+Another approach consists in modeling the impact of the self-suspension $S_i$ of each higher priority task $\tau_i$ as release jitter. Several works in the state-of-the-art \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994} upper bounded the release jitter with $S_i$. However, it has been recently shown in~\cite{BletsasReport2015} that this upper bound is unsafe and  the release jitter of task $\tau_i$ can in fact be larger than $S_i$. 
 
 Nevertheless, it was proven in the same document \cite{BletsasReport2015} that the jitter of a higher-priority task $\tau_i$ can be safely upper bounded by $R_i-C_i$. It results that a task
 $\tau_k$ with a constrained deadline can be feasibly scheduled under fixed-priority if
