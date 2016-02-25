@@ -8,7 +8,6 @@ used in vector $\vec{x}$.  %The proof strategy is to
 %upper-bounded by any assignment of $\vec{x}$ of the $k-1$
 %higher-priority tasks when adopting
 %Eq.~(\ref{eq:TDA-suspension-tighter0}) as the response time analysis.
-
 Throughout the proof, we consider any arbitrary assignment
 $\vec{x}$, in which $x_i$ is either $0$ or $1$. For the sake of clarity, we classify the $k-1$
 higher-priority tasks into two sets: ${\bf T}_0$ and ${\bf T}_1$. A
@@ -44,11 +43,13 @@ Since, by assumption, the worst-case response time of task $\tau_i$ is no more t
 
 With the above properties, we can present the detailed proof of
 Theorem~\ref{theorem:general-framework}. Since the proof is pretty long, we 
-will also provide some examples to demonstrate the steps in the proof.
+will also provide examples to demonstrate the key steps in the proof.
 
 \begin{appProof}{Theorem~\ref{theorem:general-framework}}
 Consider the modified task set $\tau'$ composed of $\left\{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots \right\}$ where $\tau_k' = (C_k + S_k, 0, D_k, T_k)$. Let $\Psi$ be a schedule of $\tau'$ such that $R_k' \leq T_k$.  
-Suppose that a job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$. We prove that Eq.~\eqref{eq:TDA-suspension-tighter0} gives us a safe upper bound on $f_k-r_k$ for any job $J_k$ in $\Psi$.
+Suppose that a job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$. 
+By the assumption, we have $f_k \leq r_k+R_k' \leq r_k+T_k$.
+We prove that Eq.~\eqref{eq:TDA-suspension-tighter0} gives us a safe upper bound on $f_k-r_k$ for any job $J_k$ in $\Psi$.
 
 
 The proof is built upon the three following steps:
@@ -189,9 +190,9 @@ Step 1, we should consider two cases:
   W_j^1(\Delta) = \floor{\frac{\Delta}{T_j}}C_j + \min\left\{\Delta-\floor{\frac{\Delta}{T_j}}T_j, C_j\right\}.
 \end{equation}
 \item $\tau_j \in {\bf T}_0$. This
-  corresponds to case (b) in Step 1, which tells us that there might be a job arrived
-  before $t_j$ with a residual workload $c_j^*$ at time $t_j$. %In this case, for any $\Delta
-  %\geq 0$, the workload $\widehat{W}_j^0(\Delta, c_j^*)$ executed by $\tau_j$ from $t_j$ to $t_j+\Delta$ has to consider 
+  corresponds to Case (b) in Step 1, which tells us that there might be a job arrived
+  before $t_j$ with the residual workload $0 \leq c_j^* \leq C_j$ at time $t_j$.  Let $\widehat{W}_j^0(\Delta, c_j^*)$ be the upper bound on the executed workload that is contributed by $\tau_j$ from $t_j$ to $t_j+\Delta$ for any $\Delta
+  \geq 0$, under a given $c_j^*$. If $c_j^*$ is $0$, it is clear that $\widehat{W}_j^0(\Delta, c_j^*)$ is $W_j^1(\Delta)$. We now consider another case when $c_j^* > 0$.
   %Two subcases are considered:
   %\begin{itemize}
   %\item If the residual workload $c_j^*$
@@ -199,8 +200,7 @@ Step 1, we should consider two cases:
   %can be any time instant at or after $t_j$. 
 %In this case, for any $\Delta \geq 0$, the workload $\widehat{W}_j^0(\Delta, c_j^*)$ executed by $\tau_j$ from $t_j$ to $t_j+\Delta$ is upper bounded by $W_j^1(\Delta)$. 
 %\item If the residual workload $c_j^*$ of task $\tau_j$ is larger than $0$,
-  Let $c_j^*$ be the residual workload of task $\tau_j$ at $t_j$. 
-  Since by assumption $\tau_j$ respects all its deadlines, the absolute deadline of the job of $\tau_j$ active at $t_j$ must be at least $t_j + c_j^*$; otherwise that job would miss its
+  Since by our assumption $\tau_j$ respects all its deadlines, the absolute deadline of the job of $\tau_j$ active at $t_j$ must be at least $t_j + c_j^*$; otherwise that job would miss its
   deadline. Therefore, the earliest arrival time of task $\tau_j$
   arriving \emph{strictly after $t_j$} is at least $t_j + (T_j-D_j +
   c_j^*)$. For notational brevity, let $\rho_j$ be
@@ -221,7 +221,11 @@ Step 1, we should consider two cases:
 %Eq.~(\ref{eq:execution-case2-precise}) 
 %is to have $c_j^* = C_j$, i.e.,
 
-It is easy to see that Eq.~\eqref{eq:execution-case2-precise} is maximized when $c_j^*$ is maximum, that is, when $c_j^* = C_j$. It results that for all $\Delta \geq 0$, we have $\widehat{W}_j^0(\Delta, C_j) \geq
+When $c_j^* > 0$, it is easy to see that
+Eq.~\eqref{eq:execution-case2-precise} is maximized when $c_j^*$ is
+maximum, that is, when $c_j^* = C_j$. When $c_j^* = 0$, due to the assumption of constrained-deadline task sets, it is also easy to see that 
+$\widehat{W}_j^0(\Delta, 0) = W_j^1(\Delta) \leq \widehat{W}_j^0(\Delta, C_j)$
+It results that for all $\Delta \geq 0$ and $0 \leq c_j^* \leq C_j$, we have $\widehat{W}_j^0(\Delta, C_j) \geq
 \widehat{W}_j^0(\Delta, c_j^*)$. For the sake of notational brevity, for the rest of this proof, we use the notation $W_j^0(\Delta)$ to denote $\widehat{W}_j^0(\Delta, C_j)$.
 
 %For the sake of notational brevity,
@@ -606,3 +610,11 @@ than the actual schedule in Figure~\ref{fig:example}. The conclusion we have in 
 %   \caption{The workload function $\widehat{W}_j^0(\Delta, c_j^*)$ when $T_j=10$, $C_j=3$, and $D_j=6$. Solid line: $c_j^*$ is $3$, Dashed line: $c_j^*$ is $2$, Dotted line: $c_j^*$ is $1$.}
 %   \label{fig:example-lemma-workload}
 % \end{figure}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "master.tex"
+%%% End:
