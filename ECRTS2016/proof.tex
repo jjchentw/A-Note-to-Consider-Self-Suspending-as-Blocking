@@ -307,8 +307,12 @@ Figure~\ref{fig:example-step2}. As can be seen in the figure, the inequalities o
                 \draw (6, -4) node {\small $t_2$};
                 \draw (4, -3) node {\small $t_1$};
 
+                \draw[->,red,thin](3, 7) node[anchor=south]{\footnotesize
+                  Eq.~(\ref{eq:exec_plus_idle-2})} -- (5,2);
                 \draw[-, dashed, very thick, red] (4,0) -- (4, 1) -- (5, 2) -- (6,2) -- (6, 3)
                 -- (7, 5);
+                \draw[->,red,thin](7, 16) node[anchor=south]{\footnotesize
+                  Eq.~(\ref{eq:exec_plus_idle-3})} -- (11,15.35);
                 \draw[-, very thick, red] (7, 10) -- (8, 12) -- (10, 14) -- (11,
                 15) -- (16, 15) -- (17, 16) -- (18, 17) -- (20, 17);
                 \draw[-, very thick, blue] (7,3) --(20,16);
@@ -530,7 +534,7 @@ Figure~\ref{fig:example-proof-final}, the processor is busy executing
 the workload from time $6$ to time $21$, which is more pessimistic
 than the actual in Figure~\ref{fig:example}. The conclusion we have in the final statement of the theorem is that $20-7=f_k-r_k \leq 21-6$.
 \end{example}
-
+\vspace{-0.3in}
 \end{appProof}
 
 

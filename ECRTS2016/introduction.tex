@@ -46,8 +46,13 @@ There are two typical models for self-suspending sporadic task
 systems: 1) the dynamic self-suspension task model, and 2) the
 segmented self-suspension task model. In the \emph{dynamic}
 self-suspension task model, in addition to the worst-case execution time
+<<<<<<< HEAD
 $C_i$, a sporadic task $\tau_i$ is also associated a worst-case
 self-suspension time $S_i$. In the \emph{segmented} self-suspension
+=======
+$C_i$ of sporadic task $\tau_i$, we have also the worst-case
+self-suspension time $S_i$ of task $\tau_i$. In the \emph{segmented} self-suspension
+>>>>>>> refs/remotes/origin/master
 task model, the execution behaviour of a job of task $\tau_i$ is
 specified by interleaved computation segments and self-suspension
 intervals.  From the system designer's perspective, the dynamic
@@ -86,7 +91,8 @@ behaviour due to synchronization protocols in multiprocessor systems, was never 
 \noindent\textbf{Contributions.} In this paper, we propose the following contributions:
 \begin{compactitem}
 \item We provide a new response analysis framework for dynamic self-suspending
-  sporadic real-time tasks executing on a uniprocessor platform. The key observation in that analysis is that the \emph{interference from higher-priority
+  sporadic real-time tasks executing on a uniprocessor platform. The
+  key observation in our analysis is that the \emph{interference from higher-priority
     self-suspending tasks can be arbitrarily modelled as jitter or
     carry-in terms}.
 \item We prove that the new analysis analytically
