@@ -106,26 +106,21 @@ Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt
 \maketitle
 
 \begin{abstract}
-  For real-time embedded systems, self-suspending behaviour can cause
-  substantial performance/schedulability degradation. In this paper,
+  For real-time embedded systems, self-suspending behaviors can cause
+  substantial performance/schedulability degradations. In this paper,
   we focus on preemptive fixed-priority scheduling for the dynamic
-  self-suspension task model on a uniprocessor platform. In this
-  model, a job of a sporadic task can suspend itself dynamically under
-  a specified upper bound on the self-suspension across all of its
-  suspension phases. To quantify the higher-priority interferences,
-  the results in the literature for this task model can be classified
-  into three classes (i) suspension as computation, (ii)
-  suspension-induced release jitter, and (iii) suspension as blocking.
-  However, the suspension-induced release jitter has to be carefully
-  specified, and the concept to model suspension as blocking was never
-  proven to be correct in the past. This paper presents a unifying
+  self-suspension task model on single processor. This
+  model assumes that a job of a task can dynamically suspend itself during its execution (for instance, to wait for shared resources or access co-processors or external devices).
+  The total suspension time of a job is upper-bounded, but this dynamic behavior drastically influence the interference generated on lower-priority tasks. The state-of-the-art results for this task model can be classified
+  into three categories (i) modeling suspension as computation, (ii)
+  modeling suspension as a release jitter, and (iii) modeling suspension as a blocking time.
+  However, several results associated to the release jitter approach were recently proven to be erroneous, and the concept of modeling suspension as blocking was never
+  proven correct. This paper presents a unifying
   response time analysis framework for the dynamic self-suspending
-  task model. We provide a rigorous proof and show that all the three
-  classes mentioned above are analytically dominated by this unifying
-  framework. Therefore, all of them are in fact correct, and are
-  inferior to the proposed response time analysis in this paper.  The
-  evaluation results show that the analysis framework can have a huge
-  improvement (an increase of up to $50\%$ of the number of task sets
+  task model. We provide a rigorous proof and show that the existing analyses pertaining to the three categories mentioned above are analytically dominated by our proposed solution. Therefore, all those techniques are in fact correct, although
+  inferior to the proposed response time analysis in this paper. The
+  evaluation results show that our analysis framework can generate huge
+  improvements (an increase of up to $50\%$ of the number of task sets
   deemed schedulable) over these state-of-the-art analyses.
 \end{abstract}
 
