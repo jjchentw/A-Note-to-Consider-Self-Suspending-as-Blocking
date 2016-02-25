@@ -109,7 +109,7 @@ Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt
   For real-time embedded systems, self-suspending behaviors can cause
   substantial performance/schedulability degradations. In this paper,
   we focus on preemptive fixed-priority scheduling for the dynamic
-  self-suspension task model on single processor. This
+  self-suspension task model on uniprocessor. This
   model assumes that a job of a task can dynamically suspend itself during its execution (for instance, to wait for shared resources or access co-processors or external devices).
   The total suspension time of a job is upper-bounded, but this dynamic behavior drastically influence the interference generated on lower-priority tasks. The state-of-the-art results for this task model can be classified
   into three categories (i) modeling suspension as computation, (ii)
@@ -156,36 +156,35 @@ Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt
 \label{sec:conclusion}
 
 
-In this paper, we study preemptive fixed-priority scheduling for the
-dynamic self-suspension task model on a uniprocessor platform. This
+In this paper, we studied the preemptive fixed-priority scheduling of
+dynamic self-suspending tasks running on a uniprocessor platform. This
 paper presents a unifying response time analysis framework in
 Theorem~\ref{theorem:general-framework} and
 Corollary~\ref{corollary:general-framework}. We show that this result
 analytically dominates all the existing analyses presented in
-Section~\ref{sec:existing-analyses}, and, hence, we also implicitly
-prove the correctness of all these analyses. Although it may seem that
+Section~\ref{sec:existing-analyses}, and, by doing such, we also implicitly
+proved the correctness of all these analyses. Although
 Corollary~\ref{corollary:general-framework} requires exponential time
-complexity, we show that a simple heuristic algorithm provided in
-Section~\ref{sec:linear-approximation} can work already very well.
+complexity, we show that a simpler algorithm presented in Section~\ref{sec:linear-approximation} can help accelerate the analysis while outputting good results.
 
-In fact, the response time analysis and the schedulability tests in
-Section~\ref{sec:existing-analyses} and
-Theorem~\ref{theorem:general-framework} can be further approximated to
-polynomial-time complexity. For example, by over-approximating the
-jitter used in Section~\ref{sec:jitter}, Liu and Chen
-in \cite{LiuChen:rtss2014} provided a utilization-based schedulability
-test based on a hyperbolic-form. Moreover, as presented in
-Section~\ref{sec:suspension-blocking}, Liu in \cite{Liu:2000:RS:518501}
-in fact used the blocking time for a schedulability test based on the
-RM utilization bound. Our test in
-Theorem~\ref{theorem:linear-time-test} is a linear-time test. The
-above tests can be further improved by using the k2U and the k2Q
-frameworks
-in \cite{ChenHLRTSS2015,DBLP:journals/corr/ChenHL15b}. However, as
-polynomial-time schedulability tests are not the focus of this paper,
-such options were not seriously discussed here.
+%In fact, the response time analysis and the schedulability tests in
+%Section~\ref{sec:existing-analyses} and
+%Theorem~\ref{theorem:general-framework} can be further approximated to
+%polynomial-time complexity. For example, by over-approximating the
+%jitter used in Section~\ref{sec:jitter}, Liu and Chen
+%in \cite{LiuChen:rtss2014} provided a utilization-based schedulability
+%test based on a hyperbolic-form. Moreover, as presented in
+%Section~\ref{sec:suspension-blocking}, Liu in \cite{Liu:2000:RS:518501}
+%in fact used the blocking time for a schedulability test based on the
+%RM utilization bound. Our test in
+%Theorem~\ref{theorem:linear-time-test} is a linear-time test. The
+%above tests can be further improved by using the k2U and the k2Q
+%frameworks
+%in \cite{ChenHLRTSS2015,DBLP:journals/corr/ChenHL15b}. However, as
+%polynomial-time schedulability tests are not the focus of this paper,
+%such options were not seriously discussed here.
 
-\noindent{\bf Acknowledgement:} This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/). This work was also partially supported by National Funds through FCT/MEC (Portuguese Foundation for Science and Technology) and co-financed by ERDF (European Regional Development Fund) under the PT2020 Partnership, within project UID/CEC/04234/2013 (CISTER); also by FCT/MEC and the EU ARTEMIS JU within project(s) ARTEMIS/0003/2012 - JU grant nr. 333053 (CONCERTO) and ARTEMIS/0001/2013 - JU grant nr. 621429 (EMC2).
+\noindent{\bf Acknowledgements.} This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/). This work was also partially supported by National Funds through FCT/MEC (Portuguese Foundation for Science and Technology) and co-financed by ERDF (European Regional Development Fund) under the PT2020 Partnership, within project UID/CEC/04234/2013 (CISTER); also by FCT/MEC and the EU ARTEMIS JU within project(s) ARTEMIS/0003/2012 - JU grant nr. 333053 (CONCERTO) and ARTEMIS/0001/2013 - JU grant nr. 621429 (EMC2).
 
 \bibliography{../bibliography/biblio-summary,../bibliography/biblio}{}
 

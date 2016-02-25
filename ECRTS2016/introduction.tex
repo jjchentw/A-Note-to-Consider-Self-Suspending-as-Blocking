@@ -11,14 +11,14 @@ the minimum inter-arrival time constraint. When a job of task $\tau_i$
 arrives at time $t$, the job should finish no later than its
 \emph{absolute deadline} $t+D_i$, and the next job of task $\tau_i$
 can only be released no earlier than $t+T_i$. For the periodic task
-model, the next job is released at time $t+T_i$, in which $T_i$ is
-also referred to as the \emph{period} of task $\tau_i$.
+model, the next job is released at time $t+T_i$. $T_i$ is
+then also referred to as the \emph{period} of $\tau_i$.
 
 
 The seminal work by Liu and Layland \cite{Liu_1973} considered the
 scheduling of periodic tasks and presented the schedulability analyses
 based on utilization bounds to verify whether the deadlines are met or
-not.  For over decades, researchers in real-time systems have
+not.  For decades, researchers in real-time systems have
 devoted themselves to effective design and efficient analyses of
 different recurrent task models to ensure that tasks can meet their
 specified deadlines. In most of these studies, \emph{a task usually does not
@@ -45,9 +45,9 @@ offloading computation to GPUs~\cite{Kato_2011,Liu_2014}).
 There are two typical models for self-suspending sporadic task
 systems: 1) the dynamic self-suspension task model, and 2) the
 segmented self-suspension task model. In the \emph{dynamic}
-self-suspension task model, in addition the worst-case execution time
-$C_i$ of sporadic task $\tau_i$, we have also the worst-case
-self-suspension time $S_i$ of task $\tau_i$. In the \emph{segmented} self-suspension
+self-suspension task model, in addition to the worst-case execution time
+$C_i$, a sporadic task $\tau_i$ is also associated a worst-case
+self-suspension time $S_i$. In the \emph{segmented} self-suspension
 task model, the execution behaviour of a job of task $\tau_i$ is
 specified by interleaved computation segments and self-suspension
 intervals.  From the system designer's perspective, the dynamic
@@ -67,25 +67,21 @@ The recent report by Chen et al.\footnote{The report, with a tentative
   Self-Suspending Tasks in Real-Time Systems'' (all the authors in
   this paper are contributors to this review), has been
   finalized. However, it is under the final internal review by the
-  co-authors.  We hope the report will be filed in the early March
+  co-authors.  We hope the report to be filed in the early March
   2016.} and the report by Bletsas et al. \cite{BletsasReport2015}
-have shown that the analysis by introducing the suspension time of a
-higher-priority task as its arrival jitter in
-\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}
-is unsafe.  This misconception was unfortunately adopted in
-\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}
-to analyze the worst-case response time for partitioned multiprocessor
+have shown that several analyses in the state-of-the-art of self-suspending tasks~\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}
+are in fact unsafe. Unfortunately, those misconceptions propagated to several works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}
+analyzing the worst-case response time for partitioned multiprocessor
 real-time locking protocols.
 
-Moreover, one concept to consider suspension-time as blocking time was
-used by Jane W. S. Liu in her book titled "Real-Time Systems"
-\cite[Pages 164-165]{Liu:2000:RS:518501}, and was also implicitly used
-by Rajkumar, Sha, and Lehoczky \cite[Page
+Furthermore, one of the seminal result presented by Jane W. S. Liu in her book titled "Real-Time Systems"
+\cite[p. 164-165]{Liu:2000:RS:518501} and implicitly used
+by Rajkumar, Sha, and Lehoczky \cite[p.
 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the self-suspending
-behaviour due to synchronization protocols in multiprocessor systems.
-However, there is no proof in
-\cite{Liu:2000:RS:518501,DBLP:conf/rtss/RajkumarSL88} to support the
-correctness of the provided schedulability tests.
+behaviour due to synchronization protocols in multiprocessor systems, was never proven correct.
+%However, there is no proof in
+%\cite{Liu:2000:RS:518501,DBLP:conf/rtss/RajkumarSL88} to support the
+%correctness of the provided schedulability tests.
 
 \noindent\textbf{Contributions.} In this paper, we propose the following contributions:
 \begin{compactitem}
