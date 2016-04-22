@@ -8,7 +8,7 @@ critical instant does not hold for self-suspending sporadic tasks.
 The analysis of self-suspending task systems requires to model the self-suspending behavior of both the task $\tau_k$ under analysis and the higher priority tasks that interfere with $\tau_k$. The techniques employed to model the self-suspension are usually different for $\tau_k$ and the higher priority tasks. The worst-case for $\tau_k$ happens when its jobs suspend whenever there is no
 higher-priority job in the system. The resulting behavior is therefore similar as if the
 suspension time $S_k$ of task $\tau_k$ was converted
-into computation time (see \cite{Huang_2015} for more detailled explanations). 
+into computation time (see \cite{Huang_2015} for more detailed explanations). 
 Second, for the higher-priority tasks,
 we need to consider the self-suspension behaviour that may result in
 the largest possible interference for task $\tau_k$.
@@ -48,7 +48,7 @@ $\tau_k$ with a constrained deadline can be feasibly scheduled under fixed-prior
 \subsection{Modeling the Suspension as Blocking Time}
 \label{sec:suspension-blocking}
 
-In \cite[p. 164-165]{Liu:2000:RS:518501}, Liu proposed a solution to study the schedulability of a self-suspending task $\tau_k$ by modeling the extra delay suffered by $\tau_k$ due to the self-suspension behavior of each task in $\tau$ as a blocking time. This blocking time has been defined as follows:
+In \cite[p. 164-165]{Liu:2000:RS:518501}, Liu proposed a solution to study the schedulability of a self-suspending task $\tau_k$ by modeling the extra delay suffered by $\tau_k$ due to the self-suspension behavior of each task in $\tau$ as a blocking time.\footnote{Even though the authors in this paper are able to provide a proof to support the correctness, the authors are not able to provide any rationale behind this method which treats suspension time as blocking time.} This blocking time has been defined as follows:
 \begin{itemize}
 \item The blocking time contributed from task $\tau_k$ is $S_k$. 
 \item A higher-priority task $\tau_i$ can block the execution of task $\tau_k$ for at most $\min(C_i, S_i)$ time units.
@@ -63,7 +63,7 @@ B_k = S_k + \sum_{i=1}^{k-1} \min(C_i, S_i).
 In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it is stated that, if $T_i=D_i$ for every task $\tau_i \in \tau$ and $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then $\tau_k$ can be feasibly scheduled with rate-monotonic scheduling. 
   
 
-The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the impact of the self-suspendion of a task due to the utilization of synchronization protocols in multiprocessor systems. The statement in \cite{DBLP:conf/rtss/RajkumarSL88} reads as follows:\footnote{We rephrased the wording and notation in order to be consistent with the rest of this paper. Moreover, the multiprocessor scheduling in such a case is based on partitioned scheduling. Therefore, the schedulability analysis of a task set on a processor is the same as the uniprocessor problem by additionally considering the self-suspending behaviour due to the synchronization with other tasks on other processors.}
+The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the impact of the self-suspension of a task due to the utilization of synchronization protocols in multiprocessor systems. The statement in \cite{DBLP:conf/rtss/RajkumarSL88} reads as follows:\footnote{We rephrased the wording and notation in order to be consistent with the rest of this paper. Moreover, the multiprocessor scheduling in such a case is based on partitioned scheduling. Therefore, the schedulability analysis of a task set on a processor is the same as the uniprocessor problem by additionally considering the self-suspending behaviour due to the synchronization with other tasks on other processors.}
 \begin{quote}
 \emph{``For each higher priority job $\tau_{i,j}$ that suspends on global semaphores or for other reasons, add the term $\min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $\tau_{i,j}$ can suspend itself. [...] The sum [...] yields $B_k$, which in turn can be used in 
 $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable."}
@@ -89,3 +89,11 @@ However, there is no proof in
 %\begin{proof}
 %  This is rather trivial, and the proof is omitted.
 %\end{proof}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "master.tex"
+%%% End:

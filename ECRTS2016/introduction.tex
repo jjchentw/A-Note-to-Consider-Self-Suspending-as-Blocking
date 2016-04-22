@@ -1,20 +1,19 @@
 \section{Introduction}
 
 The periodic/sporadic task model has been recognized as the basic
-model for real-time systems with recurring executions.  A sporadic
-real-time task $\tau_i$ is characterized by its \emph{worst-case execution
-time} $C_i$, its \emph{minimum
-  inter-arrival time} $T_i$ and its
-\emph{relative deadline} $D_i$. A sporadic task defines an infinite
-sequence of task instances, also called \emph{jobs}, that arrive with
-the minimum inter-arrival time constraint. When a job of task $\tau_i$
-arrives at time $t$, the job should finish no later than its
-\emph{absolute deadline} $t+D_i$, and the next job of task $\tau_i$
-can only be released no earlier than $t+T_i$. For the periodic task
-model, the next job is released at time $t+T_i$. $T_i$ is
-then also referred to as the \emph{period} of $\tau_i$.
-
-
+model for real-time systems with recurring executions.  
+% A sporadic
+% real-time task $\tau_i$ is characterized by its \emph{worst-case execution
+% time} $C_i$, its \emph{minimum
+%   inter-arrival time} $T_i$ and its
+% \emph{relative deadline} $D_i$. A sporadic task defines an infinite
+% sequence of task instances, also called \emph{jobs}, that arrive with
+% the minimum inter-arrival time constraint. When a job of task $\tau_i$
+% arrives at time $t$, the job should finish no later than its
+% \emph{absolute deadline} $t+D_i$, and the next job of task $\tau_i$
+% can only be released no earlier than $t+T_i$. For the periodic task
+% model, the next job is released at time $t+T_i$. $T_i$ is
+% then also referred to as the \emph{period} of $\tau_i$.
 The seminal work by Liu and Layland \cite{Liu_1973} considered the
 scheduling of periodic tasks and presented the schedulability analyses
 based on utilization bounds to verify whether the deadlines are met or
@@ -108,3 +107,11 @@ behaviour due to synchronization protocols in multiprocessor systems, was never 
 %  Section~\ref{sec:vector-assignment}.
 \item The evaluation results presented in Section~\ref{sec:experiments} show the huge improvement (an increase of up to $50\%$ of the number of task sets that are deemed schedulable) over the state-of-the-art.
 \end{compactitem}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "master.tex"
+%%% End:

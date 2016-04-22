@@ -26,3 +26,11 @@ which each task is assigned with a unique priority level. We assume
 that the priority assignment is given beforehand and that the tasks are numbered in a decreasing priority order. That is, a task with a smaller index has a higher priority than any task with a higher index, i.e., task $\tau_i$ has a higher-priority than task $\tau_{j}$ if $i < j$. 
 
 When performing the schedulability analysis of a specific task $\tau_k$, we will implicitly assume that all the higher priority tasks (i.e., $\tau_1, \tau_2, \ldots, \tau_{k-1}$) are already verified to meet their deadlines, i.e., that $R_i \leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$. 
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "master.tex"
+%%% End:

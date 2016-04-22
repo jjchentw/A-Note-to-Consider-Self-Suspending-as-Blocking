@@ -10,7 +10,7 @@ In this section, we prove that the schedulability test presented in Corollary~\r
   Eq.~\eqref{eq:TDA-SO}.
 \end{Lemma}
 \begin{proof}
-It is straightforward to see that
+For any $t > 0$, it is straightforward to see that
 \begin{align*}
 & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} (C_i + S_i) \\
  \geq & C_k + S_k + \sum_{i=1}^{k-1} S_i + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} C_i\\
@@ -44,23 +44,23 @@ Therefore, Eq.~\eqref{eq:TDA-suspension} will always have a solution which is sm
   
   Since $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} S_j \times x_j$, it holds that $Q_i^{\vec{x}} \leq  Q_1^{\vec{x}}$ for $i=1,2,\ldots,k-1$. It follows that
   \begin{align*}
-  & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} \\
-  \stackrel{(Q_i^{\vec{x}} \leq  Q_1^{\vec{x}})}{\leq} & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} \\
-  \stackrel{(R_i \leq D_i \leq T_i)}{\leq} & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}+(1-x_i)T_i}{T_i}} \\
-  \stackrel{(x_i \in \{0,1\})}{=} & C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}}{T_i}} \\
+  & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i\\
+  \stackrel{(Q_i^{\vec{x}} \leq  Q_1^{\vec{x}})}{\leq} & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i\\
+  \stackrel{(R_i \leq D_i \leq T_i)}{\leq} & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}+(1-x_i)T_i}{T_i}} C_i\\
+  \stackrel{(x_i \in \{0,1\})}{=} & C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}}{T_i}} C_i
   \end{align*}
   
   Therefore, the smallest positive value $t$ such that  
   \begin{equation}
   \label{eq:proof_dominance_blocking}
-  C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}}{T_i}} \leq t
+  C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}}{T_i}} C_i\leq t
   \end{equation}
   is always larger than or equal to the solution of Eq.~\eqref{eq:TDA-suspension-tighter}. 
   
   Subtituting $(t+Q_1^{\vec{x}})$ by $\theta$ in Eq.~\eqref{eq:proof_dominance_blocking}, we get that $R_k$ is upper bounded by the minimum value $(\theta-Q_1^{\vec{x}})$ greater than $0$ (and therefore by the smallest $\theta > 0$) such that 
   \begin{align}
-  & C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}\leq \theta-Q_1^{\vec{x}} \nonumber \\
-  \Leftrightarrow \;\; & C_k + S_k + Q_1^{\vec{x}} + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}\leq \theta \nonumber \\
+  & C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i\leq \theta-Q_1^{\vec{x}} \nonumber \\
+  \Leftrightarrow \;\; & C_k + S_k + Q_1^{\vec{x}} + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i\leq \theta \nonumber \\
 \Leftrightarrow \;\; & C_k + S_k + \sum_{i=1}^{k-1}(x_i S_i + (1-x_i) C_i) + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i \leq \theta \label{eq:proof_dominance_blocking_final}.
     \end{align}
     
@@ -102,3 +102,11 @@ It directly results from the two following facts,
 \item [(ii)] as proven in Section~\ref{sec:proof-th1}, Corollary~\ref{corollary:general-framework} is correct.
 \end{compactitem}
 \end{proof}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "master.tex"
+%%% End:

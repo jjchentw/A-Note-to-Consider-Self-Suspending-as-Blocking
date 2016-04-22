@@ -34,7 +34,8 @@ In a preemptive fixed-priority schedule, the lower-priority jobs do not impact t
 
 \begin{Lemma}
 \label{lemma:remove-same-task}
-In a preemptive fixed-priority schedule, if the worst-case response time of task $\tau_i$ is no more than its period $T_i$, preventing the release of a job of task $\tau_i$ does not affect the schedule of any other job of task $\tau_i$.
+In a preemptive fixed-priority schedule, if the worst-case response
+time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ does not affect the schedule of any other jobs of task $\tau_i$.
 \end{Lemma}
 \begin{proof}
 Since, by assumption, the worst-case response time of task $\tau_i$ is no more than its period, any job $\tau_{i,j}$ of task $\tau_i$ completes its execution before the release of the next job $\tau_{i,j+1}$. Hence, the execution of $\tau_{i,j}$ does not directly interfere with the execution of any other job of $\tau_i$, which then depends only on the schedule of the higher priority jobs. Furthermore, as stated in Property~\ref{prop:lower-priority}, the removal of $\tau_{i,j}$ has no impact on the schedule of the higher-priority jobs, thereby implying that the other jobs of task $\tau_i$ are not affected by the removal of $\tau_{i,j}$.
@@ -120,6 +121,7 @@ This iterative process is repeated until producing $\Psi^1$. The procedures are 
 \begin{example}
 \label{ex:proof_step1}
 Consider the 4 tasks $\tau_1 =(1,1,6,6)$, $\tau_2 =(1,6,10,10)$, $\tau_3 =(4,1,18,18)$ and $\tau_4 =(5,0,20,20)$.
+We assume  $x_1=1$, $x_2=0$, $x_3=1$ in this example.
 
 Figure~\ref{fig:example} depicts a possible schedule of those tasks. We assume that the first job of task $\tau_1$ arrives
 at time $4+\epsilon$ with a very small $\epsilon > 0$. The first job
@@ -200,11 +202,12 @@ Step 1, we should consider two cases:
   %can be any time instant at or after $t_j$. 
 %In this case, for any $\Delta \geq 0$, the workload $\widehat{W}_j^0(\Delta, c_j^*)$ executed by $\tau_j$ from $t_j$ to $t_j+\Delta$ is upper bounded by $W_j^1(\Delta)$. 
 %\item If the residual workload $c_j^*$ of task $\tau_j$ is larger than $0$,
-  Since by our assumption $\tau_j$ respects all its deadlines, the absolute deadline of the job of $\tau_j$ active at $t_j$ must be at least $t_j + c_j^*$; otherwise that job would miss its
+  Since by our assumption $R_j \leq D_j \leq T_j$, task $\tau_j$ respects all its deadlines and the
+  worst-case response time, the finishing time of the job of $\tau_j$ active at $t_j$ must be at least $t_j + c_j^*$; otherwise that job would miss its
   deadline. Therefore, the earliest arrival time of task $\tau_j$
-  arriving \emph{strictly after $t_j$} is at least $t_j + (T_j-D_j +
+  arriving \emph{strictly after $t_j$} is at least $t_j + (T_j-R_j +
   c_j^*)$. For notational brevity, let $\rho_j$ be
-  $(T_j-D_j + c_j^*)$. In this case, for any $\Delta \geq 0$ and $c_j^* > 0$, the workload $\widehat{W}_j^0(\Delta, c_j^*)$ executed by $\tau_j$ from $t_j$ to $t_j+\Delta$ is upper bounded by
+  $(T_j-R_j + c_j^*)$. In this case, for any $\Delta \geq 0$ and $c_j^* > 0$, the workload $\widehat{W}_j^0(\Delta, c_j^*)$ executed by $\tau_j$ from $t_j$ to $t_j+\Delta$ is upper bounded by
   \begin{equation}
   \label{eq:execution-case2-precise}
   \widehat{W}_j^0(\Delta, c_j^*)=
@@ -502,19 +505,22 @@ $j=1,2,\ldots,k-1$. Therefore, we know that
  $W_j^1(t-t_j^*) \leq
 \ceiling{\frac{t-t_k^* +\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell}{T_j}}C_j$ for task $\tau_j$ in ${\bf T}_1$. Moreover, 
 $\forall t
-\mid t_k^* \leq t < f_k$, we have $W_j^0(t-t_j^*) \leq
-\ceiling{\frac{t-t_k^*+\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell + (1-x_j)(D_j-C_j)}{T_j}}C_j$
-for task $\tau_j$ in ${\bf T}_0$. Therefore, we can conclude that 
+\mid t_k^* \leq t < f_k$, we have 
+{\small \begin{align*}
+W_j^0(t-t_j^*) & = W_j^0(t-t_k^* + t_k^* - t_j^*) = W_j^0(t-t_k^* + \sum_{\ell=j}^{k-1} x_\ell\sigma_\ell)\\
+&\leq C_j + W_j^1(t-t_k^* + \sum_{\ell=j}^{k-1} x_\ell\sigma_\ell-(T_j-R_j+C_j))\\
+& \leq \ceiling{\frac{t-t_k^*+\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell +(R_j-C_j)}{T_j}}C_j  
+\end{align*}}for task $\tau_j$ in ${\bf T}_0$ with $x_j = 0$. Therefore, we can conclude that 
 $\forall t \mid t_k^* \leq t < f_k$
 \begin{equation}
-C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{t-t_k^*+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j > t-t_k^*,
+C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{t-t_k^*+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j > t-t_k^*,
 \end{equation}
 where $X_j$ is $\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell$. We replace $t-t_k^*$ with $\theta$. 
-The above inequation implies that the minimum $\theta$ with $\theta > 0$ such that
-$C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j = \theta$
+The above inequality implies that the minimum $\theta$ with $\theta > 0$ such that
+$C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j = \theta$
  is larger than or equal to $f_k-t_k^* \geq f_k-t_k$. 
 
-However, the above condition requires the knowledge of $\sigma_i$. It is straightforward to see that $\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(D_j-C_j)}{T_j}} C_j$ reaches the worst case if $X_j$ is the largest. Since $X_j$ is upper bounded by $Q_j^{\vec{x}}$ defined in Theorem~\ref{theorem:general-framework}, we reach the conclusion.
+However, the above condition requires the knowledge of $\sigma_i$. It is straightforward to see that $\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j$ reaches the worst case if $X_j$ is the largest. Since $X_j$ is upper bounded by $Q_j^{\vec{x}}$ defined in Theorem~\ref{theorem:general-framework}, we reach the conclusion.
 
 \begin{example}
 This can
