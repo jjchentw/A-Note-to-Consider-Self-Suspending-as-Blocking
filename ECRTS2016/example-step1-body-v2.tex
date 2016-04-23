@@ -1,0 +1,118 @@
+
+		\def\ux{0.5cm}\def\uy{0.5cm} 
+		\begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
+		\tikzset{
+			task/.style={fill=#1,  rectangle, text height=.3cm},
+			task1a/.style={task=green!30},
+			task1b/.style={task=green},
+			task2a/.style={task=orange!30},
+			task2b/.style={task=orange, minimum width=1mm},
+			task3a/.style={task=pink, minimum width=1mm},
+			task3b/.style={task=pink!80, minimum width=1mm},
+			task4a/.style={task=cyan, minimum width=1mm},
+			task4b/.style={task=cyan!50},
+			task5/.style={task=blue},
+			task6/.style={task=purple},
+			task7/.style={minimum height=0.3cm,draw},
+			task8/.style={minimum height=\ux,draw,thick},
+			task9/.style={task=gray,minimum height=0.7cm,draw},
+		}
+		\tikzstyle{jobs}=[ fill=black!50];
+
+		\begin{scope}[shift={(0,0)}]
+		
+		\draw[<-](4.1,1.1) -- (4.1,0);
+		\draw[<->](10.1,1.1) -- (10.1,0);
+		\draw[<->](16.1,1.1) -- (16.1,0);
+		\draw[<->](22.1,1.1) -- (22.1,0);
+		
+		
+		\draw[->] (0,0) node[anchor=east] {$\tau_1$}-- coordinate (xaxis) (25,0);
+
+		
+		\node[task7, minimum width=\ux,
+		anchor=south west]at (5.1, 0){};
+		\node[task7, minimum width=\ux,
+		anchor=south west]at (10.1, 0){};
+		\node[task7, minimum width=\ux,
+		anchor=south west]at (16.1, 0){};
+		\node[task7, minimum width=\ux,
+		anchor=south west]at (22.1, 0){};
+		\draw[(-), thin] (4.1, 0.3) -- (5.1, 0.3);
+
+		\end{scope}
+		
+		
+		\begin{scope}[shift={(0,-1.8)}]
+		%%timeline
+		
+		
+		\draw[<-](6,1.1)
+                node[anchor=west,xshift=-3.1cm,yshift=0.1cm]{\footnotesize\textcolor{blue}{release
+                    an artifical job of $\tau_2$ at time $6$}} -- (6,0);
+		\draw[<-](10,1.1) -- (10,0);
+		\draw[<-](20,1.1) -- (20,0);
+		
+		
+		\draw (6.1,0) -- (6.1, 0.3cm) -- (6.2, 0.3cm) --
+                (6.2, 0);
+		anchor=south west]  at ( 6, 0){};
+		\node[task7, minimum width=0.9*\ux,
+		anchor=south west] at (7, 0){};
+		\draw (10,0) -- (10, 0.3cm) -- (10.1, 0.3cm) --
+                (10.1, 0);
+		\node[task7, minimum width=0.9*\ux,
+		anchor=south west] at (11.1, 0){};
+		\node[task7, minimum width=\ux,
+		anchor=south west] at (21, 0){};
+
+		\draw[->] (0,0)node[anchor=east] {$\tau_2$} -- coordinate (xaxis) (25,0);
+%		\draw[(-), thin] (0, 0.3) -- (5.1, 0.3);
+		\draw[(-), thin] (6.2, 0.3) -- (7, 0.3);
+		\draw[(-), thin] (20, 0.3) -- (21, 0.3);
+		
+		
+		\end{scope}
+
+		\begin{scope}[shift={(0,-3.6)}]
+		%%timeline
+		
+		\draw[<-](6,1.1) -- (6,0);
+		\draw[<-](24,1.1) -- (24,0);
+		
+
+		\draw[->] (0,0)node[anchor=east] {$\tau_3$} -- coordinate (xaxis) (25,0);
+		
+		\node[task7, minimum width=2.1*\ux,
+		anchor=south west]  at ( 7.9, 0){};
+		\node[task7, minimum width=1.9*\ux,
+		anchor=south west]  at ( 12, 0){};
+		
+		\draw[(-), thin] (6, 0.3) -- (7, 0.3);
+		
+		\end{scope}
+
+		\begin{scope}[shift={(0,-5.4)}]
+		
+		
+		
+		\draw[->] (0,0) node[anchor=east] {$\tau_4$}-- coordinate (xaxis) (25,0);
+		\draw[<-](7,1.1) -- (7,0)node[anchor=north] {$$};
+                \node[task7, minimum width=2.2*\ux,anchor=south west]at (13.9, 0){};
+                \node[task7, minimum width=2.8*\ux,anchor=south west]at (17.1, 0){};
+		
+		\foreach \x in {0,...,24}{
+			\draw[-](\x,0.1) -- (\x,-0.1)
+			node[below] {\small $\x$};
+			\draw[-,very thin, dotted](\x,6.5) -- (\x,-0.1);
+		}
+
+
+                \draw (19.9, -1.5) node {\small $f_4$};
+                \draw (7, -1.5) node {\small $t_4$};
+                \draw (6, -1.5) node {\small $t_3$};
+                \draw (6, -2) node {\small $t_2$};
+                \draw (4.3, -1.5) node {\small $t_1$};
+		\end{scope}
+		
+		\end{tikzpicture}  

@@ -12,11 +12,20 @@ this paper is the following theorem:
 
 \begin{theorem}
    \label{theorem:general-framework}
-   Suppose that $R_k \leq T_k$, then for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either $0$ or $1$, the worst-case
+   Suppose that $R_k \leq T_k$. Then, for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either $0$ or $1$, the worst-case
    response time $R_k$ of $\tau_k$ is upper bounded by the minimum $t$ larger than $0$ such that 
    {\small \begin{equation} \label{eq:TDA-suspension-tighter0} 
        C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i \leq t
      \end{equation}}where $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} (S_j \times x_j)$.
+ \end{theorem} 
+\begin{theorem}
+   \label{theorem:general-framework-not-feasible}
+   Suppose that $R_k > T_k$. For any arbitrary vector assignment
+   $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either
+   $0$ or $1$,  we have $\forall t | 0 < t \leq T_k$,
+   {\small \begin{equation*}
+       C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i > t
+     \end{equation*}}where $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} (S_j \times x_j)$.
  \end{theorem} 
  %We will explain the resulting properties from
  %Theorem~\ref{theorem:general-framework} first, by leaving the proof
