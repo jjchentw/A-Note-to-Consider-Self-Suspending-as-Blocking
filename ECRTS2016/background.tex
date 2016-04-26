@@ -1,7 +1,7 @@
 \section{Background}
 \label{sec:existing-analyses}
 
-To analyze the worst-case response time (or the schedulability) of a task $\tau_k$, one usually needs to quantify the worst-case interference exerted by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when (i) $\tau_k$ and all the higher-priority tasks release their first job synchronously and (ii) all their subsequent jobs are released as early as possible (i.e., with a rate equal to their period).  However,  this definition of the
+To analyze the worst-case response time (or the schedulability) of a task $\tau_k$, one usually needs to quantify the worst-case interference exerted by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when (i) $\tau_k$ and all the higher-priority tasks release their first job synchronously and (ii) all their subsequent jobs are released as early as possible (i.e., with a rate equal to their periods).  However,  this definition of the
 critical instant does not hold for self-suspending sporadic tasks.  
 
 
@@ -13,7 +13,7 @@ Second, for the higher-priority tasks,
 we need to consider the self-suspension behaviour that may result in
 the largest possible interference for task $\tau_k$.
 %With the above concept in mind, 
-There exist three different approaches in the state-of-the-art 
+There exist three approaches in the state-of-the-art 
 that are potentially sound to perform the schedulability analysis of self-suspending tasks:
 \begin{compactitem}
 \item modeling the suspension as execution, also known as the suspension-oblivious analysis (see Section~\ref{sec:suspension-oblivious});

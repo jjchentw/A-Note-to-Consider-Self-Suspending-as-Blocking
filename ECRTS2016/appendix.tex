@@ -9,7 +9,7 @@ $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to deter
 \end{quote}
   We rephrased the wording and notation in order to be consistent with this paper. Moreover, the multiprocessor scheduling in such a case is based on partitioned scheduling. Therefore, the schedulability analysis of a task set on a processor is the same as the uniprocessor problem by additionally considering the self-suspending behaviour due to the synchronization with other tasks on other processors.
 
-\begin{appProof}{of Lemma~\ref{lemma:remove-same-task}.}
+\begin{appProof}{of Lemma~\ref{lemma:remove-same-task}}
 Since, by assumption, the worst-case response time of task $\tau_i$ is no more than its period, any job $\tau_{i,j}$ of task $\tau_i$ completes its execution before the release of the next job $\tau_{i,j+1}$. Hence, the execution of $\tau_{i,j}$ does not directly interfere with the execution of any other job of $\tau_i$, which then depends only on the schedule of the higher priority jobs. Furthermore, as stated in Property~\ref{prop:lower-priority}, the removal of $\tau_{i,j}$ has no impact on the schedule of the higher-priority jobs, thereby implying that the other jobs of task $\tau_i$ are not affected by the removal of $\tau_{i,j}$.
 \end{appProof}
 
@@ -73,7 +73,7 @@ Since, by assumption, the worst-case response time of task $\tau_i$ is no more t
   \label{fig:example-lemma-workload}
 \end{figure}
 
-\begin{appProof}{of Lemma~\ref{lem:dominance_blocking}.}
+\begin{appProof}{of Lemma~\ref{lem:dominance_blocking}}
   In this proof, we first transform the worst-case response time analysis presented in Corollary~\ref{corollary:general-framework} in a more pessimistic analysis. We then prove that this more pessimistic version of Corollary~\ref{corollary:general-framework} provides the same solution as Eq.~\eqref{eq:TDA-suspension}, which then proves the lemma.
   
   Since $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} S_j \times x_j$, it holds that $Q_i^{\vec{x}} \leq  Q_1^{\vec{x}}$ for $i=1,2,\ldots,k-1$. It follows that

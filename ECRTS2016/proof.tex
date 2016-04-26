@@ -421,6 +421,7 @@ conditions, we reach the condition in Eq.~\eqref{eq:exec_plus_idle-3}.
 Consider the same 4 tasks as in Example~\ref{ex:proof_step1}, for which a possible schedule was depicted in Figure~\ref{fig:example} when $\epsilon$ is very close to $0$. We have $x_1\sigma_1=1$, $x_2\sigma_2=0$ and $x_3\sigma_3=1-2\epsilon$. The corresponding functions
 $W_1^1(t-t_1)$, $W_2^0(t-t_2)$, $W_3^1(t-t_3)$ are illustrated in
 Figure~\ref{fig:example-step2} when $\epsilon$ is close to $0$. More precisely,
+
 {\footnotesize \begin{compactitem}
   \item $W_1^1(t-t_1) = \floor{\frac{t-t_1}{6}}1 + \min\left\{t-t_1-\floor{\frac{t-t_1}{6}}6, 1\right\}$ if $t \geq t_1$.
   \item $W_2^0(t-t_2) = t-t_2$ if $t_2 \leq t \leq t_2 + 1$ and $W_2^0(t-t_2) = 1 + \floor{\frac{t-t_2-1}{10}} + \min\left\{t-t_2-1-\floor{\frac{t-t_2-1}{10}}10, 1\right\}$ if $t > t_2+1$.
@@ -440,7 +441,7 @@ For any $\Delta > 0$, we have
 \end{align}
 \end{Lemma}
 \begin{proof}
-  The upper bound of $W_j^1(\Delta)$ is obvious. We focus on the upper bound of $W_j^0(\Delta)$. If $0 < \Delta \leq C_j$, we know that $W_j^0(\Delta) = \Delta \leq C_j \leq \ceiling{\frac{\Delta+R_j-C_j}{T_j}}C_j$. If $\Delta > C_j$, then we have
+  The upper bound of $W_j^1(\Delta)$ is obvious. We focus on the upper bound of $W_j^0(\Delta)$. If $0 < \Delta \leq C_j$, we know that $W_j^0(\Delta) = \Delta \leq C_j \leq \ceiling{\frac{\Delta+R_j-C_j}{T_j}}C_j$. If $\Delta > C_j$, then 
 {\small \begin{align*}
 W_j^0(\Delta) &\leq_1 C_j + W_j^1(\Delta - (T_j-R_j+C_j))\nonumber\\
 & \leq C_j+\ceiling{\frac{\Delta-T_j +(R_j-C_j)}{T_j}}C_j  = \ceiling{\frac{\Delta+R_j-C_j}{T_j}}C_j 
@@ -641,7 +642,6 @@ $\tau_k'$. However, it is not since $t_j$ values for $j=1,2,\ldots,k$
 are in general unknown. We need to have a strategy to use the
 conditions in Lemma~\ref{lemma:conclusion-step2} for analyzing the
 response time of $\tau_k'$.
-
 Therefore, Step 3 has to construct a safe response-time analysis based on the
 conditions specified by Eqs.~(\ref{eq:exec_plus_idle-2}) and
 (\ref{eq:exec_plus_idle-3}) in Lemma~\ref{lemma:conclusion-step2}. Our
