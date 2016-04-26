@@ -15,11 +15,11 @@ the largest possible interference for task $\tau_k$.
 %With the above concept in mind, 
 There exist three different approaches in the state-of-the-art 
 that are potentially sound to perform the schedulability analysis of self-suspending tasks:
-\begin{itemize}
+\begin{compactitem}
 \item modeling the suspension as execution, also known as the suspension-oblivious analysis (see Section~\ref{sec:suspension-oblivious});
 \item modeling the suspension as release jitter (see Section~\ref{sec:jitter});
 \item modeling the suspension as blocking time (see Section~\ref{sec:suspension-blocking}).
-\end{itemize}
+\end{compactitem}
 We later prove in Section~\ref{sec:dominance} that all these approaches are analytically correct. 
 
 \subsection{Suspension-Oblivious Analysis}
@@ -55,20 +55,11 @@ In \cite[p. 164-165]{Liu:2000:RS:518501}, Liu proposed a solution to study the s
 \end{itemize}
 %As a result, if $S_i < C_i$, then the blocking time contributed from task $\tau_i$ is at most $S_i$. Therefore, the contribution of a higher-priority task $\tau_i$  to $B_k$ is at most $b_i=min(C_i, S_i)$.
 An upper bound on the blocking time is therefore given by:
-\begin{equation}
-\label{eq:Bk}
-B_k = S_k + \sum_{i=1}^{k-1} \min(C_i, S_i).
-\end{equation}
-
+$B_k = S_k + \sum_{i=1}^{k-1} \min(C_i, S_i).$
 In \cite{Liu:2000:RS:518501}, the blocking time is then used to derive a utilization-based schedulability test for rate-monotonic scheduling. Namely, it is stated that, if $T_i=D_i$ for every task $\tau_i \in \tau$ and $\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$, then $\tau_k$ can be feasibly scheduled with rate-monotonic scheduling. 
   
 
-The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the impact of the self-suspension of a task due to the utilization of synchronization protocols in multiprocessor systems. The statement in \cite{DBLP:conf/rtss/RajkumarSL88} reads as follows:\footnote{We rephrased the wording and notation in order to be consistent with the rest of this paper. Moreover, the multiprocessor scheduling in such a case is based on partitioned scheduling. Therefore, the schedulability analysis of a task set on a processor is the same as the uniprocessor problem by additionally considering the self-suspending behaviour due to the synchronization with other tasks on other processors.}
-\begin{quote}
-\emph{``For each higher priority job $\tau_{i,j}$ that suspends on global semaphores or for other reasons, add the term $\min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $\tau_{i,j}$ can suspend itself. [...] The sum [...] yields $B_k$, which in turn can be used in 
-$\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable."}
-\end{quote}
-  
+The same concept was also implicitly used by Rajkumar, Sha, and Lehoczky in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the impact of the self-suspension of a task due to the utilization of synchronization protocols in multiprocessor systems. (See Appendix\citetechreport{} for details.)
 If the above argument is correct, we can further prove that a constrained-deadline task $\tau_k$ can be feasibly scheduled under fixed-priority scheduling if
 \begin{equation}
 \label{eq:TDA-suspension}

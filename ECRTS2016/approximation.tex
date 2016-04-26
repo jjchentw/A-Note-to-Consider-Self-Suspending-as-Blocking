@@ -25,7 +25,7 @@ It results that the minimum positive value for $t$ such that
 \label{eq:linear-approximation-upper-bound}
 C_k + S_k + \sum_{i=1}^{k-1}  \left(U_i t + C_i + U_i (1-x_i)(R_i-C_i) + x_i S_i\sum_{\ell=1}^{i}U_\ell \right) \leq t
 \end{align}}
-is an upper bound on the WCRT of $\tau_k$.
+is an upper bound on the worst-case response time $R_k$ of $\tau_k$.
 
 Observing Eq.~(\ref{eq:linear-approximation-upper-bound}), the
 contribution of $x_i$ can be individually determined as $U_i(R_i-C_i)$
@@ -49,9 +49,22 @@ For any $t > 0$, the vector assignment $\vec{x}^{\mathit{lin}}$ minimizes
   the solution to Eq.~\eqref{eq:linear-approximation-upper-bound} among all $2^{k-1}$ possible vector assignments.
 \end{Property}
 
+
+
+\begin{figure*}[t!]
+  \centering
+  \subfloat[Varying the number of tasks $n$, $U'=0.95$, $r_{\min} = 0.05$, $r_{\max} = 0.5$]{\label{fig:plot1} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingn_smin=5_smax=50_U=0_95_T=100-10000_1000runs_croped.pdf}}
+  \subfloat[Varying $r_{\max}$ (unit: \%), $U'=1$, $n=8$, $r_{\min} = 0.05$]{\label{fig:plot2} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingSmax_smin=5_U=1_n=8_T=100-10000_1000runs_croped.pdf}}
+  \subfloat[Varying $U'$, $n=8$, $r_{\min} = 0.05$, $r_{\max} = 0.5$]{\label{fig:plot3} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingU_smin=5_smax=50_n=8_T=100-10000_1000runs_croped.pdf}}
+  \subfloat[Varying $U'$, $n=8$, $r_{\min} = 0.5$, $r_{\max} = 0.9$]{\label{fig:plot4} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingU_smin=50_smax=90_n=8_T=100-10000_1000runs_croped.pdf}} 
+  \caption{Number of schedulable task sets over $1000$ randomly generated task sets.}
+  \label{fig:exp}
+\end{figure*}
+
+
 \begin{theorem}
 \label{theorem:linear-time-test}
-Let $rbf^{\mathit{lin}}_k(t, \vec{x})$ be the left hand side of Eq.~\eqref{eq:linear-approximation-upper-bound}. Task $\tau_k$ is schedulable
+Let $rbf_k(t, \vec{x}^{\mathit{lin}})$ be the left hand side of Eq.~\eqref{eq:linear-approximation-upper-bound}. Task $\tau_k$ is schedulable
   under fixed-priority if
   \begin{equation}
     \label{eq:linear-time-test}
@@ -59,7 +72,15 @@ Let $rbf^{\mathit{lin}}_k(t, \vec{x})$ be the left hand side of Eq.~\eqref{eq:li
   \end{equation}
 \end{theorem}
 \begin{proof}
-It directly follows from Corollary~\ref{corollary:general-framework} and the fact that, by construction, Eq.~\eqref{eq:linear-approximation-upper-bound} upper bounds Eq.~\eqref{eq:TDA-suspension-tighter0}.
+  It directly follows from Corollary~\ref{corollary:general-framework}
+  and the fact that, by construction,
+  Eq.~\eqref{eq:linear-approximation-upper-bound} upper bounds
+  Eq.~\eqref{eq:TDA-suspension-tighter0}. Note that $rbf_k(t,
+  \vec{x}^{\mathit{lin}})$ can be expressed as $A+\sum_{i=1}^{k-1} U_i
+  t$ with a constant $A > 0$ (independent from $t$). Therefore, if the
+  condition in Eq.~\eqref{eq:linear-approximation-upper-bound} holds
+  for a certain $0 < t < D_k$ with $A+\sum_{i=1}^{k-1} U_i t \leq t$, then
+  the inequality $A+\sum_{i=1}^{k-1} U_i D_k \leq D_k$ also holds.
 \end{proof}
 
 \begin{Property}

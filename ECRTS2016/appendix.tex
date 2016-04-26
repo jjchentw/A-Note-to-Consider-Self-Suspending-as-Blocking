@@ -1,0 +1,120 @@
+\section*{Appendix}
+{\bf How Rajkumar, Sha, and Lehoczky
+  in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} analyzed dynamic
+  self-suspending behaviour due to multiprocessor synchronization?}
+The statement in \cite{DBLP:conf/rtss/RajkumarSL88} reads as follows:
+\begin{quote}
+\emph{``For each higher priority job $\tau_{i,j}$ that suspends on global semaphores or for other reasons, add the term $\min(C_i, S_i)$ to $B_k$, where $S_i$ is the maximum duration that $\tau_{i,j}$ can suspend itself. [...] The sum [...] yields $B_k$, which in turn can be used in 
+$\frac{C_k+B_k}{T_k} + \sum_{i=1}^{k-1} U_i \leq k (2^{\frac{1}{k}}-1)$ to determine whether the current task allocation to the processor is schedulable."}
+\end{quote}
+  We rephrased the wording and notation in order to be consistent with this paper. Moreover, the multiprocessor scheduling in such a case is based on partitioned scheduling. Therefore, the schedulability analysis of a task set on a processor is the same as the uniprocessor problem by additionally considering the self-suspending behaviour due to the synchronization with other tasks on other processors.
+
+\begin{appProof}{of Lemma~\ref{lemma:remove-same-task}.}
+Since, by assumption, the worst-case response time of task $\tau_i$ is no more than its period, any job $\tau_{i,j}$ of task $\tau_i$ completes its execution before the release of the next job $\tau_{i,j+1}$. Hence, the execution of $\tau_{i,j}$ does not directly interfere with the execution of any other job of $\tau_i$, which then depends only on the schedule of the higher priority jobs. Furthermore, as stated in Property~\ref{prop:lower-priority}, the removal of $\tau_{i,j}$ has no impact on the schedule of the higher-priority jobs, thereby implying that the other jobs of task $\tau_i$ are not affected by the removal of $\tau_{i,j}$.
+\end{appProof}
+
+
+\begin{appProof}{of Lemma~\ref{lemma:Wj0-dominate}}
+  We first prove that $\widehat{W}_j^0(\Delta, C_j) \geq
+ W_j^1(\Delta)$ defined in Eq.~\eqref{eq:execution-case1}.  By the definition of $\rho_j=T_j-R_j+C_j$ when $c_j^*$ is $C_j$ and the
+ assumption $C_j \leq R_j \leq T_j$, we have $0 \leq \rho_j \leq
+ T_j$. Therefore, for $\Delta \geq T_j$, we have $W_j^1(\Delta) = C_j
+ + W_j^1(\Delta-T_j) \leq C_j + W_j^1(\Delta - \rho_j) \leq
+ \widehat{W}_j^0(\Delta, C_j)$. For $0 \leq \Delta < T_j$, it is also
+ obvious that $\widehat{W}_j^0(\Delta, C_j) \geq \min\{\Delta, C_j\}
+ = W_j^1(\Delta)$.
+
+ We then prove that $\widehat{W}_j^0(\Delta, C_j) \geq
+ \widehat{W}_j^0(\Delta, c_j^*)$ for any $0 < c_j^* \leq C_j$ based on the definition in Eq.~\eqref{eq:execution-case2-precise}. Figure~\ref{fig:example-lemma-workload} provides an illustrative example for $\widehat{W}_j^0(\Delta, c_j^*)$. We consider three subcases:
+ \begin{compactitem}
+ \item For $0 \leq \Delta \leq C_j$, it is obvious that
+   $\widehat{W}_j^0(\Delta, C_j) \geq \widehat{W}_j^0(\Delta,
+   c_j^*)$.
+ \item For $C_j < \Delta \leq T_j-R_j+C_j$, we have
+   $\widehat{W}_j^0(\Delta, C_j) = C_j$, and it is obvious that
+   $\widehat{W}_j^0(\Delta, c_j^*) = c_j^* + \max\{0,
+   \Delta-(T_j-R_j+c_j^*)\} \leq c_j^* + C_j - c_j^* = C_j$.
+
+ \item For $T_j-R_j+C_j < \Delta$, we have $\widehat{W}_j^0(\Delta,
+   C_j) = C_j + W_j^1(\Delta - (T_j-R_j+C_j))$.  Moreover, by
+   definition, we also know $\widehat{W}_j^0(\Delta, c_j^*) \leq
+   \delta+\widehat{W}_j^0(\Delta-\delta, c_j^*)$ for any $\delta$ with $0 < \delta \leq
+   \Delta$. Therefore, for such a case, we can conclude
+   $\widehat{W}_j^0(\Delta, c_j^*) = c_j^* + W_j^1(\Delta -
+   (T_j-R_j+c_j^*)) \leq C_j + W_j^1(\Delta - (T_j-R_j+C_j))$ by
+   setting $\delta$ to $C_j - c_j^*$ with the previous inequality.
+ \end{compactitem}
+\end{appProof}
+
+
+\begin{figure}[t]
+  \centering
+
+		\def\ux{0.32cm}\def\uy{0.3cm} 
+		\begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
+		\draw[->] (0,0) -- coordinate (xaxis) (21,0) node[anchor=west] {$\Delta$};
+		\foreach \x in {0,...,20}{
+			\draw[-](\x,0.1) -- (\x,-0.1)
+			node[below] {\footnotesize $\x$};
+			
+		}
+		\draw[->] (0,0) node[anchor=east] {}-- coordinate (xaxis) (0,10.5);
+		\foreach \y in {0,...,10}{
+			\draw[-](0.1, \y) -- (-0.1, \y)
+			node[left] {\small $\y$};
+			
+		}
+
+                \draw[-,thick] (0, 0) -- (3, 3) -- (7, 3) -- (10, 6) -- (17, 6) -- (20, 9);
+                \draw[-,dashed] (0 ,0) -- (2,2) -- (6, 2) -- (9, 5) -- (16, 5) -- (19, 8) -- (20, 8);
+                \draw[-,dotted] (0, 0) -- (1, 1) -- (5, 1) -- (8, 4) -- (15, 4) -- (18, 7) -- (20, 7);
+		\end{tikzpicture}    
+  \caption{The workload function $\widehat{W}_j^0(\Delta, c_j^*)$ when $T_j=10$, $C_j=3$, and $D_j=6$. Solid line: $c_j^*$ is $3$, Dashed line: $c_j^*$ is $2$, Dotted line: $c_j^*$ is $1$.}
+  \label{fig:example-lemma-workload}
+\end{figure}
+
+\begin{appProof}{of Lemma~\ref{lem:dominance_blocking}.}
+  In this proof, we first transform the worst-case response time analysis presented in Corollary~\ref{corollary:general-framework} in a more pessimistic analysis. We then prove that this more pessimistic version of Corollary~\ref{corollary:general-framework} provides the same solution as Eq.~\eqref{eq:TDA-suspension}, which then proves the lemma.
+  
+  Since $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} S_j \times x_j$, it holds that $Q_i^{\vec{x}} \leq  Q_1^{\vec{x}}$ for $i=1,2,\ldots,k-1$. It follows that
+  \begin{align*}
+  & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i\\
+  \stackrel{(Q_i^{\vec{x}} \leq  Q_1^{\vec{x}})}{\leq} & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i\\
+  \stackrel{(R_i \leq D_i \leq T_i)}{\leq} & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}+(1-x_i)T_i}{T_i}} C_i\\
+  \stackrel{(x_i \in \{0,1\})}{=} & C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}}{T_i}} C_i
+  \end{align*}
+  
+  Therefore, the smallest positive value $t$ such that  
+  \begin{equation}
+  \label{eq:proof_dominance_blocking}
+  C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}}{T_i}} C_i\leq t
+  \end{equation}
+  is always larger than or equal to the solution of Eq.~\eqref{eq:TDA-suspension-tighter}. 
+  
+  Subtituting $(t+Q_1^{\vec{x}})$ by $\theta$ in Eq.~\eqref{eq:proof_dominance_blocking}, we get that $R_k$ is upper bounded by the minimum value $(\theta-Q_1^{\vec{x}})$ greater than $0$ (and therefore by the smallest $\theta > 0$) such that 
+  \begin{align}
+  & C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i\leq \theta-Q_1^{\vec{x}} \nonumber \\
+  \Leftrightarrow \;\; & C_k + S_k + Q_1^{\vec{x}} + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i\leq \theta \nonumber \\
+\Leftrightarrow \;\; & C_k + S_k + \sum_{i=1}^{k-1}(x_i S_i + (1-x_i) C_i) + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i \leq \theta \label{eq:proof_dominance_blocking_final}.
+    \end{align}
+    
+    
+    Now, consider the particular vector assignment $\vec{x}$ in which 
+  \begin{equation*}
+    x_i =
+    \begin{cases}
+      1 &\mbox{if } S_i \leq    C_i\\
+      0 & \mbox{otherwise},
+    \end{cases}
+  \end{equation*}
+  for $i=1,2,\ldots,k-1$. 
+    By the definition of $B_k$ (i.e., Section~\ref{sec:suspension-blocking}), we get that 
+    $$B_k = S_k + \sum_{i=1}^{k-1} \min(C_i, S_i) = S_k + \sum_{i=1}^{k-1} \left(x_i
+    S_i + (1-x_i) C_i\right)$$
+Eq.~\eqref{eq:proof_dominance_blocking_final} thus becomes identical to Eq.~\eqref{eq:TDA-suspension}. Therefore, if Eq.~\eqref{eq:TDA-suspension} deems a task set as being schedulable, so does Corollary~\ref{corollary:general-framework}. 
+\end{appProof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "master.tex"
+%%% End:

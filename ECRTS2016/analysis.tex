@@ -7,12 +7,14 @@ As already discussed in Section~\ref{sec:existing-analyses}, one can greedily co
 \cite{Liu_2014}, that $R_k'$ is a safe upper bound on the worst-case response time of task $\tau_k$ in the original task set.
 
 Note that in all this section, we implicitly assume that $R_i
-\leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$.  Our key result in
+\leq D_i \leq T_i, \forall \tau_i \mid 1 \leq i \leq k-1$.  This assumption is implicitly used as a fact in all the theorems and lemmas. \emph{Therefore, the worst-case response time or the schedulability of task $\tau_k$ has to be verified from $k=1,2,\ldots, n$. Here we only focus on the analysis of a certain task $\tau_k$, under the assumption that we have already validated that $R_i
+\leq D_i \leq T_i, \forall \tau_i \mid 1 \leq i \leq k-1$ (by using any method in this section or Section~\ref{sec:existing-analyses}). } 
+Our key result in
 this paper is the following theorem:
 
 \begin{theorem}
    \label{theorem:general-framework}
-   Suppose that $R_k \leq T_k$. Then, for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either $0$ or $1$, the worst-case
+   Suppose that $R_k' \leq T_k$. Then, for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either $0$ or $1$, the worst-case
    response time $R_k$ of $\tau_k$ is upper bounded by the minimum $t$ larger than $0$ such that 
    {\small \begin{equation} \label{eq:TDA-suspension-tighter0} 
        C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i \leq t
@@ -20,7 +22,7 @@ this paper is the following theorem:
  \end{theorem} 
 \begin{theorem}
    \label{theorem:general-framework-not-feasible}
-   Suppose that $R_k > T_k$. For any arbitrary vector assignment
+   Suppose that $R_k' > T_k$. For any arbitrary vector assignment
    $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either
    $0$ or $1$,  we have $\forall t | 0 < t \leq T_k$,
    {\small \begin{equation*}
@@ -30,8 +32,8 @@ this paper is the following theorem:
  %We will explain the resulting properties from
  %Theorem~\ref{theorem:general-framework} first, by leaving the proof
  %to Section~\ref{sec:proof-th1} since it is pretty long.   
- One can directly derive the
- following schedulability test from Theorem~\ref{theorem:general-framework}.
+By the above two theorems, we can directly derive the
+following schedulability test.
 
  \begin{Corollary}
    \label{corollary:general-framework}
@@ -44,39 +46,67 @@ this paper is the following theorem:
      \end{align}}
      where $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} (S_j \times x_j)$, then the constrained-deadline task $\tau_k$ is schedulable under fixed-priority.
  \end{Corollary}
- \begin{proof}
- \end{proof}
  
-  The proof of correctness of Theorem~\ref{theorem:general-framework} and hence Corollary~\ref{corollary:general-framework} is provided in Section~\ref{sec:proof-th1}. Moreover, we will later prove in Section~\ref{sec:dominance}, that Corollary~\ref{corollary:general-framework} in fact dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
+  The proof of correctness of Theorem~\ref{theorem:general-framework}
+  and Theorem~\ref{theorem:general-framework-not-feasible}, and hence Corollary~\ref{corollary:general-framework} is provided in Section~\ref{sec:proof-th1}. Moreover, we will later prove in Section~\ref{sec:dominance}, that Corollary~\ref{corollary:general-framework} in fact dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
  
+ \begin{table*}[t]
+    \centering
+    \renewcommand{\arraystretch}{1.7}
+\scalebox{0.95}{
+    \begin{tabular}{|c|c|c|c|c|}
+\hline
+    $\vec{x}$ & Case 1: $(0, 0)$ & Case 2: $(0, 1)$ & Case 3: $(1, 0)$ & Case 4:$(1, 1)$\\
+\hline
+    $(Q_1^{\vec{x}}, Q_2^{\vec{x}})$ & $(0, 0)$ & $(1, 1)$ & $(5, 0)$ & $(6, 1)$\\
+\hline
+    condition of Eq.~\eqref{eq:TDA-suspension-tighter} & $4+ \ceiling{\frac{t+0+5}{10}} 4 + \ceiling{\frac{t+0+9}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+1+5}{10}} 4 + \ceiling{\frac{t+1+0}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+5+0}{10}} 4 + \ceiling{\frac{t+0+9}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+6+0}{10}} 4 + \ceiling{\frac{t+1+0}{19}}6 \leq t$\\      
+\hline
+upper bound of $R_3$ & $42$ & $32$ & $42$ & $32$\\
+\hline
+    \end{tabular}}
+    \caption{Detailed procedure in Example~\ref{ex:general_framework} for deriving the upper bound of $R_3$, with $R_1-C_1=5$ and $R_2-C_2=9$.}
+    \label{tab:example3-calculation}
+  \end{table*}
+
  We now use the same example as in Section~\ref{sec:rationale}, to demonstrate how
 Corollary~\ref{corollary:general-framework} can be applied.
  
  \begin{example}
  \label{ex:general_framework}
-  Consider the same three tasks used in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$. There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}:
+  Consider the same three tasks used in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$. By the analysis in Example~\ref{ex:rationale_1}, $R_1$ is upper bound by $9$ and $R_2$ is upper bounded by $15$. We use $R_1=9$ and $R_2=15$ in this example. There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}.
 
-\noindent\textbf{Case 1.} $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by the minimum $t$ under $0 < t \leq D_3$ such that $4+ \ceiling{\frac{t+5}{10}} 4 + \ceiling{\frac{t+9}{19}} 6 \leq t$. Note that this equation is identical to the schedulability test discussed in Section~\ref{sec:jitter}, and hence, as shown in Example~\ref{ex:rationale_1}, we get that $R_k \leq 42$.
 
-\noindent\textbf{Case 2.} $\vec{x} = (0 , 1)$:
- In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by  the minimum $t$
-under $0 < t \leq D_3$ that satisfies $4+ \ceiling{\frac{t+6}{10}} 4 + \ceiling{\frac{t+1}{19}} 6 \leq t$. As a solution, we get that $R_k \leq 32$. % due to $4+ \ceiling{\frac{32+7}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
+ 
+
+% \noindent\textbf{Case 1.} $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by the minimum $t$ under $0 < t \leq D_3$ such that $4+ \ceiling{\frac{t+5}{10}} 4 + \ceiling{\frac{t+9}{19}} 6 \leq t$. Note that this equation is identical to the schedulability test discussed in Section~\ref{sec:jitter}, and hence, as shown in Example~\ref{ex:rationale_1}, we get that $R_k \leq 42$.
+
+% \noindent\textbf{Case 2.} $\vec{x} = (0 , 1)$:
+%  In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by  the minimum $t$
+% under $0 < t \leq D_3$ that satisfies $4+ \ceiling{\frac{t+6}{10}} 4 + \ceiling{\frac{t+1}{19}} 6 \leq t$. As a solution, we get that $R_k \leq 32$. % due to $4+ \ceiling{\frac{32+7}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
        
-\noindent\textbf{Case 3.} $\vec{x} = (1 , 0)$:
- In this case, we look for the minimum $t$ such that $4+ \ceiling{\frac{t+5}{10}}\cdot 4 + \ceiling{\frac{t+9}{19}}\cdot 6 \leq t$. Hence, we get $R_k \leq 42$.
+% \noindent\textbf{Case 3.} $\vec{x} = (1 , 0)$:
+%  In this case, we look for the minimum $t$ such that $4+ \ceiling{\frac{t+5}{10}}\cdot 4 + \ceiling{\frac{t+9}{19}}\cdot 6 \leq t$. Hence, we get $R_k \leq 42$.
 
-\noindent\textbf{Case 4.} $\vec{x} = (1 , 1)$:
- In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by  the minimum $t$
-under $0 < t \leq T_3$ such that $
-       4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t$ leading to $R_k \leq 32$.% due to $4+ \ceiling{\frac{32+6}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
+% \noindent\textbf{Case 4.} $\vec{x} = (1 , 1)$:
+%  In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by  the minimum $t$
+% under $0 < t \leq T_3$ such that $
+%        4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t$ leading to $R_k \leq 32$.% due to $4+ \ceiling{\frac{32+6}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
 
+% Among the above four cases, the tests in Cases 2 and 4 are the tightest. Therefore, by
+% Corollary~\ref{corollary:general-framework}, $\tau_3$ is
+% schedulable under fixed-priority.
+
+The corresponding procedure to use these four vector assignments can be found in Table~\ref{tab:example3-calculation}. 
 Among the above four cases, the tests in Cases 2 and 4 are the tightest. Therefore, by
-Corollary~\ref{corollary:general-framework}, $\tau_3$ is
-schedulable under fixed-priority.
+ Corollary~\ref{corollary:general-framework}, $\tau_3$ is
+ schedulable under fixed-priority.
 \hfill\myendproof
  \end{example}
 
-Note also that the upper bound on $\tau_3$'s WCRT computed in Example~\ref{ex:general_framework}, is lower than the WCRT estimate obtained in Example~\ref{ex:rationale_2}. The response time analysis presented in Corollary~\ref{corollary:general-framework} is therefore tighter than the simple combination of existing analysis techniques proposed in Example~\ref{ex:rationale_2}.
+Note also that the upper bound on $R_3$ computed in
+Example~\ref{ex:general_framework}, is lower than the worst-case
+response time estimate obtained in Example~\ref{ex:rationale_2}. The response time analysis presented in Corollary~\ref{corollary:general-framework} is therefore tighter than the simple combination of existing analysis techniques proposed in Example~\ref{ex:rationale_2}.
 
 
 \input{proof}
