@@ -74,29 +74,25 @@ Corollary~\ref{corollary:general-framework} can be applied.
  
  \begin{example}
  \label{ex:general_framework}
-  Consider the same three tasks used in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$. By the analysis in Example~\ref{ex:rationale_1}, $R_1$ is upper bound by $9$ and $R_2$ is upper bounded by $15$. We use $R_1=9$ and $R_2=15$ in this example. There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}.
-
-
- 
-
+  Consider the same three tasks used in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$. By the analysis in Example~\ref{ex:rationale_1}, $R_1$ is upper bounded by $9$ and $R_2$ is upper bounded by $15$. We use $R_1=9$ and $R_2=15$ in this example. There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}.
 % \noindent\textbf{Case 1.} $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by the minimum $t$ under $0 < t \leq D_3$ such that $4+ \ceiling{\frac{t+5}{10}} 4 + \ceiling{\frac{t+9}{19}} 6 \leq t$. Note that this equation is identical to the schedulability test discussed in Section~\ref{sec:jitter}, and hence, as shown in Example~\ref{ex:rationale_1}, we get that $R_k \leq 42$.
-
+%
 % \noindent\textbf{Case 2.} $\vec{x} = (0 , 1)$:
 %  In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by  the minimum $t$
 % under $0 < t \leq D_3$ that satisfies $4+ \ceiling{\frac{t+6}{10}} 4 + \ceiling{\frac{t+1}{19}} 6 \leq t$. As a solution, we get that $R_k \leq 32$. % due to $4+ \ceiling{\frac{32+7}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
-       
+%       
 % \noindent\textbf{Case 3.} $\vec{x} = (1 , 0)$:
 %  In this case, we look for the minimum $t$ such that $4+ \ceiling{\frac{t+5}{10}}\cdot 4 + \ceiling{\frac{t+9}{19}}\cdot 6 \leq t$. Hence, we get $R_k \leq 42$.
-
+%
 % \noindent\textbf{Case 4.} $\vec{x} = (1 , 1)$:
 %  In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by  the minimum $t$
 % under $0 < t \leq T_3$ such that $
 %        4+ \ceiling{\frac{t+6}{10}}\cdot 4 + \ceiling{\frac{t+1}{19}}\cdot 6 \leq t$ leading to $R_k \leq 32$.% due to $4+ \ceiling{\frac{32+6}{10}} 4 + \ceiling{\frac{32+1}{19}} 6=32$.
-
+%
 % Among the above four cases, the tests in Cases 2 and 4 are the tightest. Therefore, by
 % Corollary~\ref{corollary:general-framework}, $\tau_3$ is
 % schedulable under fixed-priority.
-
+%
 The corresponding procedure to use these four vector assignments can be found in Table~\ref{tab:example3-calculation}. 
 Among the above four cases, the tests in Cases 2 and 4 are the tightest. Therefore, by
  Corollary~\ref{corollary:general-framework}, $\tau_3$ is
