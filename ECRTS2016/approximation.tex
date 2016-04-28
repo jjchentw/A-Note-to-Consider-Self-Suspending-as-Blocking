@@ -13,6 +13,19 @@ By the definition of the ceiling operator, it holds that:
 =& C_k + S_k  + \sum_{i=1}^{k-1} \left(U_i\cdot t + C_i+U_i (1-x_i)(R_i-C_i) + U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell \right) \label{eq:linear_step1}
 \end{align}}
 
+
+
+
+\begin{figure*}[t!]
+  \centering
+  \subfloat[Varying the number of tasks $n$, $U'=0.95$, $r_{\min} = 0.05$, $r_{\max} = 0.5$]{\label{fig:plot1} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingn_smin=5_smax=50_U=0_95_T=100-10000_1000runs_croped.pdf}}
+  \subfloat[Varying $r_{\max}$ (unit: \%), $U'=1$, $n=8$, $r_{\min} = 0.05$]{\label{fig:plot2} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingSmax_smin=5_U=1_n=8_T=100-10000_1000runs_croped.pdf}}
+  \subfloat[Varying $U'$, $n=8$, $r_{\min} = 0.05$, $r_{\max} = 0.5$]{\label{fig:plot3} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingU_smin=5_smax=50_n=8_T=100-10000_1000runs_croped.pdf}}
+  \subfloat[Varying $U'$, $n=8$, $r_{\min} = 0.5$, $r_{\max} = 0.9$]{\label{fig:plot4} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingU_smin=50_smax=90_n=8_T=100-10000_1000runs_croped.pdf}} 
+  \caption{Number of schedulable task sets over $1000$ randomly generated task sets.}
+  \label{fig:exp}
+\end{figure*}
+
 Moreover, using the simple algebra property that for any two vectors $\vec{a}$ and $\vec{b}$ of size $(k-1)$ there is $\sum_{i=1}^{k} a_i \sum_{j=i}^{k} b_j = \sum_{j=1}^{k} b_j \sum_{i=1}^{j} a_i$, we get that $\sum_{i=1}^{k-1} U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell = \sum_{i=1}^{k-1} x_i S_i \sum_{\ell=1}^{i}U_\ell $. Hence, injecting this last expression in Eq.~\eqref{eq:linear_step1}, it holds that
 {\footnotesize
 \begin{align*}
@@ -49,17 +62,6 @@ For any $t > 0$, the vector assignment $\vec{x}^{\mathit{lin}}$ minimizes
   the solution to Eq.~\eqref{eq:linear-approximation-upper-bound} among all $2^{k-1}$ possible vector assignments.
 \end{Property}
 
-
-
-\begin{figure*}[t!]
-  \centering
-  \subfloat[Varying the number of tasks $n$, $U'=0.95$, $r_{\min} = 0.05$, $r_{\max} = 0.5$]{\label{fig:plot1} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingn_smin=5_smax=50_U=0_95_T=100-10000_1000runs_croped.pdf}}
-  \subfloat[Varying $r_{\max}$ (unit: \%), $U'=1$, $n=8$, $r_{\min} = 0.05$]{\label{fig:plot2} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingSmax_smin=5_U=1_n=8_T=100-10000_1000runs_croped.pdf}}
-  \subfloat[Varying $U'$, $n=8$, $r_{\min} = 0.05$, $r_{\max} = 0.5$]{\label{fig:plot3} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingU_smin=5_smax=50_n=8_T=100-10000_1000runs_croped.pdf}}
-  \subfloat[Varying $U'$, $n=8$, $r_{\min} = 0.5$, $r_{\max} = 0.9$]{\label{fig:plot4} \includegraphics[width=0.24\textwidth]{../figures/experiments/varyingU_smin=50_smax=90_n=8_T=100-10000_1000runs_croped.pdf}} 
-  \caption{Number of schedulable task sets over $1000$ randomly generated task sets.}
-  \label{fig:exp}
-\end{figure*}
 
 
 \begin{theorem}

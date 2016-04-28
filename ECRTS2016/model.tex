@@ -6,7 +6,7 @@ We assume a system $\tau$ composed of $n$ sporadic self-suspending tasks. A spor
 job. The $j^{th}$ job of $\tau_i$, denoted by $\tau_{i,j}$, is released
 at time $r_{i,j}$ and has an absolute deadline at time $d_{i,j}$. Each
 job of task $\tau_i$ is assumed to have a worst-case execution time $C_i$. Furthermore, a job of task $\tau_i$ may suspend itself for at most $S_i$ time units (across all of its suspension phases). When a job suspends itself, it releases the processor and another job can be executed. The response time of a job is defined as its finishing time minus its release
-time. Successive jobs of the same task are required to execute in
+time. Successive jobs of the same task have to execute in
 sequence. 
 
 Each task $\tau_i$ is characterized by the tuple $(C_i, S_i, D_i, T_i)$, where $T_i$ is the period (or minimum inter-arrival time) of $\tau_i$ and $D_i$ is its relative deadline. $T_i$ specifies the minimum time between two consecutive job releases of

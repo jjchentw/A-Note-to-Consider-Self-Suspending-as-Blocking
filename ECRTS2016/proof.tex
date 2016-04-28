@@ -13,10 +13,6 @@ $\vec{x}$, in which $x_i$ is either $0$ or $1$. For the sake of clarity, we clas
 higher-priority tasks into two sets: ${\bf T}_0$ and ${\bf T}_1$. A
 task $\tau_i$ is in ${\bf T}_0$ if $x_i$ is $0$; otherwise, it is in
 ${\bf T}_1$.
-
-
-
-
 Our analysis is also based on very simple properties and lemmas enunciated as follows:
 
 \begin{Property}
@@ -38,7 +34,7 @@ In a preemptive fixed-priority schedule, if the worst-case response
 time of task $\tau_i$ is no more than its period $T_i$, removing a job of task $\tau_i$ does not affect the schedule of any other jobs of task $\tau_i$.
 \end{Lemma}
 \begin{proof}
-Due to space limitation, the proof is\citetechreport{}.
+This is obvious, and the proof is\citetechreport{}.
 \end{proof}
 
 
@@ -203,14 +199,9 @@ The proof is based on the fact that for any interval $[t_1, t)$ with $t \leq f_k
 \operatorname{idle}(t_1, t) + \operatorname{exec}(t_1, t)  = (t - t_1)
 \end{equation}
 where $\operatorname{exec}(t_1, t)$ is the amount of time during which the processor executes tasks within $[t_1, t)$, and $\operatorname{idle}(t_1, t)$ is the amount of time during which the processor remains idle within the interval $[t_1, t)$.
-
-
-
-
 %If $t_i < t_{i+1}$, the processor may idle in the time interval $[t_i,
 %t_{i+1})$ in $\Psi^1$. 
 %Let $\sigma_i$ be the total idle time in $\Psi^1$ within the time interval $[t_i, t_{i+1})$. 
-
 We start our analysis with $\operatorname{idle}(t_1, t)$ when $t_1 < t \leq f_k$.
 Let $\sigma_j$ be the amount of time during which the processor remains idle within $[t_j, t_{j+1})$ in $\Psi^1$. If $t_j$ is equal to $t_{j+1}$, by definition, $\sigma_j$ is $0$.
 We have the following lemma:
@@ -456,10 +447,58 @@ $c_j^*$ to $C_j$ in Eq.~\eqref{eq:execution-case2-precise}.
 \noindent{\bf Step 3: Creating a Safe Response-Time Upper Bound}
 
 
+
+
+
+Lemma~\ref{lemma:conclusion-step2} may seem to provide a way to
+construct the worst-case response time analysis of task
+$\tau_k'$. However, it is not since $t_j$ values for $j=1,2,\ldots,k$
+are in general unknown. We need to have a strategy to use the
+conditions in Lemma~\ref{lemma:conclusion-step2} for analyzing a safe upper bound on the response time of $\tau_k'$.
+Therefore, Step 3 has to construct a safe response-time analysis based on the
+conditions specified by Eqs.~(\ref{eq:exec_plus_idle-2}) and
+(\ref{eq:exec_plus_idle-3}) in Lemma~\ref{lemma:conclusion-step2}. Our
+goal is to prove that the condition in
+Eq.~\eqref{eq:TDA-suspension-tighter0} is more pessimistic than those
+in Lemma~\ref{lemma:conclusion-step2} for any schedule $\Psi^1$ reduced from $\Psi$.
+
+Towards this, we construct another release pattern
+which moves $t_i$ to $t_i^*$ for $i=2,3,\ldots,k$ such that $t_i^*
+\leq t_i$ and the corresponding conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
+(\ref{eq:exec_plus_idle-3}) will become worse when we use $t_i^*$. We start
+the procedure as follows:
+\begin{itemize}
+\item Initial step: Let $t_1^*$ be $t_1$.
+\item Iterative steps ($i=2,3,\ldots,k$): Let $t_i^*$ be $t_{i-1}^*+x_{i-1}\cdot\sigma_{i-1}$.
+\end{itemize}
+By the definition of $\sigma_i$, we know that $\sigma_i \leq t_{i+1}-t_i$ for $i=1,2,\ldots,k-1$.
+Therefore,  for $i=2,3,\ldots,k$,\footnote{As already mentioned in Footnote~\ref{footnote-why-sigma}, if we used $S_j$ in Eqs.~(\ref{eq:exec_plus_idle-2}) and
+(\ref{eq:exec_plus_idle-3}) instead of $\sigma_j$, this condition would not hold, and the proof would fall apart.}
+\begin{equation*}
+  t_i = t_1 + \sum_{j=1}^{i-1} (t_{j+1} - t_j) \geq t_1 + \sum_{j=1}^{i-1} x_j \sigma_j = t_i^*
+\end{equation*}
+since $x_j \in \{0, 1\}$ for any $j=1,2,\ldots,i-1$.
+
+Figure~\ref{fig:example-proof-final} provides a concrete illustration about the procedure to define $t_1^*, t_2^*, t_3^*, t_4^*$ for the example used in Example~\ref{ex:proof_step1} when $\epsilon$ is close to $0$.
+ Moreover, by
+definition, $t_j^*$ is $t_1^* + \sum_{i=1}^{j-1} x_i\cdot\sigma_i$ for
+$j=2,3,\ldots,k$.
+For any task $\tau_j$ in ${\bf T}_1$,  $\forall \Delta \geq 0$, since $t_j \geq t_j^*$, we have
+\begin{equation}
+  \label{eq:execution-case1-shifted}
+  W_j^1(\Delta)  \leq W_j^1(\Delta + (t_j-t_j^*)).
+\end{equation}
+For any task $\tau_j$ in ${\bf T}_0$,  $\forall \Delta \geq 0$, since $t_j \geq t_j^*$, we have
+\begin{equation}
+  \label{eq:execution-case2-shifted}
+  W_j^0(\Delta)  \leq W_j^0(\Delta + (t_j-t_j^*)).
+\end{equation}
+
 \begin{figure}[t]
   \centering
 
 		\def\ux{0.32cm}\def\uy{0.2cm} 
+\scalebox{0.8}{
 		\begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
 		\tikzset{
 			task/.style={fill=#1,  rectangle, text height=.3cm},
@@ -522,133 +561,11 @@ $c_j^*$ to $C_j$ in Eq.~\eqref{eq:execution-case2-precise}.
                 -- (24, 3);
                 \draw[-,dotted] (6,0) -- (10, 4) -- (24, 4);
 
-		\end{tikzpicture}    
+		\end{tikzpicture}    }
   \caption{\small The workload function for the three higher-priority tasks in Example~\ref{ex:proof_step1} when $\epsilon$ is very close to $0$. Solid black line: $W_1^1(t-t_1)$ when $t \geq t_1$, Dashed black line: $W_2^0(t-t_2)$ when $t \geq t_2$, Dotted black line: $W_3^1(t-t_3)$ when $t \geq t_3$, where the three workload functions are $0$ if $t-t_j < 0$ for $j=1,2,3$, Blue line (the only linear function from $t=4$ in this figure): $t-t_1$, Red line (marked by Eq.~\eqref{eq:exec_plus_idle-2} and Eq.~\eqref{eq:exec_plus_idle-3}): left-hand side of Eq.~(\ref{eq:exec_plus_idle-2}) when $t < 7$ and left-hand side of Eq.~(\ref{eq:exec_plus_idle-3}) when $ 7 \leq t < 20$.}
   \label{fig:example-step2}
 \end{figure}
 
-
-
-Lemma~\ref{lemma:conclusion-step2} may seem to provide a way to
-construct the worst-case response time analysis of task
-$\tau_k'$. However, it is not since $t_j$ values for $j=1,2,\ldots,k$
-are in general unknown. We need to have a strategy to use the
-conditions in Lemma~\ref{lemma:conclusion-step2} for analyzing a safe upper bound on the response time of $\tau_k'$.
-Therefore, Step 3 has to construct a safe response-time analysis based on the
-conditions specified by Eqs.~(\ref{eq:exec_plus_idle-2}) and
-(\ref{eq:exec_plus_idle-3}) in Lemma~\ref{lemma:conclusion-step2}. Our
-goal is to prove that the condition in
-Eq.~\eqref{eq:TDA-suspension-tighter0} is more pessimistic than those
-in Lemma~\ref{lemma:conclusion-step2} for any schedule $\Psi^1$ reduced from $\Psi$.
-
-Towards this, we construct another release pattern
-which moves $t_i$ to $t_i^*$ for $i=2,3,\ldots,k$ such that $t_i^*
-\leq t_i$ and the corresponding conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
-(\ref{eq:exec_plus_idle-3}) will become worse when we use $t_i^*$. We start
-the procedure as follows:
-\begin{itemize}
-\item Initial step: Let $t_1^*$ be $t_1$.
-\item Iterative steps ($i=2,3,\ldots,k$): Let $t_i^*$ be $t_{i-1}^*+x_{i-1}\cdot\sigma_{i-1}$.
-\end{itemize}
-By the definition of $\sigma_i$, we know that $\sigma_i \leq t_{i+1}-t_i$ for $i=1,2,\ldots,k-1$.
-Therefore,  for $i=2,3,\ldots,k$,\footnote{As already mentioned in Footnote~\ref{footnote-why-sigma}, if we used $S_j$ in Eqs.~(\ref{eq:exec_plus_idle-2}) and
-(\ref{eq:exec_plus_idle-3}) instead of $\sigma_j$, this condition would not hold, and the proof would fall apart.}
-\begin{equation*}
-  t_i = t_1 + \sum_{j=1}^{i-1} (t_{j+1} - t_j) \geq t_1 + \sum_{j=1}^{i-1} x_j \sigma_j = t_i^*
-\end{equation*}
-since $x_j \in \{0, 1\}$ for any $j=1,2,\ldots,i-1$.
-
-Figure~\ref{fig:example-proof-final} provides a concrete illustration about the procedure to define $t_1^*, t_2^*, t_3^*, t_4^*$ for the example used in Example~\ref{ex:proof_step1} when $\epsilon$ is close to $0$.
- Moreover, by
-definition, $t_j^*$ is $t_1^* + \sum_{i=1}^{j-1} x_i\cdot\sigma_i$ for
-$j=2,3,\ldots,k$.
-For any task $\tau_j$ in ${\bf T}_1$,  $\forall \Delta \geq 0$, since $t_j \geq t_j^*$, we have
-\begin{equation}
-  \label{eq:execution-case1-shifted}
-  W_j^1(\Delta)  \leq W_j^1(\Delta + (t_j-t_j^*)).
-\end{equation}
-For any task $\tau_j$ in ${\bf T}_0$,  $\forall \Delta \geq 0$, since $t_j \geq t_j^*$, we have
-\begin{equation}
-  \label{eq:execution-case2-shifted}
-  W_j^0(\Delta)  \leq W_j^0(\Delta + (t_j-t_j^*)).
-\end{equation}
-
-\begin{figure}[t]
-  \centering
-
-		\def\ux{0.32cm}\def\uy{0.2cm} 
-		\begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
-		\tikzset{
-			task/.style={fill=#1,  rectangle, text height=.3cm},
-			task1a/.style={task=green!30},
-			task1b/.style={task=green},
-			task2a/.style={task=orange!30},
-			task2b/.style={task=orange, minimum width=1mm},
-			task3a/.style={task=pink, minimum width=1mm},
-			task3b/.style={task=pink!80, minimum width=1mm},
-			task4a/.style={task=cyan, minimum width=1mm},
-			task4b/.style={task=cyan!50},
-			task5/.style={task=blue},
-			task6/.style={task=purple},
-			task7/.style={minimum height=\ux,draw},
-			task8/.style={minimum height=\ux,draw,thick},
-			task9/.style={task=gray,minimum height=0.7cm,draw},
-		}
-		\tikzstyle{jobs}=[ fill=black!50];
-		
-		\draw[->] (0,0) -- coordinate (xaxis) (25,0) node[anchor=west] {$t$};
-		\foreach \x in {0,...,24}{
-			\draw[-](\x,0.1) -- (\x,-0.1)
-			node[below] {\footnotesize $\x$};
-			
-		}
-		\draw[->] (0,0) node[anchor=east] {}-- coordinate (xaxis) (0,18.5);
-		\foreach \y in {0,2,...,18}{
-			\draw[-](0.1, \y) -- (-0.1, \y)
-			node[left] {\small $\y$};
-			
-		}
-
-		\foreach \y in {1,2,...,18}{
-                  \draw[-,very thin,lightgray, dashed](0,\y) -- (24,\y);
-                }
-		\foreach \x in {4,7,20,18}{
-                  \draw[-,very thin,lightgray, dashed](\x,0) -- (\x,18);
-                }
-                  
-                \draw (20, -3) node {\small $f_4$};
-                \draw (6, -3) node {\small $t_4^*$};
-                \draw (5, -3) node {\small $t_3^*$};
-                \draw (5, -4.5) node {\small $t_2^*$};
-                \draw (4, -3) node {\small $t_1^*$};
-
-                \draw[->,red,thin](5.5, 4) node[anchor=south,rotate=45,yshift=-0.1cm]{\footnotesize
-                 LHS of Eq~\eqref{eq:exec_plus_idle-4}} -- (6.2,3.5);
-                \draw[-,  very thick, red] (6, 3) -- (7,5);
-                \draw[->,red,thin](8.4, 16.2) node[anchor=south]{\footnotesize
-                 LHS of Eq.~(\ref{eq:exec_plus_idle-5}) and Eq.~\eqref{eq:exec_plus_idle-almost-final} when $t \geq 7$} -- (8,11.2);
-                \draw[-, very thick, red] (7, 10) -- (9, 12) -- (10, 12) -- (11, 13) 
-                -- (16, 13) -- (17, 15) -- (20, 15);
-                \draw[-, very thick, blue] (6,0) --(20,14);
-                \draw[-, very thick, cyan] (6,8) --(7,10);
-                \draw[->,cyan](5.6, 10) node[anchor=south, rotate=45,xshift=-0.5cm, text width=2.5cm]{\footnotesize
-                 LHS of Eq.~\eqref{eq:exec_plus_idle-almost-final} when $6 \leq t < 7$} -- (6.4,8.95);
-
-
-               \draw[color=gray, dotted, very thick](6, 11) -- (7, 11) -- (7, 12) -- (10, 12) -- (10, 13) -- (16, 13) -- (16, 15) -- (20, 15);
-               \draw[->,gray](17, 16.4) node[anchor=west,text width=2.5cm]{\footnotesize  LHS of Eq.~\eqref{eq:exec_plus_idle-almost-final-before-replacing-sigma} when $t=\theta+6$} -- (16,15.2);
-
-
-                \draw[-,thick] (4,0) -- (5, 1) -- (10, 1) -- (11, 2) -- (16, 2)
-                -- (17, 3) -- (22, 3) -- (23, 4) -- (24, 4);
-                \draw[-,dashed] (5,0) -- (6, 1) -- (7, 2) -- (16, 2) -- (17, 3)
-                -- (24, 3);
-                \draw[-,dotted] (5,0) -- (9, 4) -- (23, 4) -- (24, 5);
-
-		\end{tikzpicture}    
-  \caption{\small The workload function for the three higher-priority tasks in Example~\ref{ex:proof_step1} when $\epsilon$ is very close to $0$. Solid black line: $W_1^1(t-t_1^*)$ when $t \geq t_1^*$, Dashed black line: $W_2^0(t-t_2^*)$ when $t \geq t_2^*$, Dotted black line: $W_3^1(t-t_3^*)$ when $t \geq t_3^*$, where the three workload functions are $0$ if $t-t_j^* < 0$ for $j=1,2,3$, Blue line (the only linear function from $t=6$ in this figure): $t-t_k^*=t-6$, Red line (marked by Eq.~\eqref{eq:exec_plus_idle-4} and Eq.~\eqref{eq:exec_plus_idle-5}): left-hand side of Eq.~(\ref{eq:exec_plus_idle-4}) when $t < 7$ and left-hand side of Eq.~(\ref{eq:exec_plus_idle-5}) and Eq.~\eqref{eq:exec_plus_idle-almost-final} when $ 7 \leq t < 20$, Purple line (marked by Eq.~\eqref{eq:exec_plus_idle-almost-final} when $6 \leq t < 7$), Gray dotted line (marked by Eq.~\eqref{eq:exec_plus_idle-almost-final-before-replacing-sigma}) by setting $\theta=t-6$.}
-  \label{fig:example-proof-final}
-\end{figure}
 
 
 Therefore, for any $j=1,2,\ldots,k-1$, we know that $W_j^1(t-t_j)
@@ -727,7 +644,93 @@ C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{t-t_k^*+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j > t
 The condition in Lemma~\ref{lemma:step-3-ceiling-condition} implies that the minimum $\theta$ with $\theta > 0$ and
 $C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j = \theta$
  is larger than or equal to $f_k-t_k^* \geq f_k-t_k$. 
-However, the condition in Lemma~\ref{lemma:step-3-ceiling-condition} requires the knowledge of $\sigma_i$. It is straightforward to see that $\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j$ reaches the worst case if $X_j$ is the largest. Since $X_j \leq Q_j^{\vec{x}}$ by using the last condition in Eq.~\eqref{eq:sumof-sigma} from Lemma~\ref{lem:max_idle}, we reach the conclusion of the correctness of Theorem~\ref{theorem:general-framework}, where  $Q_j^{\vec{x}}$ is defined in Theorem~\ref{theorem:general-framework}.
+However, the condition in Lemma~\ref{lemma:step-3-ceiling-condition}
+requires the knowledge of $\sigma_i$. It is straightforward to see
+that $\sum_{j=1}^{k-1}
+\ceiling{\frac{\theta+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j$ reaches the
+worst case if $X_j$ is the largest. Since $X_j \leq Q_j^{\vec{x}}$ by
+using the last condition in Eq.~\eqref{eq:sumof-sigma} from
+Lemma~\ref{lem:max_idle}, we reach the conclusion of the correctness
+of Theorem~\ref{theorem:general-framework}, where  $Q_j^{\vec{x}}$ is
+defined in Theorem~\ref{theorem:general-framework}.
+
+\begin{figure}[t]
+  \centering
+
+		\def\ux{0.32cm}\def\uy{0.2cm} \scalebox{0.8}{
+		\begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
+		\tikzset{
+			task/.style={fill=#1,  rectangle, text height=.3cm},
+			task1a/.style={task=green!30},
+			task1b/.style={task=green},
+			task2a/.style={task=orange!30},
+			task2b/.style={task=orange, minimum width=1mm},
+			task3a/.style={task=pink, minimum width=1mm},
+			task3b/.style={task=pink!80, minimum width=1mm},
+			task4a/.style={task=cyan, minimum width=1mm},
+			task4b/.style={task=cyan!50},
+			task5/.style={task=blue},
+			task6/.style={task=purple},
+			task7/.style={minimum height=\ux,draw},
+			task8/.style={minimum height=\ux,draw,thick},
+			task9/.style={task=gray,minimum height=0.7cm,draw},
+		}
+		\tikzstyle{jobs}=[ fill=black!50];
+		
+		\draw[->] (0,0) -- coordinate (xaxis) (25,0) node[anchor=west] {$t$};
+		\foreach \x in {0,...,24}{
+			\draw[-](\x,0.1) -- (\x,-0.1)
+			node[below] {\footnotesize $\x$};
+			
+		}
+		\draw[->] (0,0) node[anchor=east] {}-- coordinate (xaxis) (0,18.5);
+		\foreach \y in {0,2,...,18}{
+			\draw[-](0.1, \y) -- (-0.1, \y)
+			node[left] {\small $\y$};
+			
+		}
+
+		\foreach \y in {1,2,...,18}{
+                  \draw[-,very thin,lightgray, dashed](0,\y) -- (24,\y);
+                }
+		\foreach \x in {4,7,20,18}{
+                  \draw[-,very thin,lightgray, dashed](\x,0) -- (\x,18);
+                }
+                  
+                \draw (20, -3) node {\small $f_4$};
+                \draw (6, -3) node {\small $t_4^*$};
+                \draw (5, -3) node {\small $t_3^*$};
+                \draw (5, -4.5) node {\small $t_2^*$};
+                \draw (4, -3) node {\small $t_1^*$};
+
+                \draw[->,red,thin](5.5, 4) node[anchor=south,rotate=45,yshift=-0.1cm]{\footnotesize
+                 LHS of Eq~\eqref{eq:exec_plus_idle-4}} -- (6.2,3.5);
+                \draw[-,  very thick, red] (6, 3) -- (7,5);
+                \draw[->,red,thin](8.4, 16.2) node[anchor=south]{\footnotesize
+                 LHS of Eq.~(\ref{eq:exec_plus_idle-5}) and Eq.~\eqref{eq:exec_plus_idle-almost-final} when $t \geq 7$} -- (8,11.2);
+                \draw[-, very thick, red] (7, 10) -- (9, 12) -- (10, 12) -- (11, 13) 
+                -- (16, 13) -- (17, 15) -- (20, 15);
+                \draw[-, very thick, blue] (6,0) --(20,14);
+                \draw[-, very thick, cyan] (6,8) --(7,10);
+                \draw[->,cyan](5.6, 10) node[anchor=south, rotate=45,xshift=-0.5cm, text width=2.5cm]{\footnotesize
+                 LHS of Eq.~\eqref{eq:exec_plus_idle-almost-final} when $6 \leq t < 7$} -- (6.4,8.95);
+
+
+               \draw[color=gray, dotted, very thick](6, 11) -- (7, 11) -- (7, 12) -- (10, 12) -- (10, 13) -- (16, 13) -- (16, 15) -- (20, 15);
+               \draw[->,gray](17, 16.4) node[anchor=west,text width=2.5cm]{\footnotesize  LHS of Eq.~\eqref{eq:exec_plus_idle-almost-final-before-replacing-sigma} when $t=\theta+6$} -- (16,15.2);
+
+
+                \draw[-,thick] (4,0) -- (5, 1) -- (10, 1) -- (11, 2) -- (16, 2)
+                -- (17, 3) -- (22, 3) -- (23, 4) -- (24, 4);
+                \draw[-,dashed] (5,0) -- (6, 1) -- (7, 2) -- (16, 2) -- (17, 3)
+                -- (24, 3);
+                \draw[-,dotted] (5,0) -- (9, 4) -- (23, 4) -- (24, 5);
+
+		\end{tikzpicture}    }
+  \caption{\small The workload function for the three higher-priority tasks in Example~\ref{ex:proof_step1} when $\epsilon$ is very close to $0$. Solid black line: $W_1^1(t-t_1^*)$ when $t \geq t_1^*$, Dashed black line: $W_2^0(t-t_2^*)$ when $t \geq t_2^*$, Dotted black line: $W_3^1(t-t_3^*)$ when $t \geq t_3^*$, where the three workload functions are $0$ if $t-t_j^* < 0$ for $j=1,2,3$, Blue line (the only linear function from $t=6$ in this figure): $t-t_k^*=t-6$, Red line (marked by Eq.~\eqref{eq:exec_plus_idle-4} and Eq.~\eqref{eq:exec_plus_idle-5}): left-hand side of Eq.~(\ref{eq:exec_plus_idle-4}) when $t < 7$ and left-hand side of Eq.~(\ref{eq:exec_plus_idle-5}) and Eq.~\eqref{eq:exec_plus_idle-almost-final} when $ 7 \leq t < 20$, Purple line (marked by Eq.~\eqref{eq:exec_plus_idle-almost-final} when $6 \leq t < 7$), Gray dotted line (marked by Eq.~\eqref{eq:exec_plus_idle-almost-final-before-replacing-sigma}) by setting $\theta=t-6$.}
+  \label{fig:example-proof-final}
+\end{figure}
+
 
 \hfill {\bf end of the proof of Theorem~\ref{theorem:general-framework}.} \qed  
 
@@ -762,7 +765,8 @@ As shown in Figure~\ref{fig:example-proof-final}, all the inequalities
 \end{example}
 \vspace{-0.3in}
 \end{appProof}
-
+The physical meaning of the above analysis in Theorem 1 can be found
+in Appendix\citetechreport{}.
 
 \begin{appProof}{of Theorem \ref{theorem:general-framework-not-feasible}}
   By the assumption that $R_k' > T_k$, there exists a schedule $\Psi$
