@@ -1,6 +1,26 @@
 \section{A Unifying Analysis Framework}
 \label{sec:analysis}
 
+
+ \begin{table*}[t]
+    \centering
+    \renewcommand{\arraystretch}{1.7}
+\scalebox{0.95}{
+    \begin{tabular}{|c|c|c|c|c|}
+\hline
+    $\vec{x}$ & Case 1: $(0, 0)$ & Case 2: $(0, 1)$ & Case 3: $(1, 0)$ & Case 4:$(1, 1)$\\
+\hline
+    $(Q_1^{\vec{x}}, Q_2^{\vec{x}})$ & $(0, 0)$ & $(1, 1)$ & $(5, 0)$ & $(6, 1)$\\
+\hline
+    condition of Eq.~\eqref{eq:TDA-suspension-tighter} & $4+ \ceiling{\frac{t+0+5}{10}} 4 + \ceiling{\frac{t+0+9}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+1+5}{10}} 4 + \ceiling{\frac{t+1+0}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+5+0}{10}} 4 + \ceiling{\frac{t+0+9}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+6+0}{10}} 4 + \ceiling{\frac{t+1+0}{19}}6 \leq t$\\      
+\hline
+upper bound of $R_3$ & $42$ & $32$ & $42$ & $32$\\
+\hline
+    \end{tabular}}
+    \caption{Detailed procedure in Example~\ref{ex:general_framework} for deriving the upper bound of $R_3$, with $R_1-C_1=5$ and $R_2-C_2=9$.}
+    \label{tab:example3-calculation}
+  \end{table*}
+
 %\subsection{A new Response time Analysis}
 
 As already discussed in Section~\ref{sec:existing-analyses}, one can greedily convert the suspension time of task $\tau_k$ in computation time. Let $\tau_k'$ be this converted version of task $\tau_k$, i.e., $\tau_k' = (C_k + S_k, 0, D_k, T_k)$.  Suppose that $R_k'$ is the worst-case response time of $\tau_k'$ in the modified task set $\setof{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k'}$. It was already shown in previous works, e.g., Lemma~3 in
@@ -50,25 +70,6 @@ following schedulability test.
   The proof of correctness of Theorem~\ref{theorem:general-framework}
   and Theorem~\ref{theorem:general-framework-not-feasible}, and hence Corollary~\ref{corollary:general-framework} is provided in Section~\ref{sec:proof-th1}. Moreover, we will later prove in Section~\ref{sec:dominance}, that Corollary~\ref{corollary:general-framework} in fact dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
  
- \begin{table*}[t]
-    \centering
-    \renewcommand{\arraystretch}{1.7}
-\scalebox{0.95}{
-    \begin{tabular}{|c|c|c|c|c|}
-\hline
-    $\vec{x}$ & Case 1: $(0, 0)$ & Case 2: $(0, 1)$ & Case 3: $(1, 0)$ & Case 4:$(1, 1)$\\
-\hline
-    $(Q_1^{\vec{x}}, Q_2^{\vec{x}})$ & $(0, 0)$ & $(1, 1)$ & $(5, 0)$ & $(6, 1)$\\
-\hline
-    condition of Eq.~\eqref{eq:TDA-suspension-tighter} & $4+ \ceiling{\frac{t+0+5}{10}} 4 + \ceiling{\frac{t+0+9}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+1+5}{10}} 4 + \ceiling{\frac{t+1+0}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+5+0}{10}} 4 + \ceiling{\frac{t+0+9}{19}} 6 \leq t$ & $4+ \ceiling{\frac{t+6+0}{10}} 4 + \ceiling{\frac{t+1+0}{19}}6 \leq t$\\      
-\hline
-upper bound of $R_3$ & $42$ & $32$ & $42$ & $32$\\
-\hline
-    \end{tabular}}
-    \caption{Detailed procedure in Example~\ref{ex:general_framework} for deriving the upper bound of $R_3$, with $R_1-C_1=5$ and $R_2-C_2=9$.}
-    \label{tab:example3-calculation}
-  \end{table*}
-
  We now use the same example as in Section~\ref{sec:rationale}, to demonstrate how
 Corollary~\ref{corollary:general-framework} can be applied.
  

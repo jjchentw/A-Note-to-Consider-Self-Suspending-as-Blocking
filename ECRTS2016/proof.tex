@@ -191,7 +191,12 @@ $\Psi^2$.
 
 \noindent{\bf Step 2 in our proof: Analyzing the reduced schedule $\Psi^1$}
 
-We now analyze the properties of the final schedule $\Psi^1$ in which all the unnecessary jobs have been removed. By Lemma~\ref{lem:step-1-conclusion}, the response time of job $J_k$ is the same in both schedules $\Psi$ and $\Psi^1$.
+We now analyze the properties of the final schedule $\Psi^1$ in which
+all the unnecessary jobs have been removed. The main purpose of this
+step is to prove the correctness of the conditions listed in
+Lemma~\ref{lemma:conclusion-step2} for the schedule $\Psi^1$. 
+
+By Lemma~\ref{lem:step-1-conclusion}, the response time of job $J_k$ is the same in both schedules $\Psi$ and $\Psi^1$.
 The proof is based on the fact that for any interval $[t_1, t)$ with $t \leq f_k$, there is 
 \begin{equation}
 \label{eq:exec_plus_idle}
@@ -267,7 +272,7 @@ $\operatorname{exec}_j(t_j, t)$ if $t > t_j$.
 \begin{Lemma}
   \label{lemma:exec-tau-k}
   $\forall t | t_k \leq t < f_k$, the (accumulative) amount of time that
-  task $\tau_k'$ is executed from $t_k$ to $t$ is $exec_k(t_k, t) <
+  task $\tau_k'$ is executed from $t_k$ to $t$ is $\operatorname{exec}_k(t_k, t) <
   C_k$.
 \end{Lemma}
 \begin{proof}
@@ -275,7 +280,7 @@ $\operatorname{exec}_j(t_j, t)$ if $t > t_j$.
   condition holds by definition.
 \end{proof}
 
-According to Step 1, we should consider three rules when analyzing $exec_j(t_j, t)$ for $j=1,2,\ldots,k-1$:
+According to Step 1, we should consider three rules when analyzing $\operatorname{exec}_j(t_j, t)$ for $j=1,2,\ldots,k-1$:
 \begin{itemize}
 \item Task $\tau_j$ applies {\bf Rule 1}. This is the case when
   $\tau_j \in {\bf T}_1$ and the job $J_j$ has not finished yet at
@@ -286,7 +291,7 @@ According to Step 1, we should consider three rules when analyzing $exec_j(t_j, 
 {\footnotesize \begin{equation}
   \label{eq:execution-case1}
   W_j^1(\Delta) \stackrel{\mbox{def}}{=} \floor{\frac{\Delta}{T_j}}C_j + \min\left\{\Delta-\floor{\frac{\Delta}{T_j}}T_j, C_j\right\}.
-\end{equation}}The above workload function in Eq.~\eqref{eq:execution-case1} has been widely used in the literature if task $\tau_j$ is an ordinary sporadic task without self-suspension, e.g., in \cite{bertogna2006new}. However, since we are only interested to get the upper bound  of $\operatorname{exec}_j(t_j, t_j+\Delta)$, it is obvious that self-suspension does not play any specific rule here.
+\end{equation}}The above workload function in Eq.~\eqref{eq:execution-case1} has been widely used in the literature if task $\tau_j$ is an ordinary sporadic task without self-suspension, e.g., in \cite{bertogna2006new}. However, since we are only interested to get an upper bound  of $\operatorname{exec}_j(t_j, t_j+\Delta)$, it is obvious that self-suspension does not play any specific rule here.
 
 \item Task $\tau_j$ applies {\bf Rule 2}. This is the case when
   $\tau_j \in {\bf T}_1$ and the job $J_j$ already finishes at time
@@ -296,7 +301,7 @@ According to Step 1, we should consider three rules when analyzing $exec_j(t_j, 
   $\tau_j \in {\bf T}_0$. There might be a job $J_j$ arrived before
   $t_j$ with the residual workload $0 \leq c_j^* \leq C_j$ at time
   $t_j$. For notational brevity, let $\rho_j$ be defined as $(T_j-R_j +
-  c_j^*)$. We will show that $exec_j(t_j, t_j+\Delta) \leq
+  c_j^*)$. We will show that $\operatorname{exec}_j(t_j, t_j+\Delta) \leq
   \widehat{W}_j^0(\Delta, c_j^*)$, defined as follows for two cases for $\Delta \geq 0$:
   If $c_j^*$ is $0$, then\footnote{The reader may think that this case
     is not necessary, but it is, since the formulation in
@@ -336,8 +341,8 @@ According to Step 1, we should consider three rules when analyzing $exec_j(t_j, 
 $\forall \Delta \geq 0$ and given $c_j^*$ for a task $\tau_j \in {\bf T}_0$, we have 
 \[
 \begin{cases}
-exec_j(t_j, t_j+\Delta) \leq \widehat{W}_j^0(\Delta, c_j^*) &\mbox{ if } \tau_j \in {\bf T}_0\\  
-exec_j(t_j, t_j+\Delta) \leq W_j^1(\Delta) &\mbox{ if } \tau_j \in {\bf T}_1  
+\operatorname{exec}_j(t_j, t_j+\Delta) \leq \widehat{W}_j^0(\Delta, c_j^*) &\mbox{ if } \tau_j \in {\bf T}_0\\  
+\operatorname{exec}_j(t_j, t_j+\Delta) \leq W_j^1(\Delta) &\mbox{ if } \tau_j \in {\bf T}_1  
  \end{cases}
 \]
 \end{Lemma}
@@ -625,8 +630,8 @@ For any task $\tau_j$ in ${\bf T}_0$,  $\forall \Delta \geq 0$, since $t_j \geq 
                 \draw[-, very thick, red] (7, 10) -- (9, 12) -- (10, 12) -- (11, 13) 
                 -- (16, 13) -- (17, 15) -- (20, 15);
                 \draw[-, very thick, blue] (6,0) --(20,14);
-                \draw[-, very thick,purple, dashed] (6,8) --(7,10);
-                \draw[->,purple](5.6, 10) node[anchor=south, rotate=45,xshift=-0.5cm, text width=2.5cm]{\footnotesize
+                \draw[-, very thick, cyan] (6,8) --(7,10);
+                \draw[->,cyan](5.6, 10) node[anchor=south, rotate=45,xshift=-0.5cm, text width=2.5cm]{\footnotesize
                  LHS of Eq.~\eqref{eq:exec_plus_idle-almost-final} when $6 \leq t < 7$} -- (6.4,8.95);
 
 
