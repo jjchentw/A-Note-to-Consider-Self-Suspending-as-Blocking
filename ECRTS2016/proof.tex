@@ -43,9 +43,9 @@ Theorem~\ref{theorem:general-framework}. Since the proof is pretty long, we
 will also provide examples to demonstrate the key steps in the proof and lemmas to explain the intermediate conclusion in the proof.
 
 \begin{appProof}{Theorem~\ref{theorem:general-framework}}
-Consider the modified task set $\tau'$ composed of $\left\{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots \right\}$ where $\tau_k' = (C_k + S_k, 0, D_k, T_k)$. Let $\Psi$ be a fixed-priority preemptive schedule of $\tau'$ such that $R_k' \leq T_k$.  
+Consider the modified task set $\tau'$ composed of $\left\{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k', \tau_{k+1}, \ldots \right\}$ where $\tau_k' = (C_k + S_k, 0, D_k, T_k)$. Let $\Psi$ be a fixed-priority preemptive schedule of $\tau'$.
 Suppose that a job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$. 
-By the assumption, we have $f_k \leq r_k+R_k' \leq r_k+T_k$.
+By the assumption of $R_k' \leq T_k$, we have $f_k \leq r_k+R_k' \leq r_k+T_k$.
 We prove that Eq.~\eqref{eq:TDA-suspension-tighter0} gives us a safe upper bound on $f_k-r_k$ for any job $J_k$ in $\Psi$.
 
 
@@ -87,12 +87,12 @@ The proof is built upon the three following steps:
 \noindent{\bf Step 1 in our proof: Reducing the schedule $\Psi$} 
 
 \emph{Our purpose in this step is to discard all the jobs that arrive before $r_k$ and have no impact on the response time of $J_k$ in the schedule
-  $\Psi$. } During this step, we iteratively build an artificial schedule $\Psi^j$ from $\Psi^{j+1}$ (with $1 \leq j < k$) so that the response time of $\tau_{k}'$ remains identical. At each iteration, we define $t_j$ for task $\tau_j$ in the schedule $\Psi^{j+1}$ (with $j=k-1, k-2, \ldots, 1$) and build $\Psi^j$ by removing all the jobs released by $\tau_j$ before $t_j$. \emph{Therefore, the correctness of this step is to show that the response time of $J_k$ in the original schedule $\Psi$ remains the same as the response time of $J_k$ in  the reduced schedule $\Psi^1$.}
+  $\Psi$. } During this step, based on a given schedule $\Psi^{j+1}$ (with $1 \leq j < k$), we build a schedule $\Psi^j$ such that the response time of $\tau_{k}'$ remains identical. At each iteration, we define $t_j$ for task $\tau_j$ in the schedule $\Psi^{j+1}$ (with $j=k-1, k-2, \ldots, 1$) and build $\Psi^j$ by removing all the jobs released by $\tau_j$ before $t_j$. \emph{Therefore, the correctness of this step is to show that the response time of $J_k$ in the original schedule $\Psi$ remains the same as the response time of $J_k$ in  the reduced schedule $\Psi^1$.}
 
 
 \noindent\textit{Basic step (definition of $\Psi^k$ and $t_k$):} 
 
-Recall that the job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$ in schedule $\Psi$. We know by Property~\ref{prop:lower-priority} that the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots, \tau_n$ do not impact the response time of $J_{k}$. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, Lemma~\ref{lemma:remove-same-task} proves that removing all the jobs of task $\tau_k'$ but $J_{k}$ has no impact on the schedule of $J_{k}$. Therefore, let $\Psi^k$ be a schedule identical to $\Psi$ but removing all the jobs released by the lower priority tasks $\tau_{k+1}, \ldots, \tau_n$ as well as all the jobs released by $\tau_k'$ at the exception of $J_{k}$. The response time of $J_{k}$ in $\Psi^{k}$ is identical to the response time of $J_{k}$ in $\Psi$.
+Recall that the job $J_{k}$ of task $\tau_k'$ arrives at time $r_k$ and finishes at time $f_k$ in schedule $\Psi$. We know by Property~\ref{prop:lower-priority} that the lower priority tasks $\tau_{k+1}, \tau_{k+2}, \ldots, \tau_n$ do not impact the response time of $J_{k}$. Moreover, since we assume that the worst-case response time of task $\tau_k'$ is no more than $T_k$, Lemma~\ref{lemma:remove-same-task} proves that removing all the jobs of task $\tau_k'$ except $J_{k}$ has no impact on the schedule of $J_{k}$. Therefore, let $\Psi^k$ be a schedule identical to $\Psi$ but removing all the jobs released by the lower priority tasks $\tau_{k+1}, \ldots, \tau_n$ as well as all the jobs released by $\tau_k'$ at the exception of $J_{k}$. As this removal does not change the schedule of $J_k$, the response time of $J_{k}$ in $\Psi^{k}$ is identical to the response time of $J_{k}$ in $\Psi$.
 
 We define $t_k$ as the release time of $J_k$ (i.e., $t_k = r_k$).
 
@@ -103,28 +103,28 @@ Let $r_j$ be the arrival time of the last job released by $\tau_j$ before $t_{j+
 %\begin{itemize}
 %\item $J_{j}$ completed its execution no later than $t_{j+1}$. Then, we simply set $t_j$ to $t_{j+1}$ and generate $\Psi^j$ by removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ in the schedule $\Psi^{j+1}$. By Lemma~\ref{lemma:remove-same-task} and Property \ref{prop:lower-priority}, removing all the jobs of task $\tau_j$ arrived before $t_{j+1}$ has no impact on the schedule of the higher-priority jobs (jobs released by $\tau_1, \ldots, \tau_{j-1}$) and the jobs of $\tau_j$ released after $t_{j+1}$. Moreover, because no task with a priority lower than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. The response time of $J_{k}$ in $\Psi^j$ thus remains unchanged in comparison to its response time in $\Psi^{j+1}$. 
 %\item $J_{j}$ did not complete its execution before $t_{j+1}$.
-If $r_j$ does not exist, i.e., all the jobs of task $\tau_j$ are released at  or after $t_{j+1}$, then, we can safely set $\Psi^j$ as $\Psi^{j+1}$ and $t_j$ as $t_{j+1}$. This does not change the response time of $J_k$ since the schedules $\Psi^j$ and $\Psi^{j+1}$ are the same. For such a case, the induction step for task $\tau_j$ finishes. 
+If $r_j$ does not exist, i.e., all the jobs of task $\tau_j$ are released at  or after $t_{j+1}$, then, we can set $\Psi^j$ as $\Psi^{j+1}$ and $t_j$ as $t_{j+1}$. This does not change the response time of $J_k$ since the schedules $\Psi^j$ and $\Psi^{j+1}$ are the same. For such a case, the induction step for task $\tau_j$ finishes. 
 
 For the rest of the induction step, we focus on the other case, i.e., $r_j$ exists.
-\emph{By the assumption that $R_j \leq D_j \leq T_j$ for $j=1,2,\ldots,k-1$}, removing all the jobs of task $\tau_j$ arrived before $r_j$ has no impact on the schedule of any other job released by $\tau_j$ (Lemma~\ref{lemma:remove-same-task}) or any higher priority job released by $\tau_1, \ldots, \tau_{j-1}$ (Property \ref{prop:lower-priority}). Moreover, because by the construction of $\Psi^{j+1}$, no task with a priority lower than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. \emph{Therefore, we can safely remove all the jobs of task $\tau_j$ arrived before $r_j$ without impacting the response time of $J_{k}$.}
+By the assumption that $R_j \leq D_j \leq T_j$ for $j=1,2,\ldots,k-1$, removing all the jobs of task $\tau_j$ arrived before $r_j$ has no impact on the schedule of any other job released by $\tau_j$ (Lemma~\ref{lemma:remove-same-task}) or any higher priority job released by $\tau_1, \ldots, \tau_{j-1}$ (Property \ref{prop:lower-priority}). Moreover, because by the construction of $\Psi^{j+1}$, no task with a priority lower than $\tau_j$ executes jobs before $t_{j+1}$ in $\Psi^{j+1}$, removing the jobs released by $\tau_j$ before $t_{j+1}$ does not impact the schedule of the jobs of $\tau_{j+1}, \ldots, \tau_{k}$. \emph{Therefore, we can safely remove all the jobs of task $\tau_j$ arrived before $r_j$ without impacting the response time of $J_{k}$.}
 
 But, should we include or exclude $J_j$ for the construction of
 $\Psi^j$?  We use three rules to define the construction of the
 schedule $\Psi^j$ and $t_j$ for including or excluding $J_j$.
 \begin{compactitem}
-\item {\bf Rule 1 assigns $t_j$ to $r_j$ by including $J_j$:} This rule is applied to
+\item {\bf Rule 1 assigns $t_j$ to $r_j$ and includes $J_j$:} This rule is applied to
   include the complete job of task $\tau_j$ released at time $r_j$
   in the schedule $\Psi^j$. 
-\item {\bf Rule 2 assigns $t_j$ to $t_{j+1}$ by excluding $J_j$:} This rule is applied to
+\item {\bf Rule 2 assigns $t_j$ to $t_{j+1}$ and excludes $J_j$:} This rule is applied to
   completely exclude $J_j$ in the schedule $\Psi^j$. 
-\item {\bf Rule 3 assigns $t_j$ to $t_{j+1}$ by partially excluding
+\item {\bf Rule 3 assigns $t_j$ to $t_{j+1}$ and partially excludes
     $J_j$:} This rule is applied to partially exclude $J_j$ in the
   schedule $\Psi^j$.  If we apply this rule, we will remove $J_j$ and
   create an artificial job to represent the residual workload of $J_j$
   (to be explained and defined later), executed at or after $t_{j+1}$.
 \end{compactitem}
 
-We apply the above three rules, depending on different cases, as follows:
+We apply one of the above three rules to task $\tau_j$, depending on different cases, as follows:
 \begin{enumerate}[(a)]
 \item $\tau_j \in {\bf T}_1$: In this case, we analyze two different subcases:
 \begin{itemize}
@@ -255,16 +255,16 @@ $\tau_k'$ in $\Psi^1$, we only focus on the execution patterns of the
 tasks $(\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k')$. Let
 $\operatorname{exec}_j(t_1, t)$ be the workload, defined as \emph{the
  (accumulative) amount of time that task $\tau_j$ is executed in the schedule
-  $\Psi^1$ in the time interval $(t_1, t]$}. By the definition of the
+  $\Psi^1$ in the time interval $(t_1, t]$}. By the construction of the
 schedule $\Psi^1$, we know that $\operatorname{exec}_j(t_1, t_j)$ must
-be $0$. Therefore, $\operatorname{exec}_j(t_1, t)$ is equal to
+be $0$ since task $\tau_j$ is not executed between $t_1$ and $t_j$, as they were already discarded for the construction of $\Psi^j$. Therefore, $\operatorname{exec}_j(t_1, t)$ is equal to
 $\operatorname{exec}_j(t_j, t)$ if $t > t_j$.
 
 \begin{Lemma}
   \label{lemma:exec-tau-k}
   $\forall t | t_k \leq t < f_k$, the (accumulative) amount of time that
   task $\tau_k'$ is executed from $t_k$ to $t$ is $\operatorname{exec}_k(t_k, t) <
-  C_k$.
+  C_k'$.
 \end{Lemma}
 \begin{proof}
   Since the finishing time of job $J_k$ is at time $f_k$ in schedule $\Psi^1$, the
@@ -276,13 +276,13 @@ According to Step 1, we should consider three rules when analyzing $\operatornam
 \item Task $\tau_j$ applies {\bf Rule 1}. This is the case when
   $\tau_j \in {\bf T}_1$ and the job $J_j$ has not finished yet at
   time $t_{j+1}$. In this case, there is no job of task $\tau_j$
-  arrived before $t_j$ in $\Psi^1$.  Therefore, for any $\Delta \geq
+  arrived before $t_j$ in $\Psi^1$.  Since we are only interested to get an upper bound  of $\operatorname{exec}_j(t_j, t_j+\Delta)$, it is obvious that self-suspension does not play any specific rule here. Therefore, for any $\Delta \geq
   0$, the workload $\operatorname{exec}_j(t_j, t_j+\Delta)$, executed by $\tau_j$ on the
   processor from $t_j$ to $t_j+\Delta$ is upper bounded by a function $\operatorname{exec}_j(t_j, t_j+\Delta)  \leq W_j^1(\Delta)$, defined as follows:
 {\footnotesize \begin{equation}
   \label{eq:execution-case1}
   W_j^1(\Delta) \stackrel{\mbox{def}}{=} \floor{\frac{\Delta}{T_j}}C_j + \min\left\{\Delta-\floor{\frac{\Delta}{T_j}}T_j, C_j\right\}.
-\end{equation}}The above workload function in Eq.~\eqref{eq:execution-case1} has been widely used in the literature if task $\tau_j$ is an ordinary sporadic task without self-suspension, e.g., in \cite{bertogna2006new}. However, since we are only interested to get an upper bound  of $\operatorname{exec}_j(t_j, t_j+\Delta)$, it is obvious that self-suspension does not play any specific rule here.
+\end{equation}}The above workload function in Eq.~\eqref{eq:execution-case1} has been widely used in the literature if task $\tau_j$ is an ordinary sporadic task without self-suspension, e.g., in \cite{bertogna2006new}.
 
 \item Task $\tau_j$ applies {\bf Rule 2}. This is the case when
   $\tau_j \in {\bf T}_1$ and the job $J_j$ already finishes at time
@@ -385,6 +385,7 @@ C'_k +\sum_{j=1}^{k-1} x_j\cdot (W_j^1(t-t_j) +\sigma_j) + (1-x_j)\cdot W_j^0(t-
 \end{equation} 
 \end{Lemma}
 \begin{proof}
+  We will quantify $\operatorname{idle}(t_1, t)$ and $\operatorname{exec}(t_1, t)$ and use the condition $\operatorname{idle}(t_1, t)+\operatorname{exec}(t_1, t) = t-t_1$ for $t_1 \leq t \leq f_k$ in Eq.~\eqref{eq:exec_plus_idle} to prove this lemma.
   By Lemmas~\ref{lemma:Wj01-exact}~and~\ref{lemma:Wj0-dominate} and the condition that $\vec{x}$
   is specified with only binary values in its elements, for
   $i=2,3,\ldots,k-1$ that $\forall t \mid t_{i-1} \leq t < t_i$, we
@@ -450,22 +451,22 @@ $c_j^*$ to $C_j$ in Eq.~\eqref{eq:execution-case2-precise}.
 
 
 
-Lemma~\ref{lemma:conclusion-step2} may seem to provide a way to
-construct the worst-case response time analysis of task
-$\tau_k'$. However, it is not since $t_j$ values for $j=1,2,\ldots,k$
+% Lemma~\ref{lemma:conclusion-step2} may seem to provide a way to
+% construct the worst-case response time analysis of task
+% $\tau_k'$.
+
+The conditions in Lemma \ref{lemma:conclusion-step2}  cannot be used directly since $t_j$ values for $j=1,2,\ldots,k$
 are in general unknown. We need to have a strategy to use the
 conditions in Lemma~\ref{lemma:conclusion-step2} for analyzing a safe upper bound on the response time of $\tau_k'$.
 Therefore, Step 3 has to construct a safe response-time analysis based on the
 conditions specified by Eqs.~(\ref{eq:exec_plus_idle-2}) and
 (\ref{eq:exec_plus_idle-3}) in Lemma~\ref{lemma:conclusion-step2}. Our
-goal is to prove that the condition in
-Eq.~\eqref{eq:TDA-suspension-tighter0} is more pessimistic than those
-in Lemma~\ref{lemma:conclusion-step2} for any schedule $\Psi^1$ reduced from $\Psi$.
+goal in this step is to prove that the condition in
+Eq.~\eqref{eq:TDA-suspension-tighter0} can cover all the cases listed
+in Lemma~\ref{lemma:conclusion-step2} for any schedule $\Psi^1$ generated from $\Psi$.
 
-Towards this, we construct another release pattern
-which moves $t_i$ to $t_i^*$ for $i=2,3,\ldots,k$ such that $t_i^*
-\leq t_i$ and the corresponding conditions in Eqs.~(\ref{eq:exec_plus_idle-2}) and
-(\ref{eq:exec_plus_idle-3}) will become worse when we use $t_i^*$. We start
+Our proof strategy is to first artificially move $t_i$ to $t_i^*$ for $i=1,2,\ldots,k$ such that $t_i^*
+\leq t_i$. We start
 the procedure as follows:
 \begin{itemize}
 \item Initial step: Let $t_1^*$ be $t_1$.
@@ -477,9 +478,9 @@ Therefore,  for $i=2,3,\ldots,k$,\footnote{As already mentioned in Footnote~\ref
 \begin{equation*}
   t_i = t_1 + \sum_{j=1}^{i-1} (t_{j+1} - t_j) \geq t_1 + \sum_{j=1}^{i-1} x_j \sigma_j = t_i^*
 \end{equation*}
-since $x_j \in \{0, 1\}$ for any $j=1,2,\ldots,i-1$.
+since $x_j \in \{0, 1\}$ for any $j=1,2,\ldots,i-1$. The property that $t_i^* \leq t_i$ is very important in our proof since this can lead to the conditions in Eqs.~\eqref{eq:execution-case1-shifted},~\eqref{eq:execution-case2-shifted}, etc.
 
-Figure~\ref{fig:example-proof-final} provides a concrete illustration about the procedure to define $t_1^*, t_2^*, t_3^*, t_4^*$ for the example used in Example~\ref{ex:proof_step1} when $\epsilon$ is close to $0$.
+%Figure~\ref{fig:example-proof-final} provides a concrete illustration about the procedure to define $t_1^*, t_2^*, t_3^*, t_4^*$ for the example used in Example~\ref{ex:proof_step1} when $\epsilon$ is close to $0$.
  Moreover, by
 definition, $t_j^*$ is $t_1^* + \sum_{i=1}^{j-1} x_i\cdot\sigma_i$ for
 $j=2,3,\ldots,k$.
@@ -611,7 +612,8 @@ C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{\theta+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j > \t
 where $X_j$ is $\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell$. 
 \end{Lemma}
 \begin{proof}
-  By the definition of $t_j^*$, $\forall t \mid t_k^* \leq t < f_k$,
+  By the definition of $t_j^*$, we have $t_j^* = t_k^* - \sum_{\ell=j}^{k-1}
+  x_\ell\sigma_\ell$. Therefore, $\forall t \mid t_k^* \leq t < f_k$,
   we have $t-t_j^* = t - t_k^* + \sum_{\ell=j}^{k-1}
   x_\ell\sigma_\ell = t-t_k^* + X_j$ for every $j=1,2,\ldots,k-1$. By using Lemma~\ref{lemma:W_0-and-W_1-upper} and $t-t_j^*$ above, we can rewrite the condition in Lemma~\ref{lemma:step-3-one-condition} as $\forall t \mid t_k^* \leq t < f_k$,
 \begin{equation*}
