@@ -38,19 +38,20 @@ to $\Psi^1$:
     $J_{j}$ denote that job;
 
     \IF {$r_j$ does not exist} 
-    \STATE $\Psi^j \leftarrow \Psi^{j+1}$ and $t_j \leftarrow t_{j+1}$; 
+    \STATE $\Psi^j \leftarrow \Psi^{j+1}$ and $t_j \leftarrow
+    t_{j+1}$;  \COMMENT {\bf Case 0}
     \ELSE
     \STATE $\Psi^j \leftarrow \Psi^{j+1}$ and remove all the jobs of task $\tau_j$ released before $r_j$
     in schedule $\Psi^j$;
      \IF {$\tau_j \in {\bf T}_0$} 
      \STATE  $t_j \leftarrow t_{j+1}$, remove $J_j$, and  create an
      artificial job to represent the residual workload of $J_j$,
-     executed at or after $t_{j+1}$; \COMMENT {\bf Rule 3}
+     executed at or after $t_{j+1}$; \COMMENT {\bf Case 3}
      \ELSE
      \IF {$J_j$ completes its execution at or before $t_{j+1}$}
-     \STATE  $t_j \leftarrow t_{j+1}$, remove $J_j$ in schedule $\Psi^j$; \COMMENT {\bf Rule 2}
+     \STATE  $t_j \leftarrow t_{j+1}$, remove $J_j$ in schedule $\Psi^j$; \COMMENT {\bf Case 2}
      \ELSE
-     \STATE  $t_j \leftarrow r_j$; \COMMENT {\bf Rule 1}
+     \STATE  $t_j \leftarrow r_j$; \COMMENT {\bf Case 1}
      \ENDIF   
     \ENDIF
     \ENDIF

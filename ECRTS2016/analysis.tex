@@ -31,7 +31,7 @@ this paper are the two following theorems:
 
 \begin{theorem}
    \label{theorem:general-framework}
-   Suppose that all tasks $\tau_\ell \mid 1 \leq \ell \leq k$ are schedulable, (i.e., $R_\ell \leq T_\ell$). Then, for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either $0$ or $1$, the WCRT $R_k$ of $\tau_k$ is upper bounded by the minimum $t$ larger than $0$ such that 
+   Suppose that all tasks $\tau_\ell \mid 1 \leq \ell \leq k$ are schedulable, (i.e., $R_\ell \leq T_\ell$). Then, for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either $0$ or $1$, the worst-case response time $R_k$ of $\tau_k$ is upper bounded by the minimum $t$ larger than $0$ such that 
    {\small \begin{equation} \label{eq:TDA-suspension-tighter0} 
        C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i \leq t
      \end{equation}}where $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} (S_j \times x_j)$.
@@ -103,7 +103,7 @@ tightest.
  \end{example}
 
 Note also that the upper bound on $R_3$ computed in
-Example~\ref{ex:general_framework}, is lower than the WCRT estimate obtained in Example~\ref{ex:rationale_2}. The response time analysis presented in Corollary~\ref{corollary:general-framework} is therefore tighter than the simple combination of existing analysis techniques as proposed in Example~\ref{ex:rationale_2}.
+Example~\ref{ex:general_framework}, is lower than the estimated worst-case response time obtained in Example~\ref{ex:rationale_2}. The response time analysis presented in Corollary~\ref{corollary:general-framework} is therefore tighter than the simple combination of existing analysis techniques as proposed in Example~\ref{ex:rationale_2}.
 
 
 \input{proof}
