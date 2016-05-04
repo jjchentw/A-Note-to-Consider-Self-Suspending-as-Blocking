@@ -60,34 +60,36 @@ to $\Psi^1$:
 \end{algorithm}
 
 \begin{appProof}{of Lemma~\ref{lemma:Wj0-dominate}}
-  We first prove that $\widehat{W}_j^0(\Delta, C_j) \geq
- W_j^1(\Delta)$ defined in Eq.~\eqref{eq:execution-case1}.  By the definition of $\rho_j=T_j-R_j+C_j$ when $c_j^*$ is $C_j$ and the
+  We first prove that $\widehat{W}_j^0(\Delta, C_j) \geq \widehat{W}_j^0(\Delta, c_j^*)$ when $c_j^* =0$. That is, we prove that $\widehat{W}_j^0(\Delta, C_j) \geq W_j^1(\Delta)$ (see Eq.~\eqref{eq:execution-case2-precise}). 
+  
+  By definition, $\rho_j=T_j-R_j+C_j$ when $c_j^*$ is $C_j$. Because by
  assumption $C_j \leq R_j \leq T_j$, we have $0 \leq \rho_j \leq
  T_j$. Therefore, for $\Delta \geq T_j$, we have $W_j^1(\Delta) = C_j
- + W_j^1(\Delta-T_j) \leq C_j + W_j^1(\Delta - \rho_j) \leq
- \widehat{W}_j^0(\Delta, C_j)$. For $0 \leq \Delta < T_j$, it is also
+ + W_j^1(\Delta-T_j) \leq C_j + W_j^1(\Delta - \rho_j) =
+ \widehat{W}_j^0(\Delta, C_j)$ where the last equality is given by the fourth case of Eq.~\eqref{eq:execution-case2-precise} when $c_j^* = C_j$. For $0 \leq \Delta < T_j$, it is also
  obvious that $\widehat{W}_j^0(\Delta, C_j) \geq \min\{\Delta, C_j\}
  = W_j^1(\Delta)$.
 
  We then prove that $\widehat{W}_j^0(\Delta, C_j) \geq
- \widehat{W}_j^0(\Delta, c_j^*)$ for any $0 < c_j^* \leq C_j$ based on the definition in Eq.~\eqref{eq:execution-case2-precise}. Figure~\ref{fig:example-lemma-workload} provides an illustrative example for $\widehat{W}_j^0(\Delta, c_j^*)$. We consider three subcases:
+ \widehat{W}_j^0(\Delta, c_j^*)$ for any $0 < c_j^* \leq C_j$ based on its definition in Eq.~\eqref{eq:execution-case2-precise}. 
+Figure~\ref{fig:example-lemma-workload} provides an illustrative example for $\widehat{W}_j^0(\Delta, c_j^*)$. We consider three subcases:
  \begin{compactitem}
  \item For $0 \leq \Delta \leq C_j$, it is obvious that
    $\widehat{W}_j^0(\Delta, C_j) \geq \widehat{W}_j^0(\Delta,
    c_j^*)$.
  \item For $C_j < \Delta \leq T_j-R_j+C_j$, we have
-   $\widehat{W}_j^0(\Delta, C_j) = C_j$, and it is obvious that
+   $\widehat{W}_j^0(\Delta, C_j) = C_j$, and from Eq~\eqref{eq:execution-case2-precise},
    $\widehat{W}_j^0(\Delta, c_j^*) = c_j^* + \max\{0,
    \Delta-(T_j-R_j+c_j^*)\} \leq c_j^* + C_j - c_j^* = C_j$.
 
  \item For $T_j-R_j+C_j < \Delta$, we have $\widehat{W}_j^0(\Delta,
    C_j) = C_j + W_j^1(\Delta - (T_j-R_j+C_j))$.  Moreover, by
-   definition, we also know $\widehat{W}_j^0(\Delta, c_j^*) \leq
-   \delta+\widehat{W}_j^0(\Delta-\delta, c_j^*)$ for any $\delta$ with $0 < \delta \leq
-   \Delta$. Therefore, for such a case, we can conclude
+   definition, we also know $W_j^1(\Delta, c_j^*) \leq
+   \delta+W_j^1(\Delta-\delta, c_j^*)$ for any $\delta$ such that $0 < \delta \leq
+   \Delta$. Therefore, we conclude that
    $\widehat{W}_j^0(\Delta, c_j^*) = c_j^* + W_j^1(\Delta -
    (T_j-R_j+c_j^*)) \leq C_j + W_j^1(\Delta - (T_j-R_j+C_j))$ by
-   setting $\delta$ to $C_j - c_j^*$ with the previous inequality.
+   setting $\delta$ to $C_j - c_j^*$ in the previous inequality.
  \end{compactitem}
 \end{appProof}
 

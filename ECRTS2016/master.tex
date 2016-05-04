@@ -101,7 +101,7 @@ align =left,
 \providebool{techreport}
 \setbool{techreport}{false}
 
-\newcommand{\citetechreport}[1]{\ifbool{techreport}{}{ in the report \cite{ecrts16-techreport}}}
+\newcommand{\citetechreport}[1]{\ifbool{techreport}{}{ of \cite{ecrts16-techreport}}}
 
 \usepackage{pgfplots}
 
@@ -111,6 +111,8 @@ align =left,
 %\paperfalse
 
 \pagestyle{plain}
+
+\linespread{0.96}
 
 \begin{document}
   

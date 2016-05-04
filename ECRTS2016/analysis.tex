@@ -23,26 +23,22 @@ upper bound of $R_3$ & $42$ & $32$ & $42$ & $32$\\
 
 %\subsection{A new Response time Analysis}
 
-As already discussed in Section~\ref{sec:existing-analyses}, one can greedily convert the suspension time of task $\tau_k$ in computation time. Let $\tau_k'$ be this converted version of task $\tau_k$, i.e., $\tau_k' = (C_k + S_k, 0, D_k, T_k)$.  Suppose that $R_k'$ is the worst-case response time of $\tau_k'$ in the modified task set $\setof{\tau_1, \tau_2, \ldots, \tau_{k-1}, \tau_k'}$. It was already shown in previous works, e.g., Lemma~3 in
-\cite{Liu_2014}, that $R_k'$ is a safe upper bound on the worst-case response time of task $\tau_k$ in the original task set.
-
-Note that in all this section, we implicitly assume that $R_i
-\leq D_i \leq T_i, \forall \tau_i \mid 1 \leq i \leq k-1$.  This assumption is implicitly used as a fact in all the theorems and lemmas. \emph{Therefore, the worst-case response time or the schedulability of task $\tau_k$ has to be verified from $k=1,2,\ldots, n$. Here we only focus on the analysis of a certain task $\tau_k$, under the assumption that we have already validated that $R_i
+In all this section, we implicitly assume that $R_i
+\leq D_i, \forall \tau_i \mid 1 \leq i \leq k-1$.  This assumption is implicitly used as a fact in all the theorems and lemmas. \emph{Therefore, the worst-case response time or the schedulability of task $\tau_k$ has to be verified from $k=1,2,\ldots, n$. Here we only focus on the analysis of a certain task $\tau_k$, under the assumption that we have already validated that $R_i
 \leq D_i \leq T_i, \forall \tau_i \mid 1 \leq i \leq k-1$ (by using any method in this section or Section~\ref{sec:existing-analyses}). } 
 Our key result in
-this paper is the following theorem:
+this paper are the two following theorems:
 
 \begin{theorem}
    \label{theorem:general-framework}
-   Suppose that $R_k' \leq T_k$. Then, for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either $0$ or $1$, the worst-case
-   response time $R_k$ of $\tau_k$ is upper bounded by the minimum $t$ larger than $0$ such that 
+   Suppose that all tasks $\tau_\ell \mid 1 \leq \ell \leq k$ are schedulable, (i.e., $R_\ell \leq T_\ell$). Then, for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either $0$ or $1$, the WCRT $R_k$ of $\tau_k$ is upper bounded by the minimum $t$ larger than $0$ such that 
    {\small \begin{equation} \label{eq:TDA-suspension-tighter0} 
        C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_i^{\vec{x}}+(1-x_i)(R_i-C_i)}{T_i}} C_i \leq t
      \end{equation}}where $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} (S_j \times x_j)$.
  \end{theorem} 
 \begin{theorem}
    \label{theorem:general-framework-not-feasible}
-   Suppose that $R_k' > T_k$. For any arbitrary vector assignment
+   Suppose that $\tau_k$ is not schedulable (i.e., $R_k > T_k$). For any arbitrary vector assignment
    $\vec{x} = (x_1, x_2, \ldots, x_{k-1})$, in which $x_i$ is either
    $0$ or $1$,  we have $\forall t | 0 < t \leq T_k$,
    {\small \begin{equation*}
@@ -52,12 +48,12 @@ this paper is the following theorem:
  %We will explain the resulting properties from
  %Theorem~\ref{theorem:general-framework} first, by leaving the proof
  %to Section~\ref{sec:proof-th1} since it is pretty long.   
-By the above two theorems, we can directly derive the
+By Theorems~\ref{theorem:general-framework} and~\ref{theorem:general-framework-not-feasible}, we can directly derive the
 following schedulability test.
 
  \begin{Corollary}
    \label{corollary:general-framework}
-   If there is a vector $\vec{x} = (x_1, x_2, \ldots,
+   If $\forall \tau_i \mid 1 \leq i < k, ~R_i \leq T_i$, and if there is a vector $\vec{x} = (x_1, x_2, \ldots,
    x_{k-1})$ with $x_i \in \{ 0, 1\}$, such that 
    {\small \begin{align} 
    \label{eq:TDA-suspension-tighter} 
@@ -66,16 +62,19 @@ following schedulability test.
      \end{align}}
      where $Q_i^{\vec{x}} \equals \sum_{j=i}^{k-1} (S_j \times x_j)$, then the constrained-deadline task $\tau_k$ is schedulable under fixed-priority.
  \end{Corollary}
+ \begin{proof}
+Let $t^*$ be the first positive value of $t$ respecting Eq. \eqref{eq:TDA-suspension-tighter}. By the assumptions stated in the claim, $t^*$ exists and $t^*$ is smaller than or equal to the deadline $D_k$. By Theorems~\ref{theorem:general-framework} and~\ref{theorem:general-framework-not-feasible}, $t^*$ exists and is smaller than or equal to $D_k$ only if $\tau_k$ is schedulable.
+ \end{proof}
+
  
-  The proof of correctness of Theorem~\ref{theorem:general-framework}
-  and Theorem~\ref{theorem:general-framework-not-feasible}, and hence Corollary~\ref{corollary:general-framework} is provided in Section~\ref{sec:proof-th1}. Moreover, we will later prove in Section~\ref{sec:dominance}, that Corollary~\ref{corollary:general-framework} in fact dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
+  The proof of correctness of Theorems~\ref{theorem:general-framework} and~\ref{theorem:general-framework-not-feasible}, and hence Corollary~\ref{corollary:general-framework} is provided in Section~\ref{sec:proof-th1}. Moreover, we will later prove in Section~\ref{sec:dominance}, that Corollary~\ref{corollary:general-framework} in fact dominates all the analyses discussed in Section~\ref{sec:existing-analyses}.
  
  We now use the same example as in Section~\ref{sec:rationale}, to demonstrate how
 Corollary~\ref{corollary:general-framework} can be applied.
  
  \begin{example}
  \label{ex:general_framework}
-  Consider the same three tasks used in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$. By the analysis in Example~\ref{ex:rationale_1}, $R_1$ is upper bounded by $9$ and $R_2$ is upper bounded by $15$. We use $R_1=9$ and $R_2=15$ in this example. There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}.
+  Consider the same three tasks used in Examples~\ref{ex:rationale_1} and~\ref{ex:rationale_2}, i.e., $\tau_1 = (4, 5, 10, 10)$, $\tau_2 =(6, 1, 19, 19)$ and $\tau_3 = (4, 0, 50, 50)$. By the analysis in Example~\ref{ex:rationale_1}, $R_1$ is upper bounded by $9$ and $R_2$ is upper bounded by $15$. Let us assume $R_1=9$ and $R_2=15$ in the rest of this example. There are four possible vector assignments $\vec{x}$ when considering the schedulability of task $\tau_3$ with Corollary~\ref{corollary:general-framework}.
 % \noindent\textbf{Case 1.} $\vec{x} = (0 , 0)$: In this case, Theorem~\ref{theorem:general-framework} states that $R_k$ is upper bounded by the minimum $t$ under $0 < t \leq D_3$ such that $4+ \ceiling{\frac{t+5}{10}} 4 + \ceiling{\frac{t+9}{19}} 6 \leq t$. Note that this equation is identical to the schedulability test discussed in Section~\ref{sec:jitter}, and hence, as shown in Example~\ref{ex:rationale_1}, we get that $R_k \leq 42$.
 %
 % \noindent\textbf{Case 2.} $\vec{x} = (0 , 1)$:
@@ -104,8 +103,7 @@ tightest.
  \end{example}
 
 Note also that the upper bound on $R_3$ computed in
-Example~\ref{ex:general_framework}, is lower than the worst-case
-response time estimate obtained in Example~\ref{ex:rationale_2}. The response time analysis presented in Corollary~\ref{corollary:general-framework} is therefore tighter than the simple combination of existing analysis techniques proposed in Example~\ref{ex:rationale_2}.
+Example~\ref{ex:general_framework}, is lower than the WCRT estimate obtained in Example~\ref{ex:rationale_2}. The response time analysis presented in Corollary~\ref{corollary:general-framework} is therefore tighter than the simple combination of existing analysis techniques as proposed in Example~\ref{ex:rationale_2}.
 
 
 \input{proof}
