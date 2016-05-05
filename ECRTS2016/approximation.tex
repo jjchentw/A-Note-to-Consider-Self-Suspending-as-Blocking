@@ -26,7 +26,7 @@ By the definition of the ceiling operator, it holds that:
   \label{fig:exp}
 \end{figure*}
 
-Moreover, using the simple algebra property that for any two vectors $\vec{a}$ and $\vec{b}$ of size $(k-1)$ there is $\sum_{i=1}^{k} a_i \sum_{j=i}^{k} b_j = \sum_{j=1}^{k} b_j \sum_{i=1}^{j} a_i$, we get that $\sum_{i=1}^{k-1} U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell = \sum_{i=1}^{k-1} x_i S_i \sum_{\ell=1}^{i}U_\ell $. Hence, injecting this last expression in Eq.~\eqref{eq:linear_step1}, it holds that
+Moreover, using the simple algebra property that for any two vectors $\vec{a}$ and $\vec{b}$ of size $(k-1)$ there is $\sum_{i=1}^{k-1} a_i \sum_{j=i}^{k-1} b_j = \sum_{j=1}^{k-1} b_j \sum_{i=1}^{j} a_i$, we get that $\sum_{i=1}^{k-1} U_i\sum_{\ell=i}^{k-1}x_\ell S_\ell = \sum_{i=1}^{k-1} x_i S_i \sum_{\ell=1}^{i}U_\ell $. Hence, injecting this last expression in Eq.~\eqref{eq:linear_step1}, it holds that
 {\footnotesize
 \begin{align*}
 & C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+\sum_{\ell=i}^{k-1}x_\ell S_\ell+(1-x_i)(R_i-C_i)}{T_i}} C_i\\

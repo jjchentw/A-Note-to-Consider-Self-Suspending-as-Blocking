@@ -51,15 +51,15 @@ will also provide examples to demonstrate the key steps in the proof and lemmas 
 Let $\Psi$ be a fixed-priority preemptive schedule of the task system $\tau$.
 Suppose that a job $J_{k}$ of task $\tau_k$ arrives at time $r_k$ and finishes at time $f_k$. 
 By the assumption of $R_k \leq T_k$, we have $f_k \leq r_k+R_k \leq r_k+T_k$.
-We prove that Eq.~\eqref{eq:TDA-suspension-tighter0} gives us a safe upper bound on $f_k-r_k$ for any job $J_k$ in $\Psi$ if $R_k \leq T_k$, and Theorem~\ref{theorem:general-framework-not-feasible} is respected if $R_k > T_k$.
-
-
+We first prove that Eq.~\eqref{eq:TDA-suspension-tighter0} gives us a
+safe upper bound on $f_k-r_k$ for any job $J_k$ in $\Psi$ if $R_k \leq
+T_k$.
+% and Theorem~\ref{theorem:general-framework-not-feasible} is respected if $R_k > T_k$.
 The proof is built upon the three following steps:
 \begin{enumerate}
 \item We discard all the jobs that arrive before $r_k$ and do not contribute to the response time of $J_k$ in the schedule $\Psi$. We follow an inductive strategy by iteratively inspecting the schedule of the higher priority tasks in $\Psi$, starting with $\tau_{k-1}$ until the highest priority task $\tau_1$. At each iteration, a time instant $t_j$ is identified such that $t_j \leq t_{j+1}$ ($1 \leq j < k$). Then, all the jobs of task $\tau_j$ released before $t_j$ are removed from the schedule and, if needed, replaced by an artificial job mimicking the interference caused by the residual workload of task $\tau_j$ at time $t_j$. %on the response time of job $J_k$. 
-\item The final reduced schedule is analyzed so as to characterize the
-  worst-case response time of $\tau_k'$ in $\Psi$. %by using workload functions.
-\item We then prove that the response time analysis in Eq.~(\ref{eq:TDA-suspension-tighter0}) is indeed an upper bound on the worst-case response time $R_k'$ of $\tau_k'$.
+\item The final reduced schedule is analyzed to characterize important properties of the reduced schedule in Step 1.
+\item We then prove that the response time analysis in Eq.~(\ref{eq:TDA-suspension-tighter0}) is indeed an upper bound on the worst-case response time $R_k$ of $\tau_k$.
 \end{enumerate}
 
 %!!!!!*************!!!!!!!!\\
@@ -92,12 +92,13 @@ The proof is built upon the three following steps:
 \noindent{\bf Step 1: Reducing the schedule $\Psi$} 
 
 \emph{Our purpose in this step is to discard all the jobs that arrive before $r_k$ and have no impact on the response time of $J_k$ in the schedule
-  $\Psi$. } During this step, we iteratively build the schedules from $\Psi^k$ to $\Psi^1$ mentioned above. Based on a given schedule $\Psi^{j+1}$ (with $1 \leq j < k$), we build the schedule $\Psi^j$ such that the response time of $\tau_{k}'$ remains identical. At each iteration, we define $t_j$ for task $\tau_j$ in the schedule $\Psi^{j+1}$ and build $\Psi^j$ by removing all the jobs released by $\tau_j$ before $t_j$. \emph{We then prove that the response time of $J_k$ in the reduced schedule $\Psi^1$ remains the same as the response time of $J_k$ in  the original schedule $\Psi^1$.}
+  $\Psi$. } During this step, we iteratively build the schedules from $\Psi^k$ to $\Psi^1$ mentioned above. Based on a given schedule $\Psi^{j+1}$ (with $1 \leq j < k$), we build the fixed-priority schedule $\Psi^j$ such that the response time of $J_k$ remains identical. At each iteration, we define $t_j$ for task $\tau_j$ in the schedule $\Psi^{j+1}$ and build $\Psi^j$ by removing all the jobs released by $\tau_j$ before $t_j$. \emph{We then prove that the response time of $J_k$ in the reduced fixed-priority schedule $\Psi^1$ remains the same as the response time of $J_k$ in  the original fixed-priority schedule $\Psi$.}
 
 
 \noindent\textit{Basic step (definition of $\Psi^k$ and $t_k$):} 
 
-Recall that the job $J_{k}$ of task $\tau_k$ arrives at time $r_k$ and finishes at time $f_k$ in schedule $\Psi$.  We define $\Psi^k$ as the schedule in which (i) all high-priority tasks $\tau_1, \ldots, \tau_{k-1}$ release their jobs at the exact same instants than in $\Psi$, (ii) $\tau_k$ releases only one job at time $r_k$, (iii) the low-priority tasks $\tau_{k+1}, \ldots, \tau_n$ do not release any job, and (iv) all jobs suspend their execution after the exact same execution time than in $\Psi$. Moreover, since $J_k$ is released at time $r_k$ and does not finish strictly before $f_k$, the total amount of idle time of the system from $r_k$ to $f_k$ is at most $S_k$. In the converted schedule $\Psi^k$, we further convert the idle time as part of the execution time of $J_k$. After the conversion by considering suspension as computation for job $J_k$, we know that the worst-case execution time of $J_k$ is upper bounded by $C_k'=S_k+C_k$.  As already discussed in Section~\ref{sec:existing-analyses}, such a conversion has been widely used. For notational brevity, we denote this job $J_k$ as a release of task $\tau_k' = (C_k + S_k, 0, D_k, T_k)$. 
+%Recall that the job $J_{k}$ of task $\tau_k$ arrives at time $r_k$ and finishes at time $f_k$ in schedule $\Psi$.  
+We define $\Psi^k$ as the schedule in which (i) all high-priority tasks $\tau_1, \ldots, \tau_{k-1}$ release their jobs at the exact same instants as in $\Psi$, (ii) $\tau_k$ releases only one job at time $r_k$, (iii) the low-priority tasks $\tau_{k+1}, \ldots, \tau_n$ do not release any job, and (iv) all jobs suspend their execution after the exact same execution time as in $\Psi$. Moreover, since $J_k$ is released at time $r_k$ and does not finish strictly before $f_k$, the total amount of idle time of the system from $r_k$ to $f_k$ is at most $S_k$. In the converted schedule $\Psi^k$, we further convert the idle time as part of the execution time of $J_k$. After the conversion by considering suspension as computation for job $J_k$, we know that the worst-case execution time of $J_k$ is upper bounded by $C_k'=S_k+C_k$.  As already discussed in Section~\ref{sec:existing-analyses}, such a conversion has been widely used. For notational brevity, we denote this job $J_k$ as a release of task $\tau_k' = (C_k + S_k, 0, D_k, T_k)$. It is obvious that $\Psi^k$ remains as a fixed-priority schedule.
 
 \begin{Lemma}
 \label{lemma:psik}
@@ -122,20 +123,20 @@ We define four cases in order to build $\Psi^j$ from $\Psi^{j+1}$.
 
 %If {\bf Rule 0} is applied than $\Psi^j$ and $\Psi^{j+1}$ are identical and the response time of $J_k$ is then unchanged. 
 
-Now, let us consider that  task $\tau_j$ releases at least one job before $t_{j+1}$ in $\Psi^{j+1}$. Let $r_j$ be the arrival time of the last job released by $\tau_j$ before $t_{j+1}$ in $\Psi^{j+1}$ and let $J_{j}$ denote that job. By definition, $r_j < t_{j+1}$. Let $c_j^*$ be the remaining execution time of $J_j$ at time $t_{j+1}$ in $\Psi^{j+1}$. By definition, $0 \leq c_j^* < C_j$. In the rest of the proof, $c_j^*$ is called $\tau_j$'s \emph{residual workload}.
+Now, let us consider that  task $\tau_j$ releases at least one job before $t_{j+1}$ in $\Psi^{j+1}$. Let $r_j$ be the arrival time of the last job released by $\tau_j$ before $t_{j+1}$ in $\Psi^{j+1}$ and let $J_{j}$ denote that job. By definition, $r_j < t_{j+1}$. Let $c_j^*$ be the remaining execution time of $J_j$ at time $t_{j+1}$ in $\Psi^{j+1}$. By definition, $0 \leq c_j^* \le C_j$. In the rest of the proof, $c_j^*$ is called $\tau_j$'s \emph{residual workload}.
 
-We start by setting $\Psi^j$ to be identical as $\Psi^{j+1}$. Then, all the jobs of task $\tau_j$ that arrive before $r_j$ are immediately removed from $\Psi^j$. That is, all jobs released in $\Psi^j$ have identical suspension and execution behavior as in $\Psi$, and task $\tau_j$ does not release any job before $r_j$ in $\Psi^j$. 
+We start by setting $\Psi^j$ to be identical as $\Psi^{j+1}$. Then, all the jobs of task $\tau_j$ that arrive before $r_j$ are immediately removed from $\Psi^j$. That is, all jobs released in $\Psi^j$ have identical suspension and execution behavior as in $\Psi^{j+1}$, and task $\tau_j$ does not release any job before $r_j$ in $\Psi^j$. 
 There are three cases to decide how we include or exclude $J_j$ in $\Psi^j$ as follows:
 
 
-\noindent{\bf Case 1.} If $\tau_j \in {\bf T}_1$ and $J_{j}$ does not complete its execution by $t_{j+1}$ in the schedule $\Psi^{j+1}$ (i.e., $c_j^*>0$), then $t_j \equals r_j$ and $J_j$ is included in $\Psi^j$. In this case, task $\tau_j$ releases its jobs at exactly the same instants than in $\Psi^{j+1}$ \emph{at and after} $r_j$.
+\noindent{\bf Case 1.} If $\tau_j \in {\bf T}_1$ and $J_{j}$ does not complete its execution by $t_{j+1}$ in the schedule $\Psi^{j+1}$ (i.e., $c_j^*>0$), then $t_j \equals r_j$ and $J_j$ is included in $\Psi^j$. In this case, task $\tau_j$ releases its jobs at exactly the same instants in $\Psi^{j+1}$, i.e., \emph{at and after} $r_j$.
 
 \noindent{\bf Case 2.} If $\tau_j \in {\bf T}_1$ and $J_{j}$ completes its execution before or at $t_{j+1}$ in the schedule $\Psi^{j+1}$ (i.e., $c_j^* = 0$), then $t_j \equals t_{j+1}$ and $J_j$ is further removed and excluded from $\Psi^j$. In this case, task 
- $\tau_j$ releases its jobs at exactly the same instants than in $\Psi^{j+1}$ \emph{after} $r_j$.
+ $\tau_j$ releases its jobs at exactly the same instants in $\Psi^{j+1}$ \emph{after} $r_j$.
 
-\noindent{\bf Case 3.} If $\tau_j \in {\bf T}_0$, then $t_j \equals t_{j+1}$ and (i) $\tau_j$ releases its jobs at the exact same instants than in $\Psi^{j+1}$ \emph{after} $r_j$ (i.e., exclude $J_j$ in $\Psi^j$), and (ii) an artificial (or additional) job $J_a$ with execution time $C_a \equals c_j^*$ and the same priority than $\tau_j$ is released at time $t_{j+1}$. This artificial job follows the same execution and suspension behavior as job $J_j$ after $t_{j+1}$.
+\noindent{\bf Case 3.} If $\tau_j \in {\bf T}_0$, then $t_j \equals t_{j+1}$ and (i) $\tau_j$ releases its jobs at the same instants in $\Psi^{j+1}$ \emph{after} $r_j$ (i.e., exclude $J_j$ in $\Psi^j$), and (ii) an artificial (or additional) job $J_a$ with execution time $C_a \equals c_j^*$ and the same priority as $\tau_j$ is released at time $t_{j+1}$. This artificial job follows the same execution and suspension behavior as job $J_j$ after $t_{j+1}$.
 
-
+After the above procedures, it is obvious that the resulting schedule $\Psi^j$ remains as a fixed-priority schedule.
 \begin{Lemma}
 \label{lemma:psij}
 The response time of $J_k$ in $\Psi^j$ is the same as the response time of $J_k$ in $\Psi^{j+1}$.
@@ -145,7 +146,7 @@ If Case 0 is applied, then $\Psi^j$ and $\Psi^{j+1}$ are identical. The response
 
 For the rest of the proof, we use the four following facts:
 
-\noindent{\bf Fact 1.} For any $\ell$ such that $1 \leq \ell < k$, there is $t_\ell \leq t_{\ell+1}$ and $\tau_\ell$ does not release any job before $t_\ell$.
+\noindent{\bf Fact 1.} For any $\ell$ such that $j \leq \ell < k$, there is $t_\ell \leq t_{\ell+1}$ and $\tau_\ell$ does not release any job before $t_\ell$ in $\Psi^j$.
 
 \noindent{\bf Fact 2.} No job of $\tau_k, \ldots, \tau_n$ are released before $t_k$ in $\Psi^k$.
 
@@ -224,7 +225,7 @@ $\Psi^2$.
 
 \noindent{\bf Step 2: Analyzing the reduced schedule $\Psi^1$}
 
-We now analyze the properties of the final schedule $\Psi^1$ in which
+We now analyze the properties of the final fixed-priority schedule $\Psi^1$ in which
 all the unnecessary jobs have been removed. %Remember that by Lemma~\ref{lem:step-1-conclusion}, the response time of job $J_k$ is the same in both schedules $\Psi$ and $\Psi^1$. 
 %The main goal of this
 %step is to prove the correctness of the conditions listed in
@@ -248,11 +249,11 @@ Let $\sigma_j$ be the amount of time during which the processor remains idle wit
 For $j=1,2,\ldots,k-1$, $\sigma_j  = x_j \times \sigma_j \leq x_j \times S_j$. %$\sigma_j \leq S_j$.
 \end{Lemma}
 \begin{proof}
-If Case 1 is applied on $\tau_j$ when we build $\Psi^j$ in Step 1, (i) $x_j = 1$, (ii) $t_j$ is set to the release $r_j$ of the job $J_j$, and (iii) $J_j$ has not completed its execution yet at time $t_{j+1}$. By (ii) and (iii), the
+If Case 1 is applied on $\tau_j$ when we build $\Psi^j$ in Step 1, (i) $x_j = 1$, (ii) $t_j$ is set to the release time $r_j$ of the job $J_j$, and (iii) $J_j$ has not completed its execution yet at time $t_{j+1}$. By (ii) and (iii), the
   amount of time during which the processor may remain idle within
   $[t_j, t_{j+1})$ is at most the suspension time $S_j$ of $\tau_j$. Thus, $\sigma_j \leq S_j$. And by (i), $\sigma_j = x_j \times \sigma_j \leq x_j \times S_j$.
   
-  If Cases 0, 2 or 3 is applied on $\tau_j$ when we build $\Psi^j$ in Step 1, then $t_j$ is equal to $t_{j+1}$ and by definition, $\sigma_j= 0$. It results that $\sigma_j= x_j \times \sigma_j = x_j \times S_j$.  
+  If Cases 0, 2 or 3 is applied on $\tau_j$ when we build $\Psi^j$ in Step 1, then $t_j$ is equal to $t_{j+1}$ and by definition, $\sigma_j= 0$. It results that $\sigma_j= x_j \times \sigma_j \leq x_j \times S_j$.  
   %Using the two previous equations, it results that
   %$\sum_{j=1}^{i-1} \sigma_j = \sum_{j=1}^{i-1} x_j \sigma_j \leq
   %\sum_{j=1}^{i-1} x_j S_j$.
@@ -510,7 +511,7 @@ As can be seen in Figure~\ref{fig:example-step2}, the inequalities of Eqs.~\eqre
 \end{example}
 
 
-Before moving to Step 3, the following lemma is useful for setting the workload upper bound.
+Before moving to Step 3, the following lemma is useful for setting the upper bounds of the workload functions.
 \begin{Lemma}
   \label{lemma:W_0-and-W_1-upper}
 For any $\Delta > 0$, we have
@@ -551,7 +552,7 @@ Therefore, Step 3 constructs a safe response-time analysis based on the
 conditions specified by Eqs.~\eqref{eq:exec_plus_idle-2} and
 \eqref{eq:exec_plus_idle-3} in Lemma~\ref{lemma:conclusion-step2}. Our
 goal in this step is to prove that Eq.~\eqref{eq:TDA-suspension-tighter0} in Theorem~\ref{theorem:general-framework} covers all the cases listed
-in Lemma~\ref{lemma:conclusion-step2} for any schedule $\Psi^1$ generated from any schedule $\Psi$.
+in Lemma~\ref{lemma:conclusion-step2} for any fixed-priority schedule $\Psi^1$ generated from schedule $\Psi$.
 
 Our proof strategy is to first artificially move $t_i$ to $t_i^*$ for $i=1,2,\ldots,k$ such that $t_i^*
 \leq t_i$. We define $t_i^*$ as follows:
@@ -877,15 +878,15 @@ As shown in Figure~\ref{fig:example-proof-final}, all the inequalities
 %\end{appProof}
 \ifbool{techreport}{The physical meaning of the above analysis in Theorem 1 can be found in Appendix\citetechreport{}.}{}
 
-As mentioned at the beginning of this section, all the lemmas and corollaries proven above are valid for any job in any schedule $\Psi$ where all the jobs respect their deadlines. Yet, those results are still valid for the \emph{first} job of task $\tau_k$ that misses a deadline in a schedule $\Psi$ (if such a job exists). This allows us to prove Theorem \ref{theorem:general-framework-not-feasible} below.
+As mentioned at the beginning of this section, all the lemmas and corollaries proven above are valid for any job in any schedule $\Psi$ where all the jobs respect their deadlines. Yet, those results are still valid for the first job of task $\tau_k$ that misses a deadline in a schedule $\Psi$ (if such a job exists). This allows us to prove Theorem \ref{theorem:general-framework-not-feasible} below.
 
 \begin{appProof}{Theorem \ref{theorem:general-framework-not-feasible}}
   By the assumption that $R_k > T_k$, there exists a schedule $\Psi$
   such that the response time of at least one job of $\tau_k$ is strictly larger than
-  $T_k$. Let $J_k$ be the first job in the schedule $\Psi$ that has
+  $T_k$. Let $J_k$ be the \emph{first} job in the schedule $\Psi$ that has
   response time larger than $T_k$. Suppose that $J_{k}$ arrives at
   time $r_k$. When job $J_k$ is released at time $r_k$, there is no
-  other unfinished jobs of task $\tau_k$. By
+  other unfinished job of task $\tau_k$. By
   Lemma~\ref{lemma:remove-same-task}, we can safely remove all the
   other jobs of task $\tau_k$ arrived before $r_k$ without affecting
   the response time of $J_k$. It is rather straightforward to see that
