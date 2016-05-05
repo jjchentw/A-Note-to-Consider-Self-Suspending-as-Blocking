@@ -465,12 +465,14 @@ x_j \sigma_j $ for all $t \mid t_{i} \leq t < t_{i+1}$ and $i=1,2,\ldots,k-1$.\f
   $t_i^*\leq t_i$ for $i=1,2,\ldots,k$ in Step 3 if we do so in Step 2. Such a treatment should not be applied at this moment here.}
 
 \noindent\textbf{3.} By the construction of the
-schedule $\Psi^1$, we know that $\operatorname{exec}_j(t_1, t_j)=0$ since task $\tau_j$ is not executed between $t_1$ and $t_j$. Therefore, $\operatorname{exec}_j(t_1, t)=0$ if $t<t_j$ and $\operatorname{exec}_j(t_1, t)=\operatorname{exec}_j(t_j, t)$ if $t > t_j$. Since $x_j = 0$ if $\tau_j \in {\bf T}_0$ and $x_j = 1$ if $\tau_j \in {\bf T}_1$, by Lemmas~\ref{lemma:Wj1-exact},~\ref{lemma:Wj0-exact} and ~\ref{lemma:Wj0-dominate}, we have
+schedule $\Psi^1$, we know that $\operatorname{exec}_j(t_1, t_j)=0$ since task $\tau_j$ is not executed between $t_1$ and $t_j$. Therefore, $\operatorname{exec}_j(t_1, t)=0$ if $t<t_j$ and $\operatorname{exec}_j(t_1, t)=\operatorname{exec}_j(t_j, t)$ if $t > t_j$. Since $x_j = 0$ if $\tau_j \in {\bf T}_0$ and $x_j = 1$ if $\tau_j \in {\bf T}_1$, by Lemmas~\ref{lemma:Wj1-exact},~\ref{lemma:Wj0-exact} and ~\ref{lemma:Wj0-dominate}, we have 
+for all $t \mid t_{i} \leq t < t_{i+1}$ and $i=1,2,\ldots,k-1$,
 {\footnotesize \begin{align}
 \label{eq:exec_time}
-\operatorname{exec}(t_1, t) \leq \sum_{j=1}^{i} \left( x_j\cdot W_j^1(t-t_j)  + (1-x_j)\cdot W_j^0(t-t_j) \right)
+\operatorname{exec}(t_1, t) & = \sum_{j=1}^{i} \operatorname{exec}_j(t_1, t) = \sum_{j=1}^{i} \operatorname{exec}_j(t_j, t) \nonumber \\
+& \leq \sum_{j=1}^{i} \left( x_j\cdot W_j^1(t-t_j)  + (1-x_j)\cdot \widehat{W}_j^0(t-t_j, c_j^*) \right) \nonumber \\
+&\leq \sum_{j=1}^{i} \left( x_j\cdot W_j^1(t-t_j)  + (1-x_j)\cdot W_j^0(t-t_j) \right)
 \end{align}} 
-for all $t \mid t_{i} \leq t < t_{i+1}$ and $i=1,2,\ldots,k-1$.
 
 Therefore, combining Corollary~\ref{lem:bound_idle}, Eq.~\eqref{eq:exec_time} and Eq.~(\ref{eq:exec_plus_idle}), we obtain Eq.~\eqref{eq:exec_plus_idle-2}. 
 
@@ -720,10 +722,12 @@ where $X_j$ is $\sum_{\ell=j}^{k-1} x_\ell\sigma_\ell$.
   By Eq.~\eqref{eq:ti*}, we have $t_j^* = t_k^* - \sum_{\ell=j}^{k-1}
   x_\ell\sigma_\ell$. Therefore, $\forall t \mid t_k^* \leq t < f_k$,
   we have $t-t_j^* = t - t_k^* + \sum_{\ell=j}^{k-1}
-  x_\ell\sigma_\ell = t-t_k^* + X_j$ for every $j=1,2,\ldots,k-1$. By using Lemma~\ref{lemma:W_0-and-W_1-upper} and $t-t_j^*$ above, we can rewrite the condition in Lemma~\ref{lemma:step-3-one-condition} as $\forall t \mid t_k^* \leq t < f_k$,
-\begin{equation*}
+  x_\ell\sigma_\ell = t-t_k^* + X_j$ for every $j=1,2,\ldots,k-1$. 
+By using Lemma~\ref{lemma:W_0-and-W_1-upper} and $t-t_j^*$ above, we can rewrite the condition in Lemma~\ref{lemma:step-3-one-condition} as $C_k'+\sum_{j=1}^{k-1} \left(x_j\ceiling{\frac{t-t_k^*+X_j}{T_j}} C_j  + (1-x_j) \ceiling{\frac{t-t_k^*+X_j+R_j-C_j}{T_j}} C_j\right) > t-t_k^*$, $\forall t \mid t_k^* \leq t < f_k$.
+Since $x_j$ is either $0$ or $1$, this is equivalent to  $\forall t \mid t_k^* \leq t < f_k$,
+\begin{align*}
 C_k'+\sum_{j=1}^{k-1} \ceiling{\frac{t-t_k^*+X_j+(1-x_j)(R_j-C_j)}{T_j}} C_j > t-t_k^*
-\end{equation*}
+\end{align*}
 
   By replacing $t-t_k^*$ with $\theta$, we reach the conclusion.
 \end{proof}
@@ -867,11 +871,13 @@ of Theorem~\ref{theorem:general-framework} when replacing $X_j$ with $Q_j^{\vec{
 As shown in Figure~\ref{fig:example-proof-final}, all the inequalities 
   in Eqs.~\eqref{eq:exec_plus_idle-4},~\eqref{eq:exec_plus_idle-5},~\eqref{eq:exec_plus_idle-almost-final}, and~\eqref{eq:exec_plus_idle-almost-final-before-replacing-sigma} hold.
 %The conclusion we have in the final statement of the example is that $20-7=f_k-r_k \leq  f_k-6 < 21-6$.
+\myendproof
 \end{example}
 %\vspace{-0.3in}
 %\end{appProof}
-%The physical meaning of the above analysis in Theorem 1 can be found
-%in Appendix\citetechreport{}.
+\ifbool{techreport}{The physical meaning of the above analysis in Theorem 1 can be found in Appendix\citetechreport{}.}{}
+
+As mentioned at the beginning of this section, all the lemmas and corollaries proven above are valid for any job in any schedule $\Psi$ where all the jobs respect their deadlines. Yet, those results are still valid for the \emph{first} job of task $\tau_k$ that misses a deadline in a schedule $\Psi$ (if such a job exists). This allows us to prove Theorem \ref{theorem:general-framework-not-feasible} below.
 
 \begin{appProof}{Theorem \ref{theorem:general-framework-not-feasible}}
   By the assumption that $R_k > T_k$, there exists a schedule $\Psi$

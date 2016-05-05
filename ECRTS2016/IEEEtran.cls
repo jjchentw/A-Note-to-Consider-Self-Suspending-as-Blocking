@@ -776,7 +776,8 @@
 % put in a little rubber to help stop some bad breaks (underfull vboxes)
 \parskip 0ex plus 0.2ex minus 0.1ex
 \ifCLASSOPTIONconference
-\parskip 6pt plus 2pt minus 1pt
+%\parskip 6pt plus 2pt minus 1pt
+\parskip 4pt plus 2pt minus 1pt
 \fi
 
 \parindent    1.0em
