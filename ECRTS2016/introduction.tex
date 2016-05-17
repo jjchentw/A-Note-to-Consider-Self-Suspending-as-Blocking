@@ -44,10 +44,10 @@ offloading computation to GPUs~\cite{Kato_2011,Liu_2014}).
 There are two typical models for self-suspending sporadic task
 systems: 1) the dynamic self-suspension task model, and 2) the
 segmented self-suspension task model. In the \emph{dynamic}
-self-suspension task model, in addition to the worst-case execution time
+self-suspension task model, e.g.,~\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994,LiuChen:rtss2014,Huang_2015,ecrts16-techreport}, in addition to the worst-case execution time
 $C_i$ of sporadic task $\tau_i$, we have also the worst-case
 self-suspension time $S_i$ of task $\tau_i$. In the \emph{segmented} self-suspension
-task model, the execution behaviour of a job of task $\tau_i$ is
+task model, e.g., \cite{RTCSA-BletsasA05,Kim2016,WC16-suspend-DATE,RTSS-ChenL14,Huang:multiseg,PH:rtss98}, the execution behaviour of a job of task $\tau_i$ is
 specified by interleaved computation segments and self-suspension
 intervals.  From the system designer's perspective, the dynamic
 self-suspension model provides a simple specification by ignoring the
@@ -60,7 +60,7 @@ In this paper, we focus on preemptive fixed-priority scheduling for
 the dynamic self-suspension task model on a uniprocessor platform. To
 verify the schedulability of a given task set, this problem has been
 specifically studied in
-\cite{RTCSA-KimCPKH95,MingLiRTCSA1994,ECRTS-AudsleyB04,RTAS-AudsleyB04,huangpass:dac2015}.
+\cite{RTCSA-KimCPKH95,MingLiRTCSA1994,ECRTS-AudsleyB04,RTAS-AudsleyB04,Huang_2015}.
 The recent report by Chen et al. \cite{suspension-review-jj}
 % \footnote{The report, with a tentative
 %   title ``Many Suspensions, Many Problems: A Review of
@@ -75,10 +75,10 @@ are in fact unsafe. Unfortunately, those misconceptions propagated to several wo
 analyzing the worst-case response time for partitioned multiprocessor
 real-time locking protocols. Moreover, Liu and Chen
 in \cite{LiuChen:rtss2014} provided a utilization-based schedulability
-test based on a hyperbolic-form. Huang et al. \cite{huangpass:dac2015}
+test based on a hyperbolic-form. Huang et al. \cite{Huang_2015}
 explored the priority assignment under the same system model.
 
-Furthermore, one of the seminal result presented by Jane W. S. Liu in her book titled "Real-Time Systems"
+Furthermore, one result presented by Jane W. S. Liu in her book "Real-Time Systems"
 \cite[p. 164-165]{Liu:2000:RS:518501} and implicitly used
 by Rajkumar, Sha, and Lehoczky \cite[p.
 267]{DBLP:conf/rtss/RajkumarSL88} for analyzing the self-suspending

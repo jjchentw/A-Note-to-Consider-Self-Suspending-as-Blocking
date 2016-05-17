@@ -1,7 +1,7 @@
 \newpage
 \section*{Appendix}
-{\bf How Rajkumar, Sha, and Lehoczky
-  in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} analyzed dynamic
+{\bf How did Rajkumar, Sha, and Lehoczky
+  in~\cite[p. 267]{DBLP:conf/rtss/RajkumarSL88} analyze dynamic
   self-suspending behaviour due to multiprocessor synchronization?}
 The statement in \cite{DBLP:conf/rtss/RajkumarSL88} reads as follows:
 \begin{quote}
@@ -20,14 +20,14 @@ to $\Psi^1$:
 \begin{algorithm}[h]
   \caption{Transformation from $\Psi$ to $\Psi^1$}
      \begin{algorithmic}[1]\footnotesize
-       \INPUT $\tau_k'$, ${\bf T}_0$, ${\bf T}_1$, and a
-       fixed-priority preemptive schedule $\Psi$ of $\tau'$ under the
-       assumption $R_k' \leq T_k$;
+       \INPUT $\tau_k$, ${\bf T}_0$, ${\bf T}_1$, and a
+       fixed-priority preemptive schedule $\Psi$ of $\tau$ under the
+       assumption $R_k \leq T_k$;
 
-       \STATE pick one job $J_k$ of task $\tau_k'$ and set $r_k$ as
+       \STATE pick one job $J_k$ of task $\tau_k$ and set $r_k$ as
        the arrival time of $J_k$;
 
-    \STATE remove all the jobs generated from $\tau_k', \tau_{k+1}, \tau_{k+2}, \ldots,
+    \STATE remove all the jobs generated from $\tau_k, \tau_{k+1}, \tau_{k+2}, \ldots,
     \tau_n$ in the schedule $\Psi$, except $J_k$;
 
     \STATE $\Psi^k \leftarrow \Psi$ and $t_k \leftarrow r_k$; 
@@ -280,7 +280,7 @@ Step 3 in the proof of Theorem~\ref{theorem:general-framework}.
   can be explained as follows:
 
   \begin{quote}\emph{A safe scenario to analyze the worst-case
-      response time $R_k'$ of task $\tau_k'$ when $R_k' \leq T_k$ is
+      response time $R_k$ of task $\tau_k$ when $R_k \leq T_k$ is
       1) to release each higher-priority task $\tau_j$ at time
       $t_j^*\equals \sum_{i=1}^{j-1} x_j S_j$ with release jitter
       $(1-x_j)(R_j-C_j)$, and 2) to execute the accumulated work only

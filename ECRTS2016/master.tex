@@ -110,7 +110,12 @@ align =left,
 %\newif\ifpaper
 %\paperfalse
 
+\ifbool{techreport}{
 \pagestyle{plain}
+}
+{
+\pagestyle{empty}
+}
 
 \linespread{0.96}
 
@@ -118,10 +123,12 @@ align =left,
   
 \title{A Unifying Response Time Analysis Framework for Dynamic Self-Suspending Tasks}
 
-\author{Jian-Jia Chen\IEEEauthorrefmark{1}, Geoffrey Nelissen\IEEEauthorrefmark{4}, Wen-Hung Huang\IEEEauthorrefmark{1}\\
+
+\author{
+Jian-Jia Chen\IEEEauthorrefmark{1}, Geoffrey Nelissen\IEEEauthorrefmark{4}, Wen-Hung Huang\IEEEauthorrefmark{1}\\
 \IEEEauthorrefmark{1} TU Dortmund University, Germany\\
 \IEEEauthorrefmark{4} CISTER/INESC-TEC, ISEP, Polytechnic Institute of Porto, Portugal \\
-Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt
+Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt\\
 }
 
 \maketitle
@@ -205,10 +212,13 @@ complexity, we show that a simpler algorithm presented in Section~\ref{sec:linea
 %polynomial-time schedulability tests are not the focus of this paper,
 %such options were not seriously discussed here.
 
-\noindent{\bf Acknowledgements.} This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/). This work was also partially supported by National Funds through FCT/MEC (Portuguese Foundation for Science and Technology) and co-financed by ERDF (European Regional Development Fund) under the PT2020 Partnership, within project UID/CEC/04234/2013 (CISTER); also by FCT/MEC and the EU ARTEMIS JU within project(s) ARTEMIS/0003/2012 - JU grant nr. 333053 (CONCERTO) and ARTEMIS/0001/2013 - JU grant nr. 621429 (EMC2).
+\noindent{\bf Acknowledgements.}  The authors would like to thank the anonymous reviewers for their suggestions and helps to improve the presentation flow and the clarity of the proof of Theorem~\ref{theorem:general-framework}. 
+
+This paper is supported by DFG, as part of the Collaborative Research Center SFB876 (http://sfb876.tu-dortmund.de/). This work was also partially supported by National Funds through FCT/MEC (Portuguese Foundation for Science and Technology) and co-financed by ERDF (European Regional Development Fund) under the PT2020 Partnership, within project UID/CEC/04234/2013 (CISTER); also by FCT/MEC and the EU ARTEMIS JU within project(s) ARTEMIS/0003/2012 - JU grant nr. 333053 (CONCERTO) and ARTEMIS/0001/2013 - JU grant nr. 621429 (EMC2).
 
 \bibliography{../bibliography/biblio-summary,../bibliography/biblio}{}
 
+\ifbool{techreport}{
 \input{appendix.tex}
-
+}{}
 \end{document}
