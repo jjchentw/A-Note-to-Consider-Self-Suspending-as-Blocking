@@ -1,0 +1,341 @@
+% **************************************************************************************************************
+% Style for the technical report series of the Technische UniversitÃ¤t Dortmund
+% Based on: A Classic Thesis Style Copyright (C) 2007 AndrÃ© Miede http://www.miede.de
+% Adapted by Patrick KrÃ¼mpelmann 2009
+% **************************************************************************************************************
+
+%\documentclass[twoside,openright,titlepage,fleqn,
+\documentclass[twoside,titlepage,fleqn,
+                pointlessnumbers,headinclude,BCOR5mm,
+                ]{scrreprt}
+
+\KOMAoptions{
+    paper=a4,
+    fontsize=10pt,
+%    cleardoublepage=empty,
+    footinclude=true
+}
+
+\listfiles
+
+%\usepackage{doxygen}
+
+\newcommand{\inst}[1]{$^#1$}
+% Variables for the Technical Reports
+\newcommand{\myTitle}{A Unifying Response Time Analysis Framework for Dynamic Self-Suspending Tasks }
+\newcommand{\myFormattedTitle}{\myTitle}
+\newcommand{\myName}{Jian-Jia Chen\inst{1}, Geoffrey Nelissen\inst{2}, Wen-Hung
+  Huang\inst{1}}
+\newcommand{\myUrl}{\url{http://ls12-www.cs.tu-dortmund.de}}
+\newcommand{\myProjectUrl}{~}
+\newcommand{\myChair}{$^1$Computer Science 12 at TU Dortmund
+  University, Germany\xspace\\
+$^2$CISTER/INESC-TEC, ISEP, Polytechnic Institute of Porto, Portugal
+}
+\newcommand{\myTime}{May 2016\xspace}
+\newcommand{\myVolume}{850}
+
+% static for technical reports of the TU Dortmund
+\newcommand{\myFaculty}{Department of Computer Science\xspace}
+\newcommand{\myUni}{\protect{Dortmund University of Technology}\xspace}
+\newcommand{\myLocation}{Dortmund\xspace}
+\newcommand{\myDegree}{Technical Report\xspace}
+%*******************************************************
+\input{classicthesis-config}
+%*******************************************************
+
+\usepackage{footnote}
+\makesavenoteenv[tablefootnotesave]{table}
+
+%======================================================================================================
+% Macros and environments
+%======================================================================================================
+\usepackage[geometry]{ifsym}
+\usepackage{makeidx}
+\usepackage{mathrsfs}
+
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{paralist}
+
+\lstset{mathescape=true}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\L}{\ensuremath{\mathbf{L}_{\C,\X,\XL}}}
+
+\usepackage{multido}
+%\usepackage[justification=Centering]{subfig}
+ \usepackage{tikz}
+\usepackage{multirow}
+\usetikzlibrary{shadows,patterns,shapes,arrows,decorations.pathmorphing,backgrounds,positioning,fit,plotmarks}
+
+\newcounter{ccount}
+\newenvironment{closeenum}
+    {\begin{list}{\arabic{ccount}.}
+    {\usecounter{ccount}\setlength{\itemsep}{-0.3\baselineskip}
+     \setlength{\topsep}{0.15\baselineskip}
+     \setlength{\parskip}{0pt}}}
+    {\end{list}}
+
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\newcommand{\ceiling}[1]{\left\lceil{#1}\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
+\newcommand{\setof}[1]{\left\{{#1}\right\}}
+\newcommand{\set}[2]{\{{#1}\mid{#2}\}}
+\newcommand{\equals}{\stackrel{\mathrm{def}}{=}}
+
+
+\floatname{algorithm}{Algorithm}
+\newcommand{\algorithmicinput}{\textbf{Input:}}
+\newcommand{\INPUT}{\item[\algorithmicinput]}
+\newcommand{\algorithmicoutput}{\textbf{Output:}}
+\newcommand{\OUTPUT}{\item[\algorithmicoutput]}
+\newcommand{\algorithmicprocedure}{\hskip0.2in \textbf{Procedure:}}
+\newcommand{\PROCEDURE}{\item[\algorithmicprocedure]}
+
+%%%%%%%%%%%%%%%
+ \def\myendproof{{\ \vbox{\hrule\hbox{%
+   \vrule height1.3ex\hskip0.8ex\vrule}\hrule }}\par}
+ \newenvironment{proof}{\noindent{\bf Proof. }}{\myendproof}
+%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+ \newenvironment{appProof}[1]{\noindent{\bf Proof of
+     #1. }}{\myendproof\vskip 0.1in}
+ %%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Corollary}{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{claim}{Claim}
+\newtheorem{definition}{Definition}
+\newtheorem{rrule}{Rule}
+\newtheorem{remark}{Remark}
+\newtheorem{observation}{Observation}
+\newtheorem{Property}{Property}
+\usepackage{etoolbox}
+\addtolength{\textheight}{20pt}
+
+\usetikzlibrary{%
+  arrows,%
+  shapes.misc,% wg. rounded rectangle
+  shapes.arrows,%
+  chains,%
+  matrix,%
+  positioning,% wg. " of "
+  scopes,%
+  decorations.pathmorphing,% /pgf/decoration/random steps | erste Graphik
+  shadows%
+}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+\tikzstyle{materia}=[draw, fill=white, text width=1.0em, text centered,
+  minimum height=4em,drop shadow]
+\tikzstyle{practica} = [materia, text width=18em, minimum width=8em,
+align =left,
+  minimum height=3em, rounded corners, drop shadow]
+\tikzstyle{texto} = [above, text width=6em, text centered]
+\tikzstyle{linepart} = [draw, thick, color=blue!50, -latex', dashed]
+\tikzstyle{line} = [draw, line width = 2pt, color=blue!50, -latex']
+\tikzstyle{ur}=[draw, text centered, minimum height=0.01em]
+
+
+\newcommand{\citetechreport}[1]{\ifbool{techreport}{}{ in the report \cite{ecrts16-techreport}}}
+
+\usepackage{pgfplots}
+
+\def\deltasum{\delta_{\mbox{sum}}}
+\def\musum{\mu_{\mbox{sum}}}
+\def\deltamax{\delta_{\max}}
+\def\mumax{\mu_{\max}}
+\addtolength{\textheight}{6pt}
+
+\newif\ifpaper
+\newif\iftechreport
+\newif\iftutechreport
+\papertrue 
+\techreporttrue
+\tutechreporttrue
+\newcommand{\mysectionref}{\iftutechreport Chapter\else Section\fi}
+\newcommand{\mysectionSref}{\iftutechreport Chapters\else Sections\fi}
+\newcommand{\mysectionrefnormal}{\iftutechreport chapter\else section\fi}
+\newcommand{\mychapter}[1]{\iftutechreport \chapter{#1}\else \section{#1}\fi}
+\newcommand{\mysection}[1]{\iftutechreport \section{#1}\else \subsection{#1}\fi}
+\newcommand{\mysubsection}[1]{\iftutechreport \subsection{#1}\else \subsubsection{#1}\fi}
+
+%\renewcommand{\section}[1]{\chapter{#1}}
+
+%% copied from preamble.tex
+%%
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage{calc}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{arrows}
+\usepackage{sansmath}
+\tikzset{
+     task/.style={fill=#1,  rectangle},
+     task1a/.style={task=green!30},
+     task1b/.style={task=green},
+     task2a/.style={task=orange!30},
+     task2b/.style={task=orange},
+     task3a/.style={task=pink},
+ task3b/.style={task=pink!80},
+     task4a/.style={task=cyan},
+task4b/.style={task=cyan!50},
+     task5/.style={task=blue},
+     task6/.style={task=purple},
+     task7/.style={draw,minimum height=\uy,},
+     task8/.style={draw,thick},
+     task9/.style={task=lightgray,draw,minimum height=\uy,},
+}
+\tikzset{>=latex}
+\tikzstyle{circleNode}=[circle,draw=blue!75,fill=blue!20,minimum
+size=6mm]
+\tikzstyle{niceFill}=[draw=blue!75,fill=blue!20,minimum size=6mm]
+\def\ux{0.5cm}\def\uy{0.5cm} 
+%% end copy preamble.tex
+
+\renewcommand{\eg}{{\it e.g.}\xspace}
+\renewcommand{\ie}{{\it i.e.}\xspace}
+\newcommand{\etc}{{\it etc.}\xspace}
+\newcommand{\etal}{\emph{et~al}.\xspace}
+\newcommand{\fun}[1]{\mathit{#1}}
+\newcommand{\res}[0]{\ell}
+\newcommand{\xth}{\ensuremath{^{\text{th}}}\xspace}
+
+
+% ********************************************************************
+% BEGIN DOCUMENT
+%*******************************************************
+\begin{document}
+\frenchspacing
+\raggedbottom
+\selectlanguage{american} % american ngerman
+\pagenumbering{roman}
+\pagestyle{plain}
+%********************************************************************
+% Frontmatter
+%*******************************************************
+%\include{FrontBackmatter/DirtyTitlepage}
+\include{FrontBackmatter/Titlepage}
+\include{FrontBackmatter/Titleback}
+%\cleardoublepage\include{FrontBackmatter/Dedication}
+\cleardoublepage\include{FrontBackmatter/Abstract}
+%\cleardoublepage\include{FrontBackmatter/Publication}
+%\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+\pagestyle{scrheadings}
+\cleardoublepage\include{FrontBackmatter/Contents}
+
+%********************************************************************
+% Mainmatter
+%*******************************************************
+\pagenumbering{arabic}
+% use \cleardoublepage here to avoid problems with pdfbookmark
+
+%======================================================================================================
+% Sections
+%======================================================================================================
+
+
+
+\chapter{Introduction}
+\input{introduction}
+
+\chapter{Task Model}
+\input{model}
+
+\chapter{Background}
+\label{sec:existing-analyses}
+\input{background}
+
+\chapter{Rationale}
+\label{sec:rationale}
+\input{rationale}
+
+\chapter{A Unifying Analysis Framework}
+\label{sec:analysis}
+\input{analysis}
+
+\section{Proof of Correctness}  
+\label{sec:proof-th1}
+\input{proof}
+
+\chapter{Dominance over the State of the Art}
+\label{sec:dominance}
+\input{dominance}
+
+\chapter{Linear Approximation}
+\label{sec:linear-approximation}
+\input{approximation}
+
+
+
+
+
+
+
+
+
+\chapter{Experiments}
+\label{sec:experiments}
+
+\input{experiments}
+
+
+\chapter{Conclusion}
+\label{sec:conclusion}
+
+
+In this paper, we studied the preemptive fixed-priority scheduling of
+dynamic self-suspending tasks running on a uniprocessor platform. This
+paper presents a unifying response time analysis framework in
+Theorems~\ref{theorem:general-framework}~\ref{theorem:general-framework-not-feasible} and
+Corollary~\ref{corollary:general-framework}. We show that this result
+analytically dominates all the existing analyses presented in
+Section~\ref{sec:existing-analyses}, and, by doing such, we also implicitly
+proved the correctness of all these analyses. Although
+Corollary~\ref{corollary:general-framework} requires exponential time
+complexity, we show that a simpler algorithm presented in Section~\ref{sec:linear-approximation} can help accelerate the analysis while outputting good results.
+
+%In fact, the response time analysis and the schedulability tests in
+%Section~\ref{sec:existing-analyses} and
+%Theorem~\ref{theorem:general-framework} can be further approximated to
+%polynomial-time complexity. For example, by over-approximating the
+%jitter used in Section~\ref{sec:jitter}, Liu and Chen
+%in \cite{LiuChen:rtss2014} provided a utilization-based schedulability
+%test based on a hyperbolic-form. Moreover, as presented in
+%Section~\ref{sec:suspension-blocking}, Liu in \cite{Liu:2000:RS:518501}
+%in fact used the blocking time for a schedulability test based on the
+%RM utilization bound. Our test in
+%Theorem~\ref{theorem:linear-time-test} is a linear-time test. The
+%above tests can be further improved by using the k2U and the k2Q
+%frameworks
+%in \cite{ChenHLRTSS2015,DBLP:journals/corr/ChenHL15b}. However, as
+%polynomial-time schedulability tests are not the focus of this paper,
+%such options were not seriously discussed here.
+
+\bibliographystyle{abbrv}
+\bibliography{../bibliography/biblio-summary,../bibliography/biblio}{}
+
+\chapter{Appendix}
+\input{appendix.tex}
+
+
+
+
+%\setlength\bibitemsep{1pt}
+%\printbibliography[maxnames=999]
+%\printbibliography
+%
+\end{document}
+% ********************************************************************
