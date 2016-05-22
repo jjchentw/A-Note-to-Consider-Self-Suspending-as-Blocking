@@ -1,11 +1,16 @@
-\section{A Unifying Analysis Framework}
-\label{sec:analysis}
+
+
+\ifbool{tutechreport}{
+\def\tableAscale{0.55}
+}{
+\def\tableAscale{0.95}
+}
 
 
  \begin{table*}[t]
     \centering
     \renewcommand{\arraystretch}{1.7}
-\scalebox{0.95}{
+\scalebox{\tableAscale}{
     \begin{tabular}{|c|c|c|c|c|}
 \hline
     $\vec{x}$ & Case 1: $(0, 0)$ & Case 2: $(0, 1)$ & Case 3: $(1, 0)$ & Case 4:$(1, 1)$\\
@@ -106,7 +111,6 @@ Note also that the upper bound on $R_3$ computed in
 Example~\ref{ex:general_framework}, is lower than the estimated worst-case response time obtained in Example~\ref{ex:rationale_2}. The response time analysis presented in Corollary~\ref{corollary:general-framework} is therefore tighter than the simple combination of existing analysis techniques as proposed in Example~\ref{ex:rationale_2}.
 
 
-\input{proof}
 
 
 

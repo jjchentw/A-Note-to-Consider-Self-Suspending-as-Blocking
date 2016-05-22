@@ -99,7 +99,9 @@ align =left,
 
 
 \providebool{techreport}
+\providebool{tutechreport}
 \setbool{techreport}{false}
+\setbool{tutechreport}{false}
 
 \newcommand{\citetechreport}[1]{\ifbool{techreport}{}{ in the report \cite{ecrts16-techreport}}}
 
@@ -118,6 +120,9 @@ align =left,
 }
 
 \linespread{0.96}
+
+\newcommand{\mychapter}[1]{\section{#1}}
+\newcommand{\mysection}[1]{\subsection{#1}}
 
 \begin{document}
   
@@ -152,18 +157,34 @@ Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt\\
   deemed schedulable) over these state-of-the-art analyses.
 \end{abstract}
 
+\section{Introduction}
 \input{introduction}
 
+\section{Task Model}
 \input{model}
 
+\section{Background}
+\label{sec:existing-analyses}
 \input{background}
 
+\section{Rationale}
+\label{sec:rationale}
 \input{rationale}
 
+\section{A Unifying Analysis Framework}
+\label{sec:analysis}
 \input{analysis}
 
+\subsection{Proof of Correctness}  
+\label{sec:proof-th1}
+\input{proof}
+
+\section{Dominance over the State of the Art}
+\label{sec:dominance}
 \input{dominance}
 
+\section{Linear Approximation}
+\label{sec:linear-approximation}
 \input{approximation}
 
 
@@ -174,9 +195,8 @@ Emails: \{jian-jia.chen, wen-hung.huang\}@tu-dortmund.de, grrpn@isep.ipp.pt\\
 
 
 
-
-
-
+\section{Experiments}
+\label{sec:experiments}
 
 \input{experiments}
 
@@ -219,6 +239,8 @@ This paper is supported by DFG, as part of the Collaborative Research Center SFB
 \bibliography{../bibliography/biblio-summary,../bibliography/biblio}{}
 
 \ifbool{techreport}{
+\newpage
+\section*{Appendix}
 \input{appendix.tex}
 }{}
 \end{document}

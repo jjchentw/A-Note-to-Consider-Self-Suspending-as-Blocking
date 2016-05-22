@@ -1,6 +1,3 @@
-\section{Background}
-\label{sec:existing-analyses}
-
 To analyze the worst-case response time (or the schedulability) of a task $\tau_k$, one usually needs to quantify the worst-case interference exerted by the higher-priority tasks on the execution of any job of task $\tau_k$. In the ordinary sequential sporadic real-time task model, i.e., when $S_i=0$ for every task $\tau_i$, the so-called critical instant theorem by Liu and Layland \cite{Liu_1973} is commonly adopted. That is, the worst-case response time of task $\tau_k$ (if it is less than or equal to its period) happens for the first job of task $\tau_k$ when (i) $\tau_k$ and all the higher-priority tasks release their first jobs synchronously and (ii) all their subsequent jobs are released as early as possible (i.e., with a rate equal to their periods).  However,  this definition of the
 critical instant does not hold for self-suspending tasks.  
 
@@ -33,7 +30,7 @@ scheduled by a fixed-priority scheduling algorithm if
 \exists t \mid 0 < t \leq D_k, \quad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}} (C_i+S_i) \leq t.
 \end{equation}
 
-\subsection{Modeling the Suspension as Release Jitter}
+\mysection{Modeling the Suspension as Release Jitter}
 \label{sec:jitter}
 
 Another approach consists in modeling the impact of the self-suspension $S_i$ of each higher priority task $\tau_i$ as release jitter. Several works in the state-of-the-art \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994} upper bounded the release jitter with $S_i$. However, it has been recently shown in~\cite{BletsasReport2015} that this upper bound is unsafe and  the release jitter of task $\tau_i$ can in fact be larger than $S_i$. 
@@ -45,7 +42,7 @@ $\tau_k$ with a constrained deadline can be feasibly scheduled under fixed-prior
 \exists t \mid 0 < t \leq D_k, \quad C_k + S_k + \sum_{i=1}^{k-1}\ceiling{\frac{t+R_i-C_i}{T_i}} C_i \leq t.
 \end{equation}
 
-\subsection{Modeling the Suspension as Blocking Time}
+\mysection{Modeling the Suspension as Blocking Time}
 \label{sec:suspension-blocking}
 
 In \cite[p. 164-165]{Liu:2000:RS:518501}, Liu proposed a solution to study the schedulability of a self-suspending task $\tau_k$ by modeling the extra delay suffered by $\tau_k$ due to the self-suspension behavior of each task in $\tau$ as a blocking time.\footnote{Even though the authors in this paper are able to provide a proof to support the correctness, the authors are not able to provide any rationale behind this method which treats suspension time as blocking time.} This blocking time has been defined as follows:

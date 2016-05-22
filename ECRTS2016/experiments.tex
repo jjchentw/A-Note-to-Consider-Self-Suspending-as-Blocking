@@ -1,6 +1,3 @@
-\section{Experiments}
-\label{sec:experiments}
-
 In this section, we present experiments conducted on randomly generated task sets. Five schedulability tests are compared, namely, the suspension oblivious approach (Section~\ref{sec:suspension-oblivious}), the modeling of suspension as release jitter (Section~\ref{sec:jitter}), the analysis that models the suspension as a blocking term (Section~\ref{sec:suspension-blocking}), the generic framework of Corollary~\ref{corollary:general-framework} (called ECRTS 16 in the plots) and the schedulability test of Theorem~\ref{theorem:general-framework} based on the vector defined in Eq.~\eqref{eq:x-linear} in Section~\ref{sec:linear-approximation} (called ECRTS 16 linear in the plots). In those experiments, the tasks are assumed to be scheduled with rate monotonic and have implicit deadlines (i.e., $D_i = T_i$).
 
 The task sets were generated using the \texttt{randfixedsum} algorithm presented in \cite{Emberson-taskSetGeneration-2010}. Let $C'_i$ denote the sum of $C_i$ and $S_i$ (i.e., $C'_i \equals C_i + S_i$). 
@@ -16,6 +13,24 @@ The last two plots (Figures~\ref{fig:plot3} and~\ref{fig:plot4}), present the re
 % Again, the incomparability of the jitter- and blocking-based tests can be seen. 
 % The test based on blocking usually performs better for lower utilizations. 
 The improvement of Corollary~\ref{corollary:general-framework} over the state-of-the-art is still high when suspension times are in average smaller than the execution times of the tasks (see Figures~\ref{fig:plot3}). However, when the suspension time becomes larger than the execution time of the task (see Figures~\ref{fig:plot4}), the release jitter-based test performs almost as well as Corollary~\ref{corollary:general-framework} since the best vector assignment is usually to set all the $x_i$ to $0$ for such cases.
+
+
+\ifbool{tutechreport}
+{
+\begin{figure*}[t!]
+  \centering
+  \subfloat[Varying the number of tasks $n$, $U'=0.95$, $r_{\min} = 0.05$, $r_{\max} = 0.5$]{\label{fig:plot1} \includegraphics[width=0.5\textwidth]{../figures/experiments/varyingn_smin=5_smax=50_U=0_95_T=100-10000_1000runs_croped.pdf}}
+  \subfloat[Varying $r_{\max}$ (unit: \%), $U'=1$, $n=8$, $r_{\min} = 0.05$]{\label{fig:plot2} \includegraphics[width=0.45\textwidth]{../figures/experiments/varyingSmax_smin=5_U=1_n=8_T=100-10000_1000runs_croped.pdf}}\\
+  \subfloat[Varying $U'$, $n=8$, $r_{\min} = 0.05$, $r_{\max} = 0.5$]{\label{fig:plot3}   \begin{tikzpicture}[x=\ux,y=\uy, font=\sffamily,thick]  
+      \draw (1.5, 0.7) node[rotate=90]{\footnotesize \# of schedulable task sets};      
+ \node[anchor=west] at (2, 0) {\includegraphics[width=0.45\textwidth]{../figures/experiments/varyingU_smin=5_smax=50_n=8_T=100-10000_1000runs_croped.pdf}};
+  \end{tikzpicture}}
+  \subfloat[Varying $U'$, $n=8$, $r_{\min} = 0.5$, $r_{\max} = 0.9$]{\label{fig:plot4} \includegraphics[width=0.45\textwidth]{../figures/experiments/varyingU_smin=50_smax=90_n=8_T=100-10000_1000runs_croped.pdf}} 
+  \caption{Number of schedulable task sets over $1000$ randomly generated task sets.}
+  \label{fig:exp}
+\end{figure*}
+}
+{}
 
 
 %%% Local Variables:
