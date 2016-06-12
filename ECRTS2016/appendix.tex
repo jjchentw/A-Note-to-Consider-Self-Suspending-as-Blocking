@@ -326,16 +326,15 @@ Step 3 in the proof of Theorem~\ref{theorem:general-framework}.
   \label{eq:proof_dominance_blocking}
   C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{t+Q_1^{\vec{x}}}{T_i}} C_i\leq t
   \end{equation}
-  is always larger than or equal to the solution of Eq.~\eqref{eq:TDA-suspension-tighter}. 
+  is always larger than or equal to the solution of Eq.~\eqref{eq:TDA-suspension-tighter}. Suppose that $R_k^*$ is the smallest positive value $t$ satisfying Eq.~\eqref{eq:proof_dominance_blocking} for a given vector assignment $\vec{x}$.
   
-  Subtituting $(t+Q_1^{\vec{x}})$ by $\theta$ in Eq.~\eqref{eq:proof_dominance_blocking}, we get that $R_k$ is upper bounded by the minimum value $(\theta-Q_1^{\vec{x}})$ greater than $0$ (and therefore by the smallest $\theta > 0$) such that 
+  Subtituting $(t+Q_1^{\vec{x}})$ by $\theta$ in Eq.~\eqref{eq:proof_dominance_blocking}, we get that $R_k^*$ is upper bounded by the minimum value $(\theta-Q_1^{\vec{x}})$ greater than $0$ (and therefore by the smallest $\theta > 0$) such that 
   \begin{align}
   & C_k + S_k + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i\leq \theta-Q_1^{\vec{x}} \nonumber \\
   \Leftrightarrow \;\; & C_k + S_k + Q_1^{\vec{x}} + \sum_{i=1}^{k-1} (1-x_i)C_i + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i\leq \theta \nonumber \\
 \Leftrightarrow \;\; & C_k + S_k + \sum_{i=1}^{k-1}(x_i S_i + (1-x_i) C_i) + \sum_{i=1}^{k-1}\ceiling{\frac{\theta}{T_i}}C_i \leq \theta \label{eq:proof_dominance_blocking_final}.
     \end{align}
-    
-    
+    Suppose that $R_k^\dagger$ is the smallest positive value $\theta$ satisfying Eq.~\eqref{eq:proof_dominance_blocking_final} for the given vector assignment $\vec{x}$. By definition, $R_k^\dagger = R_k^* + Q_1^{\vec{x}} \geq R_k^*$ for any given vector assignment $\vec{x}$.
     Now, consider the particular vector assignment $\vec{x}$ in which 
   \begin{equation*}
     x_i =
